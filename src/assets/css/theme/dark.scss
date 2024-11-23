@@ -1,0 +1,17 @@
+html.dark {
+  color-scheme: dark;
+
+  --fansy-box-shadow-color-lighter: rgba(255, 255, 255, 0.1);
+
+  // --el-bg-color-page: #181818;
+
+  --el-color-primary: #d84e3e;
+  --el-color-primary-light-3: #e48378;
+  --el-color-primary-light-5: #eca79f;
+  --el-color-primary-light-7: #f3cac5;
+  --el-color-primary-light-8: #f7dcd8;
+  --el-color-primary-light-9: #fbedec;
+  // --el-color-primary-dark-2: #ad3e32;
+
+  --el-menu-hover-bg-color: var(--el-color-primary-light-5);
+}

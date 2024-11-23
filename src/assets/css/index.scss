@@ -1,0 +1,110 @@
+@use './nprogress.scss';
+@use './transition.scss';
+@use './element-ui.scss';
+@use './theme/dark.scss';
+
+:root {
+  --padding-sm: 12px;
+  --padding-md: 16px;
+  --padding-lg: 20px;
+  --padding-xl: 24px;
+
+  --bg-white: #fff;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+
+  --fansy-box-shadow-color-lighter: rgba(0, 0, 0, 0.1);
+
+  // --el-bg-color-page: #f5f7fa;
+  --el-color-primary: #d84e3e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--el-bg-color-page);
+
+  color-scheme: light dark;
+  color: var(--el-text-color-primary);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  font-feature-settings: 'tnum';
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: none;
+  overflow: hidden;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--el-text-color-placeholder);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--el-fill-color-blank);
+}
+::-webkit-scrollbar-track-piece {
+  width: 6px;
+  background-color: var(--el-fill-color-blank);
+}
+::-webkit-scrollbar-corner {
+  background-color: var(--el-fill-color-blank);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--el-text-color-disabled);
+}
+
+canvas,
+svg {
+  vertical-align: top;
+}
+
+// 去除 dropdown-menu 聚焦边框样式
+:focus,
+:hover {
+  outline: none;
+  // box-shadow: none;
+}
+
+#app {
+  width: 100%;
+}
+
+.scrollbar-hide {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .el-scrollbar__bar {
+    display: none;
+  }
+}
