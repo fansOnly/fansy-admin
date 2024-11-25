@@ -6,11 +6,11 @@
         <transition name="fade-slide" mode="out-in" appear>
           <keep-alive v-if="route.meta.cache && loaded">
             <base-iframe v-if="route.meta.type === 'iframe'" :src="route.meta.src" />
-            <component :is="Component" v-else />
+            <component :is="Component" :key="route.meta.id" v-else />
           </keep-alive>
           <template v-else-if="loaded">
             <base-iframe v-if="route.meta.type === 'iframe'" :src="route.meta.src" />
-            <component :is="Component" v-else />
+            <component :is="Component" :key="route.meta.id" v-else />
           </template>
         </transition>
       </router-view>

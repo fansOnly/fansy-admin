@@ -54,7 +54,7 @@
 
 <script setup>
 import { useGlobalStore } from '@/store/app'
-import { useNavBarHook } from './use-nav-bar.hook'
+import { useNavBarHook } from './use-nav-bar'
 
 const emit = defineEmits(['reload'])
 

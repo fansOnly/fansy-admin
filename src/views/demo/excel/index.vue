@@ -26,85 +26,84 @@
     </el-tabs>
   </div>
 </template>
-  
+
 <script setup>
-  import { read, utils, writeFileXLSX } from 'xlsx'
-  import { getTableList } from '@/api/demo/table'
-  import { exportExcel, importExcel } from '@/utils/excel'
+import { read, utils, writeFileXLSX } from 'xlsx'
+import { getTableList } from '@/api/demo/table'
+import { exportExcel, importExcel } from '@/utils/excel'
 
-  const tableList = ref([])
-  const tableData = ref([])
-  const activeName = ref('1')
+const tableList = ref([])
+const tableData = ref([])
+const activeName = ref('1')
 
-  const exportToExcel = (data) => {
-    if (!data.length) return
-    exportExcel(data, 'SheetJSVueAoO')
-    // /* generate worksheet from state */
-    // const worksheet = utils.json_to_sheet(data)
-    // /* create workbook and append worksheet */
-    // const workbook = utils.book_new()
-    // utils.book_append_sheet(workbook, worksheet, 'Data')
-    // /* export to XLSX */
-    // writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
-  }
+const exportToExcel = (data) => {
+  if (!data.length) return
+  exportExcel(data, 'SheetJSVueAoO')
+  // /* generate worksheet from state */
+  // const worksheet = utils.json_to_sheet(data)
+  // /* create workbook and append worksheet */
+  // const workbook = utils.book_new()
+  // utils.book_append_sheet(workbook, worksheet, 'Data')
+  // /* export to XLSX */
+  // writeFileXLSX(workbook, 'SheetJSVueAoO.xlsx')
+}
 
-  async function export2() {
-    /* fetch JSON data and parse */
-    const url = 'https://docs.sheetjs.com/executive.json'
-    const raw_data = await (await fetch(url)).json()
+async function export2() {
+  /* fetch JSON data and parse */
+  const url = 'https://docs.sheetjs.com/executive.json'
+  const raw_data = await (await fetch(url)).json()
 
-    /* filter for the Presidents */
-    const prez = raw_data.filter((row) => row.terms.some((term) => term.type === 'prez'))
+  /* filter for the Presidents */
+  const prez = raw_data.filter((row) => row.terms.some((term) => term.type === 'prez'))
 
-    /* sort by first presidential term */
-    prez.forEach((row) => (row.start = row.terms.find((term) => term.type === 'prez').start))
-    prez.sort((l, r) => l.start.localeCompare(r.start))
+  /* sort by first presidential term */
+  prez.forEach((row) => (row.start = row.terms.find((term) => term.type === 'prez').start))
+  prez.sort((l, r) => l.start.localeCompare(r.start))
 
-    /* flatten objects */
-    const rows = prez.map((row) => ({
-      name: row.name.first + ' ' + row.name.last,
-      birthday: row.bio.birthday
-    }))
-    console.log('rows: ', rows)
+  /* flatten objects */
+  const rows = prez.map((row) => ({
+    name: row.name.first + ' ' + row.name.last,
+    birthday: row.bio.birthday
+  }))
+  console.log('rows: ', rows)
 
-    /* generate worksheet and workbook */
-    const worksheet = utils.json_to_sheet(rows)
-    const workbook = utils.book_new()
-    utils.book_append_sheet(workbook, worksheet, 'Dates')
+  /* generate worksheet and workbook */
+  const worksheet = utils.json_to_sheet(rows)
+  const workbook = utils.book_new()
+  utils.book_append_sheet(workbook, worksheet, 'Dates')
 
-    /* fix headers */
-    utils.sheet_add_aoa(worksheet, [['Name', 'Birthday']], { origin: 'A1' })
+  /* fix headers */
+  utils.sheet_add_aoa(worksheet, [['Name', 'Birthday']], { origin: 'A1' })
 
-    /* calculate column width */
-    const max_width = rows.reduce((w, r) => Math.max(w, r.name.length), 10)
-    worksheet['!cols'] = [{ wch: max_width }]
+  /* calculate column width */
+  const max_width = rows.reduce((w, r) => Math.max(w, r.name.length), 10)
+  worksheet['!cols'] = [{ wch: max_width }]
 
-    /* create an XLSX file and try to save to Presidents.xlsx */
-    writeFileXLSX(workbook, 'Presidents.xlsx', { compression: true })
-  }
+  /* create an XLSX file and try to save to Presidents.xlsx */
+  writeFileXLSX(workbook, 'Presidents.xlsx', { compression: true })
+}
 
-  const loadExcel = async () => {
-    const f = await fetch('https://docs.sheetjs.com/pres.numbers')
-    const ab = await f.arrayBuffer()
-    // /* parse */
-    const workbook = read(ab)
-    // /* generate array of objects from first worksheet */
-    const worksheet = workbook.Sheets[workbook.SheetNames[0]] // get the first worksheet
-    const data = utils.sheet_to_json(worksheet) // generate objects
-    /* update state */
-    tableData.value = data
-  }
+const loadExcel = async () => {
+  const f = await fetch('https://docs.sheetjs.com/pres.numbers')
+  const ab = await f.arrayBuffer()
+  // /* parse */
+  const workbook = read(ab)
+  // /* generate array of objects from first worksheet */
+  const worksheet = workbook.Sheets[workbook.SheetNames[0]] // get the first worksheet
+  const data = utils.sheet_to_json(worksheet) // generate objects
+  /* update state */
+  tableData.value = data
+}
 
-  const loadTable = async () => {
-    const data = await getTableList()
-    tableList.value = data.list
-  }
+const loadTable = async () => {
+  const data = await getTableList()
+  tableList.value = data.list
+}
 
-  onMounted(async () => {
-    loadTable()
-    loadExcel()
-  })
+onMounted(() => {
+  loadTable()
+  loadExcel()
+})
 </script>
-  
-  <style lang="scss" scoped>
-</style>
+
+<style lang="scss" scoped></style>
