@@ -4,3 +4,22 @@
 .el-table__cell .el-radio__label {
   padding-left: 0;
 }
+
+// .el-menu
+.el-menu-item {
+  overflow: hidden;
+}
+.el-menu-item,
+.el-sub-menu__title {
+  .el-icon {
+    transition: all 0.3s ease;
+  }
+}
+.el-menu-item.is-active,
+.el-menu-item:hover,
+.el-sub-menu__title:hover {
+  background: var(--el-menu-item-bg-color);
+  .el-icon {
+    transform: scale(1.2);
+  }
+}

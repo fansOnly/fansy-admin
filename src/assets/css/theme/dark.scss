@@ -13,5 +13,6 @@ html.dark {
   --el-color-primary-light-9: #fbedec;
   // --el-color-primary-dark-2: #ad3e32;
 
-  --el-menu-hover-bg-color: var(--el-color-primary-light-5);
+  --el-menu-item-bg-color: var(--el-color-info-light-9);
+  --el-menu-hover-bg-color: var(--el-menu-item-bg-color);
 }

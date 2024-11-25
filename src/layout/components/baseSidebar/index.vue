@@ -4,7 +4,6 @@
     <div
       class="box-border flex-[center,center] color-custom-var(--el-text-color-primary) border-bottom-[1px,solid,var(--el-border-color-lighter)]"
       :style="{ height: topHeight + 'px' }">
-      <!-- <img src="@/assets/images/vue.svg" alt="logo" /> -->
       <el-icon>
         <Sunrise />
       </el-icon>
@@ -42,7 +41,8 @@
                     </template>
                     <template v-for="third in second.children" :key="third.id">
                       <!-- 仅限3级菜单 -->
-                      <el-menu-item v-if="third.visible === 1" :index="third.id" @click="handleClickMenu(third)">
+                      <el-menu-item v-if="third.visible === 1" :index="third.id" class="fansy-menu-item"
+                        @click="onClickMenu(third)">
                         <el-icon v-if="third.icon">
                           <component :is="third.icon" />
                         </el-icon>
@@ -50,7 +50,7 @@
                       </el-menu-item>
                     </template>
                   </el-sub-menu>
-                  <el-menu-item v-else :index="second.id" @click="handleClickMenu(second)">
+                  <el-menu-item v-else :index="second.id" class="fansy-menu-item" @click="onClickMenu(second)">
                     <el-icon v-if="second.icon">
                       <component :is="second.icon" />
                     </el-icon>
@@ -59,7 +59,7 @@
                 </template>
               </template>
             </el-sub-menu>
-            <el-menu-item v-else :index="first.id" @click="handleClickMenu(first)">
+            <el-menu-item v-else :index="first.id" class="fansy-menu-item" @click="onClickMenu(first)">
               <el-icon v-if="first.icon">
                 <component :is="first.icon" />
               </el-icon>
@@ -83,7 +83,7 @@ const globalStore = useGlobalStore()
 
 const topHeight = globalStore.layout.headerHeight
 
-const handleClickMenu = (current) => {
+const onClickMenu = (current) => {
   const { type, link, path } = current
   if (type === 'external-link') {
     window.open(link, '_blank')

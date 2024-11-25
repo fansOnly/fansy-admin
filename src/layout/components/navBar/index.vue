@@ -10,10 +10,10 @@
       </el-icon>
     </div>
     <el-scrollbar ref="navScrollRef" class="flex-1 scrollbar-hide" @scroll="onScroll">
-      <div class="flex-[center]">
+      <div ref="navDragRef" class="flex-[center]">
         <div v-for="(item, index) in navBarSortedList" :key="index"
           class="nav-item flex-[center] relative mr-1px pl-12px pr-8px b-b-2px b-b-solid cursor-pointer whitespace-nowrap select-none "
-          :class="[currentNavBar.name === item.name ? 'background-custom-var(--el-color-primary-light-9) border-color-custom-var(--el-color-primary) color-custom-var(--el-color-primary) is-active' : 'border-color-transparent hover:background-custom-var(--el-color-info-light-9)']"
+          :class="[currentNavBar.name === item.name ? 'background-custom-var(--el-color-primary-light-9) border-color-custom-var(--el-color-primary) color-custom-var(--el-color-primary) is-active' : 'border-color-transparent hover:background-custom-var(--el-color-info-light-9)', item.meta?.affix ? 'is-affix' : null, currentNavIndex === index + 1 ? 'is-prev' : null]"
           @click="clickItem(item.name)">
           <el-icon v-if="item.meta?.icon" class="mr-4px">
             <component :is="item.meta.icon" />
@@ -72,20 +72,17 @@
 </template>
 
 <script setup>
-import { useDebounceFn } from '@vueuse/core'
+import { useSortable, moveArrayElement } from '@vueuse/integrations/useSortable'
 import { useGlobalStore } from '@/store/app'
-import { useNavBarHook } from './use-nav-bar'
+import { useNavBar } from './use-nav-bar'
+import { useNavBarScroll } from './use-nav-bar-scroll';
 
 const emit = defineEmits(['reload'])
-
 const globalStore = useGlobalStore()
-const { navBarSortedList, currentNavBar, isFirstNav, isLastNav, clickItem, removeItem, handleCommand } = useNavBarHook()
+const { navBarSortedList, currentNavBar, currentNavIndex, isFirstNav, isLastNav, clickItem, removeItem, handleCommand } = useNavBar()
+const { navScrollRef, scrollable, scrollLeftAble, scrollRightAble, checkScrollable, scrollToActive, onScroll, scrollDistance } = useNavBarScroll()
 
-const navScrollRef = ref(null)
-const scrollable = ref(false)
-const scrollLeft = ref(0)
-const scrollLeftAble = ref(false)
-const scrollRightAble = ref(false)
+const navDragRef = ref(null)
 
 watch(() => navBarSortedList.value.length, () => {
   checkScrollable()
@@ -95,71 +92,20 @@ watch(() => currentNavBar.value, () => {
   scrollToActive()
 })
 
-// const autoDistance = computed(() => {
-//   const { scrollContentWidth } = getScrollElWidth()
-//   return 2 * scrollContentWidth / navBarSortedList.value.length
-// })
-
-async function scrollDistance(direction = '', distance = 200) {
-  if (direction === 'left' && !scrollLeftAble.value) return
-  if (direction === 'right' && !scrollRightAble.value) return
-  await nextTick();
-  const wrapRef = navScrollRef.value?.wrapRef
-  if (wrapRef && scrollable.value) {
-    navScrollRef.value.scrollTo({
-      behavior: "smooth",
-      left: wrapRef.scrollLeft + (direction === 'left' ? -distance : distance)
-    })
-  }
-}
-
-async function scrollToActive() {
-  await nextTick();
-  const wrapRef = navScrollRef.value?.wrapRef
-  if (wrapRef && scrollable.value) {
-    requestAnimationFrame(() => {
-      const activeRef = wrapRef.querySelector('.is-active')
-      if (activeRef) {
-        activeRef.scrollIntoView({ behavior: 'smooth', inline: 'start' })
-      }
-    })
-  }
-}
-
-async function checkScrollable() {
-  await nextTick();
-  const wrapRef = navScrollRef.value?.wrapRef
-  if (wrapRef) {
-    const { scrollContentWidth, scrollWrapWidth } = getScrollElWidth()
-    scrollable.value = scrollWrapWidth < scrollContentWidth
-  }
-}
-
-function getScrollElWidth() {
-  const wrapRef = navScrollRef.value?.wrapRef
-  if (!wrapRef) return {}
-  return {
-    scrollContentWidth: wrapRef.scrollWidth,
-    scrollWrapWidth: wrapRef.offsetWidth
-  }
-}
-
-function getScrollDirection() {
-  const { scrollContentWidth, scrollWrapWidth } = getScrollElWidth()
-  scrollLeftAble.value = scrollLeft.value > 0
-  scrollRightAble.value = scrollLeft.value < (scrollContentWidth - scrollWrapWidth)
-}
-
-const onScroll = useDebounceFn(({ scrollLeft: value }) => {
-  scrollLeft.value = value
-  getScrollDirection()
+useSortable(navDragRef, navBarSortedList, {
+  handle: '.nav-item',
+  animation: 150,
+  filter: (_, el) => el.classList.contains('is-affix'),
+  onUpdate: async (e) => {
+    moveArrayElement(navBarSortedList.value, e.oldIndex, e.newIndex, e)
+  },
+  // onStart: () => { },
+  onMove: (e) => {
+    const target = e.related.classList.contains('is-affix')
+    return !target
+  },
 })
 
-onMounted(() => {
-  checkScrollable()
-  scrollToActive()
-  getScrollDirection()
-})
 
 defineOptions({
   name: 'NavBar'
@@ -169,6 +115,7 @@ defineOptions({
 <style lang="scss" scoped>
 .nav-item {
 
+  &.is-prev,
   &.is-active,
   &:hover {
     .nav-line {

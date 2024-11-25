@@ -2,7 +2,7 @@ import { useStorage, StorageSerializers } from '@vueuse/core'
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 
-export const useNavBarHook = () => {
+export const useNavBar = () => {
   const storageKey = `${import.meta.env.VITE_NAMESPACE}nav-bar-data`
   // localStorage.removeItem(storageKey)
   // sessionStorage.removeItem(storageKey)
