@@ -37,7 +37,7 @@
 
 <script setup>
 import { getMenuList, removeMenu } from '@/api/common/menu'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 import { getConstantLabel } from '@/constants/util'
 import { BADGE_STATUS_LIST, ACCOUNT_STATUS_LIST, MENU_TYPE_LIST } from '@/constants/common'
 import { generateRouteTree } from '@/router/util'

@@ -6,7 +6,7 @@
           toolsConfig.addButtonText }}</el-button>
         <el-button v-if="toolsConfig.showSelect" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-        }}</el-button>
+          }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="emit('batch-delete', selections)">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-          }}</el-button>
+            }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -127,7 +127,7 @@ import { ClickOutside as vClickOutside } from 'element-plus'
 import { VueDraggable } from 'vue-draggable-plus'
 import { COMMON_ACTIONS, BADGE_STATUS_LIST } from '@/constants/common'
 import { getConstantLabel } from '@/constants/util'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 const { useMessageBox } = useMessage()
 
 const props = defineProps({

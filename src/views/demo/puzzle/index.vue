@@ -6,7 +6,7 @@
 
 <script setup>
 import puzzleVerify from '@/components/puzzle-verify/index.vue'
-import { useMessage } from '@/hooks';
+import { useMessage } from '@/hooks/use-message';
 const { showSuccessMessage } = useMessage();
 
 const imgList = []

@@ -40,7 +40,7 @@
 <script setup>
 import { getDictionaryDetail, addDictionary, updateDictionary } from '@/api/common/dictionary'
 import { ACCOUNT_STATUS_LIST } from '@/constants/common'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 
 const router = useRouter()
 const route = useRoute()

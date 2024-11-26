@@ -1,4 +1,4 @@
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 const { showMessage } = useMessage()
 
 /**

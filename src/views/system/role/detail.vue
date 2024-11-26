@@ -14,7 +14,7 @@ import { getRoleDetail, addRole, updateRole } from '@/api/common/role'
 import { getMenuList } from '@/api/common/menu'
 import { ACCOUNT_STATUS_LIST } from '@/constants/common'
 import { generateRouteTree } from '@/router/util'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 
 const router = useRouter()
 const route = useRoute()

@@ -16,7 +16,7 @@
 
 <script setup>
 import { getRoleList, updateRole, removeRole } from '@/api/common/role'
-import { useTableHook } from '@/hooks/use-table'
+import { useTable } from '@/hooks/use-table'
 import { COMMON_ACTIONS, ACCOUNT_STATUS_LIST } from '@/constants/common'
 import { getConstantLabel } from '@/constants/util'
 
@@ -74,7 +74,7 @@ const formData = reactive({
   title: '',
   status: ''
 })
-const { tableData, total, loading, loadList, onPageChange } = useTableHook(getRoleList, {
+const { tableData, total, loading, loadList, onPageChange } = useTable(getRoleList, {
   currentPage: 1,
   pageSize: 10,
   ...formData

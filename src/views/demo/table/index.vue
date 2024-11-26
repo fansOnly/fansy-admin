@@ -22,7 +22,7 @@
 import { getTableList, deleteTable, updateTable } from '@/api/demo/table'
 import { COMMON_ACTIONS, DATA_STATUS_LIST } from '@/constants/common'
 import { getConstantLabel } from '@/constants/util'
-import { useTableHook } from '@/hooks/use-table'
+import { useTable } from '@/hooks/use-table'
 
 const formItems = [
   {
@@ -207,7 +207,7 @@ const actions = [
 const formData = reactive({
   title: '张'
 })
-const { tableData, total, loading, loadList, onPageChange } = useTableHook(getTableList, {
+const { tableData, total, loading, loadList, onPageChange } = useTable(getTableList, {
   currentPage: 1,
   pageSize: 10,
   ...formData

@@ -1,7 +1,7 @@
 import { useMessage } from '../use-message'
 const { showMessage } = useMessage()
 
-export const useTableHook = (api, params = {}) => {
+export const useTable = (api, params = {}) => {
   const { currentPage = 1, pageSize = 10, ...rest } = params
   const tableData = ref([])
   const page = ref(currentPage)

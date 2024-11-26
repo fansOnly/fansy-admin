@@ -10,7 +10,7 @@ import { getAdminDetail, addAdmin, updateAdmin } from '@/api/common/admin'
 import { getRoleList } from '@/api/common/role'
 import { ACCOUNT_STATUS_LIST } from '@/constants/common'
 import { isPhone, isEmail } from '@/utils/validate'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 
 const router = useRouter()
 const route = useRoute()

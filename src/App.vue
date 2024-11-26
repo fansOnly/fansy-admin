@@ -5,14 +5,14 @@
 </template>
 
 <script setup>
-  import zhCn from 'element-plus/es/locale/lang/zh-cn'
-  import { useGlobalStore } from './store/app'
-  import { useTitle } from '@/hooks'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import { useGlobalStore } from './store/app'
+import { useTitle } from '@/hooks/use-title'
 
-  const globalStore = useGlobalStore()
+const globalStore = useGlobalStore()
 
-  const size = globalStore.config.size
-  const zIndex = globalStore.config.zIndex
+const size = globalStore.config.size
+const zIndex = globalStore.config.zIndex
 
-  useTitle()
+useTitle()
 </script>

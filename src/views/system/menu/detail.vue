@@ -27,7 +27,7 @@ import DialogSelectIcon from '@/components/modals/dialog-select-icon/index.vue'
 import { getMenuList, getMenuDetail, addMenu, updateMenu } from '@/api/common/menu'
 import { ACCOUNT_STATUS_LIST, MENU_TYPE_LIST, ONE_ZERO_LIST } from '@/constants/common'
 import { generateRouteTree } from '@/router/util'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 
 const router = useRouter()
 const route = useRoute()

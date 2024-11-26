@@ -15,7 +15,7 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/hooks/use-message'
 
 const { showMessage } = useMessage()
 

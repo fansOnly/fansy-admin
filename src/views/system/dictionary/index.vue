@@ -13,7 +13,7 @@
 
 <script setup>
 import { getDictionaryList, updateDictionary, removeDictionary } from '@/api/common/dictionary'
-import { useTableHook } from '@/hooks/use-table'
+import { useTable } from '@/hooks/use-table'
 import { COMMON_ACTIONS, ACCOUNT_STATUS_LIST } from '@/constants/common'
 import { getConstantLabel } from '@/constants/util'
 
@@ -71,7 +71,7 @@ const formData = reactive({
   title: '',
   status: ''
 })
-const { tableData, total, loading, loadList, onPageChange } = useTableHook(getDictionaryList, {
+const { tableData, total, loading, loadList, onPageChange } = useTable(getDictionaryList, {
   currentPage: 1,
   pageSize: 10,
   ...formData

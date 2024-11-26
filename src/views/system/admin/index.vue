@@ -17,7 +17,7 @@
 
 <script setup>
 import { getAdminList, updateAdmin, removeAdmin } from '@/api/common/admin'
-import { useTableHook } from '@/hooks/use-table'
+import { useTable } from '@/hooks/use-table'
 import { COMMON_ACTIONS, ACCOUNT_STATUS_LIST } from '@/constants/common'
 import { getConstantLabel } from '@/constants/util'
 
@@ -111,7 +111,7 @@ const formData = reactive({
   phone: '',
   status: ''
 })
-const { tableData, total, loading, loadList, onPageChange } = useTableHook(getAdminList, {
+const { tableData, total, loading, loadList, onPageChange } = useTable(getAdminList, {
   currentPage: 1,
   pageSize: 10,
   ...formData
