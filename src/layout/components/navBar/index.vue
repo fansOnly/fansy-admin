@@ -46,6 +46,9 @@
           <el-dropdown-item @click="emit('reload')"><el-icon>
               <Refresh />
             </el-icon>刷新</el-dropdown-item>
+          <el-dropdown-item @click="removeItem(currentNavBar.name)"><el-icon>
+              <Close />
+            </el-icon>关闭</el-dropdown-item>
           <el-dropdown-item v-if="currentNavBar.meta?.affix" command="affix-off"><svg-icon name="affix-off"
               class="mr-5px" />取消固定</el-dropdown-item>
           <el-dropdown-item v-else command="affix"><svg-icon name="affix" class="mr-5px" />固定</el-dropdown-item>
@@ -95,11 +98,10 @@ watch(() => currentNavBar.value, () => {
 useSortable(navDragRef, navBarSortedList, {
   handle: '.nav-item',
   animation: 150,
-  filter: (_, el) => el.classList.contains('is-affix'),
+  filter: (_, el) => el?.classList?.contains('is-affix'),
   onUpdate: async (e) => {
     moveArrayElement(navBarSortedList.value, e.oldIndex, e.newIndex, e)
   },
-  // onStart: () => { },
   onMove: (e) => {
     const target = e.related.classList.contains('is-affix')
     return !target

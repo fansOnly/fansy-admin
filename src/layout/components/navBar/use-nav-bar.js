@@ -4,10 +4,9 @@ const globalStore = useGlobalStore()
 
 export const useNavBar = () => {
   const storageKey = `${import.meta.env.VITE_NAMESPACE}nav-bar-data`
-  // localStorage.removeItem(storageKey)
   // sessionStorage.removeItem(storageKey)
-  const storage = localStorage.getItem(storageKey) || []
-  const navBarData = useStorage(storageKey, storage, localStorage, {
+  const storage = sessionStorage.getItem(storageKey) || []
+  const navBarData = useStorage(storageKey, storage, sessionStorage, {
     serializer: StorageSerializers.object
   })
 
