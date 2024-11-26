@@ -4,8 +4,11 @@ import { useUserStore } from '@/store/user'
 import Storage from '@/common/storage'
 import { getAdminDetail } from '@/api/common/admin'
 import { addRoutes } from './util'
+import { useLoading } from '@/hooks/use-loading'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+
+const { showLoading, hideLoading } = useLoading()
 
 NProgress.configure({
   speed: 200,
@@ -20,6 +23,7 @@ const REDIRECT_PATH = ['/redirect']
 export const createRouterGuards = (router) => {
   router.beforeEach(async (to, from) => {
     console.log('[debug] from => to ', from, to)
+    showLoading()
 
     if (!from.path.includes(REDIRECT_PATH)) {
       NProgress.start()
@@ -67,9 +71,8 @@ export const createRouterGuards = (router) => {
 
   router.afterEach((to, from) => {
     if (!to.path.includes(REDIRECT_PATH) && NProgress.isStarted()) {
-      setTimeout(() => {
-        NProgress.done(true)
-      }, 200)
+      NProgress.done(true)
+      hideLoading()
     }
   })
 }
