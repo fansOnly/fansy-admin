@@ -88,6 +88,7 @@ textarea::placeholder {
 canvas,
 svg {
   vertical-align: top;
+  outline: none;
 }
 
 // 去除 dropdown-menu 聚焦边框样式
