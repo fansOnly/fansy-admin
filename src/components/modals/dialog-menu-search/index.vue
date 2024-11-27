@@ -80,7 +80,7 @@ const searchInputRef = ref(null)
 const searchItemRef = ref(null)
 const search = ref('')
 const searchIndex = ref(0)
-const storageKey = `${import.meta.env.VITE_NAMESPACE}search-history`
+const storageKey = `${import.meta.env.VITE_NAMESPACE}-search-history`
 // localStorage.removeItem(storageKey)
 const storage = localStorage.getItem(storageKey) || []
 const history = useStorage(storageKey, storage, localStorage, { serializer: StorageSerializers.object })

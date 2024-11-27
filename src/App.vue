@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :locale="zhCn" :size="size" :zIndex="zIndex">
+  <el-config-provider :locale="zhCn" :size="globalStore.config.size" :zIndex="globalStore.config.zIndex">
     <router-view />
   </el-config-provider>
 </template>
@@ -10,9 +10,19 @@ import { useGlobalStore } from './store/app'
 import { useTitle } from '@/hooks/use-title'
 
 const globalStore = useGlobalStore()
+const dom = document.documentElement
+const primaryColor = getComputedStyle(dom).getPropertyValue(`--el-color-primary`)
 
-const size = globalStore.config.size
-const zIndex = globalStore.config.zIndex
-
+const setPreference = () => {
+  const theme = globalStore.preference.theme
+  if (theme.builtin === 'default') {
+    theme.primary = primaryColor
+  } else if (theme.builtin === 'custom') {
+    dom.style.setProperty('--el-color-primary', theme.color)
+  } else {
+    dom.style.setProperty('--el-color-primary', theme.builtin)
+  }
+}
+setPreference()
 useTitle()
 </script>

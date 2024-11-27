@@ -37,4 +37,14 @@ const emit = defineEmits(['confirm', 'cancel'])
 const slots = useSlots()
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.fansy-drawer {
+  --el-drawer-padding-primary: 16px;
+}
+
+.el-drawer__header {
+  margin-bottom: 0;
+  padding: var(--el-drawer-padding-primary);
+  border-bottom: 1px solid var(--el-border-color-lighter);
+}
+</style>

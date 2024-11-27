@@ -14,7 +14,7 @@
         class="flex-[center,space-between] py-6px px-8px background-custom-var(--el-fill-color-light) rounded-full color-custom-var(--el-text-color-secondary) cursor-pointer hover:color-custom-var(--el-text-color-primary)"
         @click="showSearchModal()">
         <el-icon>
-          <i-ep-search />
+          <Search />
         </el-icon>
         <span class="px-12px font-size-14px">搜索</span>
         <div
@@ -22,17 +22,15 @@
           {{ shortKeyCtrl }} K</div>
       </div>
       <div class="header-right-item">
-        <el-icon class="full-icon" :size="18" @click="toggleFullScreen">
-          <svg-icon name="fullscreen-off" v-if="isFullscreen" />
-          <i-ep-full-screen v-else />
+        <el-icon :size="18" @click="showSetting()">
+          <Setting />
         </el-icon>
       </div>
       <div class="header-right-item">
-        <el-badge is-dot style="display: inline-flex;">
-          <el-icon class="bell-icon" :size="18">
-            <i-ep-bell />
-          </el-icon>
-        </el-badge>
+        <el-icon class="full-icon" :size="18" @click="toggleFullScreen">
+          <svg-icon name="fullscreen-off" v-if="isFullscreen" />
+          <FullScreen v-else />
+        </el-icon>
       </div>
       <div class="header-right-item">
         <el-icon class="sun-icon" :size="18" @click="toggleTheme">
@@ -41,9 +39,16 @@
         </el-icon>
       </div>
       <div class="header-right-item">
+        <el-badge is-dot style="display: inline-flex;">
+          <el-icon class="bell-icon" :size="18">
+            <Bell />
+          </el-icon>
+        </el-badge>
+      </div>
+      <div class="header-right-item is-avatar">
         <el-dropdown ref="menuDropdownRef" trigger="click">
           <div class="flex-[center]">
-            <el-badge type="success" :offset="[-4, 26]" is-dot>
+            <el-badge type="success" :offset="[-4, 26]" is-dot style="display: inline-flex;">
               <el-avatar :size="32" :src="userStore.userInfo.avatar">
                 <el-image :src="avatarDefaultImage" fit="contain" alt="user" />
               </el-avatar>
@@ -93,16 +98,18 @@
     </div>
   </el-header>
   <dialog-menu-search v-model:show="visibleSearch" />
+  <drawer-setting v-model:show="visibleSetting" />
 </template>
 
 <script setup>
 import DialogMenuSearch from '@/components/modals/dialog-menu-search/index.vue'
+import DrawerSetting from '@/components/modals/drawer-setting/index.vue'
 import { useGlobalStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { logout } from '@/api/core/login'
 import { useFullscreen } from '@/hooks/use-full-screen'
 import { useMessage } from '@/hooks/use-message'
-import { isDark, toggleDark } from '@/hooks/use-dark'
+import { useTheme } from '@/hooks/use-theme';
 import Storage from '@/common/storage'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { isMacOS } from '@/utils/index'
@@ -113,8 +120,10 @@ const globalStore = useGlobalStore()
 const userStore = useUserStore()
 const { isFullscreen, toggleFullScreen } = useFullscreen()
 const { useMessageBox } = useMessage()
+const { isDark, toggleDark } = useTheme()
 
 const menuDropdownRef = ref(null)
+const visibleSetting = ref(false)
 const searchValue = ref('')
 const visibleSearch = ref(false)
 const shortKeyAlt = computed(() => isMacOS ? '⌥' : 'Alt')
@@ -122,6 +131,10 @@ const shortKeyCtrl = computed(() => isMacOS ? '⌘' : 'Ctrl')
 
 const showSearchModal = () => {
   visibleSearch.value = true
+}
+
+const showSetting = () => {
+  visibleSetting.value = true
 }
 
 const onRoute = (path) => {
@@ -222,9 +235,15 @@ defineOptions({
   border-radius: 100%;
   cursor: pointer;
 
+  &.is-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
   &:hover {
-    background: var(--el-color-primary-light-3);
-    color: var(--el-color-primary-light-9);
+    // background: var(--el-color-primary-light-3);
+    background: var(--el-fill-color-light);
+    // color: var(--el-color-primary-light-9);
 
     .full-icon {
       animation: twinkle 0.3s ease-in-out;

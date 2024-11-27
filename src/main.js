@@ -25,7 +25,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // 全局错误捕获
-setupErrorHandler(app)
+// setupErrorHandler(app)
 
 router.isReady().then(() => {
   app.mount('#app')

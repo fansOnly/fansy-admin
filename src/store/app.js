@@ -1,4 +1,9 @@
 import { defineStore } from 'pinia'
+import { useStorage, StorageSerializers } from '@vueuse/core'
+import { PRESETS } from '@/constants/presets'
+const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
+// localStorage.removeItem(storageKey)
+const storage = localStorage.getItem(storageKey) || PRESETS
 
 export const useGlobalStore = defineStore('app', {
   state: () => {
@@ -18,7 +23,10 @@ export const useGlobalStore = defineStore('app', {
         footerHeight: 60,
         navBarHeight: 40,
         maximize: false
-      }
+      },
+      preference: useStorage(storageKey, storage, localStorage, {
+        serializer: StorageSerializers.object
+      })
     }
   },
   getters: {

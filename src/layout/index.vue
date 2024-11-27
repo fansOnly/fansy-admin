@@ -1,24 +1,25 @@
 <template>
-  <el-container class="fs-layout-container">
+  <el-container class="w-100vw">
     <el-aside :width="globalStore.sideWidth" class="transition-width">
       <base-sidebar />
     </el-aside>
     <el-container direction="vertical">
       <base-header />
       <nav-bar @reload="handleReload" />
-      <base-main v-loading="!pageLoaded" :loaded="pageLoaded" />
+      <base-main v-loading="!loaded" :loaded="loaded" />
     </el-container>
   </el-container>
 </template>
 
 <script setup>
 import { watchThrottled, useWindowSize } from '@vueuse/core'
+import { useTheme } from '@/hooks/use-theme';
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 
 const { width } = useWindowSize()
 globalStore.setMenuCollapse(width.value < 1000)
-const pageLoaded = ref(true)
+const loaded = ref(true)
 
 watchThrottled(
   width,
@@ -29,9 +30,9 @@ watchThrottled(
 )
 
 const handleReload = () => {
-  pageLoaded.value = false
+  loaded.value = false
   nextTick(() => {
-    pageLoaded.value = true
+    loaded.value = true
   })
 }
 
@@ -40,8 +41,4 @@ defineOptions({
 })
 </script>
 
-<style lang="scss" scoped>
-.fs-layout-container {
-  width: 100vw;
-}
-</style>
+<style lang="scss" scoped></style>
