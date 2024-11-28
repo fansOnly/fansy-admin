@@ -2,7 +2,7 @@
   <div class="mt-20px">
     <div class="mb-10px font-size-18px font-500">内置主题</div>
     <div class="grid grid-cols-3 gap-8px text-center">
-      <div v-for="item in THEME_COLORS_PRESETS" :key="item.value" @click="onClickBuiltin(item)">
+      <div v-for="item in THEME_COLORS_PRESET" :key="item.value" @click="onClickBuiltin(item)">
         <div class="flex-[center,center,column] h-50px b-2px b-solid rounded-6px cursor-pointer"
           :class="[theme.builtin === item.value ? 'borderColor-custom-var(--el-color-primary)' : 'borderColor-custom-var(--el-border-color)']">
           <template v-if="item.value === 'custom'">
@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { THEME_COLORS_PRESETS } from '@/constants/settings'
+import { THEME_COLORS_PRESET } from '@/constants/settings'
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 

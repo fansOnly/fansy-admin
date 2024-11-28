@@ -1,6 +1,6 @@
 <template>
   <el-header :height="globalStore.layout.headerHeight + 'px'"
-    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) border-bottom-[1px,solid,var(--el-border-color-lighter)] transition"
+    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter) transition"
     :class="{ 'overflow-hidden': globalStore.layout.maximize }">
     <div class="flex-[center]">
       <el-icon class="cursor-pointer" :size="20" @click="globalStore.toggleMenuCollapse">
@@ -46,7 +46,7 @@
         </el-badge>
       </div>
       <div class="header-right-item is-avatar">
-        <el-dropdown ref="menuDropdownRef" trigger="click">
+        <el-dropdown ref="menuDropdownRef" trigger="click" popper-class="w-200px">
           <div class="flex-[center]">
             <el-badge type="success" :offset="[-4, 26]" is-dot style="display: inline-flex;">
               <el-avatar :size="32" :src="userStore.userInfo.avatar">
@@ -62,10 +62,10 @@
               <div class="flex-[,center,column]">
                 <div class="pl-2">{{ userStore.userInfo.nickname }}
                 </div>
-                <div class="pl-2">{{ userStore.userInfo.email }}</div>
+                <div class="pl-2 break-all line-height-14px">{{ userStore.userInfo.email }}</div>
               </div>
             </div>
-            <div class="border-top-[1px,solid,var(--el-border-color-lighter)]"></div>
+            <div class="w-full h-1px background-custom-var(--el-border-color-lighter)"></div>
             <div class="header-menu-item" @click="onRoute('/user/info')">
               <div class="flex-1">
                 <el-icon size="16px">
@@ -82,7 +82,7 @@
                 <span class="ml-4px font-size-14px">修改密码</span>
               </div>
             </div>
-            <div class="border-top-[1px,solid,var(--el-border-color-lighter)]"></div>
+            <div class="w-full h-1px background-custom-var(--el-border-color-lighter)"></div>
             <div class="header-menu-item" @click="handleLogout()">
               <div class="flex-1 flex-[center]">
                 <el-icon size="16px">

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { useStorage, StorageSerializers } from '@vueuse/core'
-import { PRESETS } from '@/constants/presets'
+import { PREFERENCE_PRESET } from '@/constants/preset'
 const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
-// localStorage.removeItem(storageKey)
-const storage = localStorage.getItem(storageKey) || PRESETS
+localStorage.removeItem(storageKey)
+const storage = localStorage.getItem(storageKey) || PREFERENCE_PRESET
 
 export const useGlobalStore = defineStore('app', {
   state: () => {

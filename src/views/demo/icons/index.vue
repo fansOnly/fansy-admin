@@ -1,7 +1,7 @@
 <template>
   <div class="demo-icons-wrapper overflow-auto">
     <div v-for="item in iconList" :key="item"
-      class="flex-[center,,column] p-8px border-[,,var(--el-border-color)] rounded-4px color-#555 cursor-pointer hover:borderColor-custom-var(--el-color-primary) hover:background-custom-var(--el-color-primary-light-9)"
+      class="flex-[center,,column] p-8px b b-solid borderColor-custom-var(--el-border-color) rounded-4px color-#555 cursor-pointer hover:borderColor-custom-var(--el-color-primary) hover:background-custom-var(--el-color-primary-light-9)"
       @click="handleCopy(item)">
       <el-icon :size="24">
         <IconMenu v-if="item === 'Menu'" />

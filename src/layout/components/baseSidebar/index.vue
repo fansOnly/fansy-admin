@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-full background-custom-var(--el-fill-color-blank) border-right-[1px,solid,var(--el-border-color-lighter)] overflow-hidden">
+    class="h-full background-custom-var(--el-fill-color-blank) b-r-1px b-r-solid borderColor-custom-var(--el-border-color-lighter) overflow-hidden">
     <div
-      class="box-border flex-[center,center] color-custom-var(--el-text-color-primary) border-bottom-[1px,solid,var(--el-border-color-lighter)]"
+      class="box-border flex-[center,center] color-custom-var(--el-text-color-primary) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter)"
       :style="{ height: topHeight + 'px' }">
       <el-icon>
         <Sunrise />

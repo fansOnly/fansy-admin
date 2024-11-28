@@ -1,12 +1,12 @@
 // 预设主题
-export const THEME_PRESETS = [
+export const THEME_PRESET = [
   { label: '浅色', value: 'light' },
   { label: '深色', value: 'dark' },
   { label: '跟随系统', value: 'auto' }
 ]
 
 // 预设主题色
-export const THEME_COLORS_PRESETS = [
+export const THEME_COLORS_PRESET = [
   { label: '默认', value: 'default' },
   { label: '紫色', value: 'purple' },
   { label: '红色', value: 'red' },

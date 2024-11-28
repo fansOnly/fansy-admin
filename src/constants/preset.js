@@ -1,6 +1,9 @@
 // 预设
-export const PRESETS = {
-  appearance: {},
+export const PREFERENCE_PRESET = {
+  app: {
+    language: 'zh',
+    watermark: true
+  },
   theme: {
     mode: 'auto',
     builtin: 'default',
@@ -39,6 +42,15 @@ export const PRESETS = {
     theme: true,
     notice: true
   },
-  keyboard: {},
-  common: {}
+  shortcutKeys: {
+    enable: true,
+    search: true,
+    logout: true
+  },
+  transition: {
+    enable: true,
+    progress: true,
+    loading: true,
+    name: 'fade-slide'
+  }
 }

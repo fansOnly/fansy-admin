@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) border-bottom-[1px,solid,var(--el-border-color-lighter)]"
+    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter)"
     :style="{ 'line-height': globalStore.layout.navBarHeight + 'px' }">
     <div v-show="scrollable" class="flex-shrink-0 flex-[center,center] w-24px "
       :class="[scrollLeftAble ? 'cursor-pointer hover:color-custom-var(--el-color-primary)' : 'cursor-not-allowed']"
