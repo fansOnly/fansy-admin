@@ -7,7 +7,7 @@ import { useToggle } from '@vueuse/core'
 const { isDark, toggleDark } = useTheme()
 
 const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
-localStorage.removeItem(storageKey)
+// localStorage.removeItem(storageKey)
 const storage = localStorage.getItem(storageKey) || cloneDeep(PREFERENCE_PRESET)
 
 export const useGlobalStore = defineStore('app', {
