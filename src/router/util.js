@@ -75,6 +75,7 @@ export const transformRouteRecord = (routes = []) => {
       meta: {
         id: item.id,
         sortnum: item.sortnum,
+        parentId: item.parentId || '',
         relationId: item.relationId || '',
         icon: item.icon,
         title: item.title,

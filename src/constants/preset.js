@@ -1,38 +1,36 @@
 // 预设
 export const PREFERENCE_PRESET = {
   app: {
-    language: 'zh',
-    watermark: true
+    language: 'zhCn',
+    watermark: false
   },
   theme: {
-    mode: 'auto',
+    mode: 'dark',
     builtin: 'default',
-    primary: ''
+    primary: '#d84e3e'
   },
   sidebar: {
     show: true,
-    collapsed: false,
-    collapsedTitle: false,
-    width: '220px' // 侧边栏宽度
+    collapse: false,
+    collapsedTitle: true
   },
-  layout: {
-    menu: 'vertical',
-    menuStyle: 'default',
-    menuAccordion: true
+  menu: {
+    mode: 'vertical', // vertical horizontal
+    style: 'round', // default round
+    accordion: true
   },
   breadcrumb: {
     show: true,
-    showIcon: false,
-    showHome: true,
-    style: 'default'
+    icon: false,
+    home: true
   },
   navbar: {
     show: true,
-    showIcon: true,
+    icon: true,
     draggable: true,
     more: true,
     maximize: true,
-    style: 'default'
+    style: 'default' // default google
   },
   widget: {
     search: true,

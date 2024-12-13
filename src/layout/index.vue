@@ -1,11 +1,12 @@
 <template>
   <el-container class="w-100vw">
-    <el-aside :width="globalStore.sideWidth" class="transition-width">
+    <el-aside v-if="globalStore.preference.menu.mode === 'vertical'" :width="globalStore.sideWidth"
+      class="transition-width">
       <base-sidebar />
     </el-aside>
     <el-container direction="vertical">
       <base-header />
-      <nav-bar @reload="handleReload" />
+      <nav-bar v-if="globalStore.preference.navbar.show" @reload="handleReload" />
       <base-main v-loading="!loaded" :loaded="loaded" />
     </el-container>
   </el-container>
@@ -13,7 +14,6 @@
 
 <script setup>
 import { watchThrottled, useWindowSize } from '@vueuse/core'
-import { useTheme } from '@/hooks/use-theme';
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 

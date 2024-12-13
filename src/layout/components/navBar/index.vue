@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter)"
-    :style="{ 'line-height': globalStore.layout.navBarHeight + 'px' }">
+    :style="{ 'line-height': globalStore.navBarHeight + 'px' }">
     <div v-show="scrollable" class="flex-shrink-0 flex-[center,center] w-24px "
       :class="[scrollLeftAble ? 'cursor-pointer hover:color-custom-var(--el-color-primary)' : 'cursor-not-allowed']"
       @click="scrollDistance('left')">
@@ -15,7 +15,7 @@
           class="nav-item flex-[center] relative mr-1px pl-12px pr-8px b-b-2px b-b-solid cursor-pointer whitespace-nowrap select-none "
           :class="[currentNavBar.name === item.name ? 'background-custom-var(--el-color-primary-light-9) border-color-custom-var(--el-color-primary) color-custom-var(--el-color-primary) is-active' : 'border-color-transparent hover:background-custom-var(--el-color-info-light-9)', item.meta?.affix ? 'is-affix' : null, currentNavIndex === index + 1 ? 'is-prev' : null]"
           @click="clickItem(item.name)">
-          <el-icon v-if="item.meta?.icon" class="mr-4px">
+          <el-icon v-if="navbarSetting.icon && item.meta?.icon" class="mr-4px">
             <component :is="item.meta.icon" />
           </el-icon>
           <span>{{ item.meta.title }}</span>
@@ -35,7 +35,8 @@
         <ArrowRight />
       </el-icon>
     </div>
-    <el-dropdown class="flex-shrink-0 w-24px cursor-pointer" trigger="click" size="large" @command="handleCommand">
+    <el-dropdown v-if="navbarSetting.more" class="flex-shrink-0 w-24px cursor-pointer" trigger="click" size="large"
+      @command="handleCommand">
       <div class="flex-[center,center] w-24px cursor-pointer hover:color-custom-var(--el-color-primary)">
         <el-icon>
           <MoreFilled />
@@ -67,7 +68,8 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <div class="flex-shrink-0 flex-[center,center] w-30px cursor-pointer hover:color-custom-var(--el-color-primary)">
+    <div v-if="navbarSetting.maximize"
+      class="flex-shrink-0 flex-[center,center] w-30px cursor-pointer hover:color-custom-var(--el-color-primary)">
       <svg-icon v-if="globalStore.layout.maximize" name="minimize" @click="handleCommand('minimize')" />
       <svg-icon v-else name="maximize" @click="handleCommand('maximize')" />
     </div>
@@ -79,6 +81,7 @@ import { useSortable, moveArrayElement } from '@vueuse/integrations/useSortable'
 import { useGlobalStore } from '@/store/app'
 import { useNavBar } from './use-nav-bar'
 import { useNavBarScroll } from './use-nav-bar-scroll';
+import { watch } from 'vue';
 
 const emit = defineEmits(['reload'])
 const globalStore = useGlobalStore()
@@ -86,16 +89,9 @@ const { navBarSortedList, currentNavBar, currentNavIndex, isFirstNav, isLastNav,
 const { navScrollRef, scrollable, scrollLeftAble, scrollRightAble, checkScrollable, scrollToActive, onScroll, scrollDistance } = useNavBarScroll()
 
 const navDragRef = ref(null)
+const navbarSetting = computed(() => globalStore.preference.navbar)
 
-watch(() => navBarSortedList.value.length, () => {
-  checkScrollable()
-})
-
-watch(() => currentNavBar.value, () => {
-  scrollToActive()
-})
-
-useSortable(navDragRef, navBarSortedList, {
+const sortable = useSortable(navDragRef, navBarSortedList, {
   handle: '.nav-item',
   animation: 150,
   filter: (_, el) => el?.classList?.contains('is-affix'),
@@ -107,6 +103,23 @@ useSortable(navDragRef, navBarSortedList, {
     return !target
   },
 })
+
+watch(() => navBarSortedList.value.length, () => {
+  checkScrollable()
+})
+
+watch(() => currentNavBar.value, () => {
+  scrollToActive()
+})
+
+watch(() => navbarSetting.value.draggable, (newVal) => {
+  if (newVal) {
+    sortable.start()
+  } else {
+    sortable.stop()
+  }
+}, { immediate: true })
+
 
 
 defineOptions({

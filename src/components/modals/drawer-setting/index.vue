@@ -1,18 +1,27 @@
 <template>
-  <fansy-drawer v-model="show" title="偏好设置" width="380">
-    <fansy-tabbar :current="3" :options="menuList" @change="onTabChange" />
-    <div v-show="currentMenu === 'appearance'">
+  <fansy-drawer v-model="show" width="380">
+    <template #header>
+      <div>偏好设置</div>
+      <el-tooltip effect="light" content="恢复默认" popper-class="fansy-tooltip-popper">
+        <el-icon size="18px" class="mr-8px cursor-pointer hover:color-custom-var(--el-color-primary)"
+          @click="onReset()">
+          <RefreshRight />
+        </el-icon></el-tooltip>
+    </template>
+
+    <fansy-tabbar ref="tabbarRef" :options="menuList" @change="onTabChange" />
+    <div v-show="current === 0">
       <theme-mode />
       <theme-builtin />
     </div>
-    <div v-show="currentMenu === 'layout'">
+    <div v-show="current === 1">
       <menu-layout />
       <style-layout />
     </div>
-    <div v-show="currentMenu === 'keyboard'">
+    <div v-show="current === 2">
       <shortcut-keys />
     </div>
-    <div v-show="currentMenu === 'common'">
+    <div v-show="current === 3">
       <common-and-animation />
     </div>
   </fansy-drawer>
@@ -25,8 +34,10 @@ import MenuLayout from './menu-layout.vue';
 import StyleLayout from './style-layout.vue';
 import ShortcutKeys from './shortcut-keys.vue';
 import CommonAndAnimation from './common-and-animation.vue';
+import { useGlobalStore } from '@/store/app'
 
 const show = defineModel('show')
+const globalStore = useGlobalStore()
 
 const menuList = [
   { label: '外观', value: 'appearance' },
@@ -34,12 +45,23 @@ const menuList = [
   { label: '快捷键', value: 'keyboard' },
   { label: '通用', value: 'common' }
 ]
-const currentMenu = ref('common')
+const tabbarRef = ref(null)
+const current = ref(0)
 
-const onTabChange = (item) => {
-  currentMenu.value = item.value
+const onTabChange = (item, index) => {
+  current.value = index
 }
 
+const onReset = () => {
+  globalStore.resetPreference()
+}
+
+watch(show, (val) => {
+  if (!val) {
+    current.value = 0
+    tabbarRef.value?.setCurrent(0)
+  }
+})
 </script>
 
 <style lang="scss" scoped></style>

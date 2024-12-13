@@ -15,30 +15,15 @@
 
 <script setup>
 import { THEME_PRESET } from '@/constants/settings'
-import { useToggle } from '@vueuse/core'
-import { useTheme } from '@/hooks/use-theme';
 import { useGlobalStore } from '@/store/app'
 
 const globalStore = useGlobalStore()
-const { isDark, toggleDark } = useTheme()
-const theme = globalStore.preference.theme
+const theme = computed(() => globalStore.preference.theme)
 
 const onThemeChange = (item) => {
-  if (theme.mode === item.value) return
-  theme.mode = item.value
-  const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (item.value === 'auto') {
-    if (dark !== isDark.value) {
-      toggleDark()
-    }
-  } else {
-    if (dark !== isDark.value) {
-      useToggle(isDark)
-    }
-    if (item.value === 'dark' && !isDark.value || item.value === 'light' && isDark.value) {
-      toggleDark()
-    }
-  }
+  if (theme.value.mode === item.value) return
+  theme.value.mode = item.value
+  globalStore.setThemeMode(item.value)
 }
 </script>
 

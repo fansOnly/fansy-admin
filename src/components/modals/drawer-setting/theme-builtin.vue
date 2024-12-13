@@ -14,7 +14,8 @@
             </div>
           </template>
           <div v-else class="w-20px h-20px rounded-4px"
-            :style="`background-color: ${item.value === 'default' ? theme.primary : item.value};`"></div>
+            :style="`background-color: ${item.value === 'default' ? theme.primary : item.value};`">
+          </div>
         </div>
         <div class="mt-4px font-size-12px color-custom-var(--el-text-color-secondary)">{{ item.label }}</div>
       </div>
@@ -27,26 +28,25 @@ import { THEME_COLORS_PRESET } from '@/constants/settings'
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 
-const dom = document.documentElement
-const theme = globalStore.preference.theme
-
 const colorPickerRef = ref(null)
-const color = ref(theme.builtin)
+const color = ref(globalStore.preference.theme.builtin)
+const theme = computed(() => globalStore.preference.theme)
 
 const onClickBuiltin = (item) => {
   if (item.value === 'custom') {
-    color.value = theme.color
+    color.value = theme.value.color
     colorPickerRef.value[0].show()
-  } else if (theme.builtin !== item.value) {
-    theme.builtin = item.value
-    dom.style.setProperty('--el-color-primary', item.value === 'default' ? theme.primary : item.value)
+  } else if (theme.value.builtin !== item.value) {
+    theme.value.builtin = item.value
+    globalStore.setPrimaryColor(item.value === 'default' ? theme.value.primary : item.value)
   }
 }
 
 const onColorChange = (color) => {
-  theme.builtin = 'custom'
-  theme.color = color
-  dom.style.setProperty('--el-color-primary', color)
+  theme.value.builtin = 'custom'
+  theme.value.color = color
+  globalStore.setPrimaryColor(color)
+
 }
 </script>
 

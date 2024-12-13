@@ -1,4 +1,5 @@
 import { jwtDecode } from 'jwt-decode'
+import { useGlobalStore } from '@/store/app'
 import { useMenuStore } from '@/store/menu'
 import { useUserStore } from '@/store/user'
 import Storage from '@/common/storage'
@@ -23,9 +24,14 @@ const REDIRECT_PATH = ['/redirect']
 export const createRouterGuards = (router) => {
   router.beforeEach(async (to, from) => {
     console.log('[debug] from => to ', from, to)
-    showLoading()
 
-    if (!from.path.includes(REDIRECT_PATH)) {
+    const globalStore = useGlobalStore()
+
+    if (globalStore.preference.transition.loading) {
+      showLoading()
+    }
+
+    if (!from.path.includes(REDIRECT_PATH) && globalStore.preference.transition.progress) {
       NProgress.start()
     }
 
@@ -70,9 +76,9 @@ export const createRouterGuards = (router) => {
   })
 
   router.afterEach((to, from) => {
+    hideLoading()
     if (!to.path.includes(REDIRECT_PATH) && NProgress.isStarted()) {
       NProgress.done(true)
-      hideLoading()
     }
   })
 }

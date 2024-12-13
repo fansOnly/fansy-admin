@@ -1,6 +1,6 @@
 function Storage() {
-  const makeLocalKey = (key = '') => `::local::${key}`.toUpperCase()
-  const makeSessionKey = (key = '') => `::session::${key}`.toUpperCase()
+  const makeLocalKey = (key = '') => `::fansy-local::${key}`.toUpperCase()
+  const makeSessionKey = (key = '') => `::fansy-session::${key}`.toUpperCase()
 
   const getItem = (key) => {
     let data = null

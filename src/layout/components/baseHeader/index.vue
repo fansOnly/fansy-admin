@@ -2,43 +2,61 @@
   <el-header :height="globalStore.layout.headerHeight + 'px'"
     class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter) transition"
     :class="{ 'overflow-hidden': globalStore.layout.maximize }">
-    <div class="flex-[center]">
-      <el-icon class="cursor-pointer" :size="20" @click="globalStore.toggleMenuCollapse">
-        <Expand v-if="globalStore.menu.collapse" />
-        <Fold v-else />
-      </el-icon>
-      <breadcrumb class="ml-4" />
+    <div class="flex-1 flex-[center]">
+      <template v-if="menu.mode === 'vertical'">
+        <el-icon class="cursor-pointer" :size="20" @click="globalStore.toggleMenuCollapse">
+          <Expand v-if="sidebar.collapse" />
+          <Fold v-else />
+        </el-icon>
+        <breadcrumb class="ml-4" />
+      </template>
+      <template v-else>
+        <base-logo :height="globalStore.layout.headerHeight" :title="globalStore.name" class="mr-20px" />
+        <base-menu />
+      </template>
     </div>
     <div class="flex-[center] h-full">
-      <div
+      <div v-if="widget.search"
         class="flex-[center,space-between] py-6px px-8px background-custom-var(--el-fill-color-light) rounded-full color-custom-var(--el-text-color-secondary) cursor-pointer hover:color-custom-var(--el-text-color-primary)"
         @click="showSearchModal()">
         <el-icon>
           <Search />
         </el-icon>
-        <span class="px-12px font-size-14px">搜索</span>
-        <div
-          class="flex-[center] px-4px py-2px background-custom-var(--el-fill-color-darker) rounded-r-full font-size-12px">
+        <span class="pl-8px font-size-14px whitespace-nowrap">搜索</span>
+        <div v-show="shortcutKeys.enable && shortcutKeys.search"
+          class="flex-[center] px-4px py-2px ml-8px background-custom-var(--el-bg-color) rounded-r-full font-size-12px whitespace-nowrap">
           {{ shortKeyCtrl }} K</div>
       </div>
-      <div class="header-right-item">
+      <div class="header-right-item" v-if="widget.settings">
         <el-icon :size="18" @click="showSetting()">
           <Setting />
         </el-icon>
       </div>
-      <div class="header-right-item">
-        <el-icon class="full-icon" :size="18" @click="toggleFullScreen">
-          <svg-icon name="fullscreen-off" v-if="isFullscreen" />
-          <FullScreen v-else />
-        </el-icon>
-      </div>
-      <div class="header-right-item">
+      <div class="header-right-item" v-if="widget.theme">
         <el-icon class="sun-icon" :size="18" @click="toggleTheme">
           <Sunny v-if="isDark" />
           <Moon v-else />
         </el-icon>
       </div>
-      <div class="header-right-item">
+      <div ref="languageRef" class="header-right-item" v-if="widget.language">
+        <el-icon :size="18">
+          <svg-icon name="language" />
+        </el-icon>
+      </div>
+      <el-popover ref="languagePopoverRef" :virtual-ref="languageRef" trigger="click" virtual-triggering
+        :show-arrow="false" width="120px" popper-class="fansy-popover">
+        <div v-for="item in LANGUAGE_PRESET" :key="item.value" class="pl-12px py-4px mb-4px rounded-4px cursor-pointer"
+          :class="[app.language === item.value ? 'background-custom-var(--el-fill-color-darker)' : null]"
+          @click="setLanguage(item.value)">
+          {{ item.label }}</div>
+      </el-popover>
+      <div class="header-right-item" v-if="widget.fullscreen">
+        <el-icon class="full-icon" :size="18" @click="toggleFullScreen">
+          <svg-icon name="fullscreen-off" v-if="isFullscreen" />
+          <FullScreen v-else />
+        </el-icon>
+      </div>
+      <div class="header-right-item" v-if="widget.notice">
         <el-badge is-dot style="display: inline-flex;">
           <el-icon class="bell-icon" :size="18">
             <Bell />
@@ -46,7 +64,7 @@
         </el-badge>
       </div>
       <div class="header-right-item is-avatar">
-        <el-dropdown ref="menuDropdownRef" trigger="click" popper-class="w-200px">
+        <el-dropdown ref="menuDropdownRef" trigger="click" :show-arrow="false" popper-class="w-200px">
           <div class="flex-[center]">
             <el-badge type="success" :offset="[-4, 26]" is-dot style="display: inline-flex;">
               <el-avatar :size="32" :src="userStore.userInfo.avatar">
@@ -113,18 +131,25 @@ import { useTheme } from '@/hooks/use-theme';
 import Storage from '@/common/storage'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { isMacOS } from '@/utils/index'
+import { LANGUAGE_PRESET } from '@/constants/settings'
 import avatarDefaultImage from '@/assets/images/avatar.gif'
 
 const router = useRouter()
 const globalStore = useGlobalStore()
 const userStore = useUserStore()
 const { isFullscreen, toggleFullScreen } = useFullscreen()
-const { useMessageBox } = useMessage()
+const { showConfirmWarningBox } = useMessage()
 const { isDark, toggleDark } = useTheme()
+const widget = computed(() => globalStore.preference.widget)
+const app = computed(() => globalStore.preference.app)
+const shortcutKeys = computed(() => globalStore.preference.shortcutKeys)
+const sidebar = computed(() => globalStore.preference.sidebar)
+const menu = computed(() => globalStore.preference.menu)
 
+const languageRef = ref(null)
+const languagePopoverRef = ref(null)
 const menuDropdownRef = ref(null)
 const visibleSetting = ref(false)
-const searchValue = ref('')
 const visibleSearch = ref(false)
 const shortKeyAlt = computed(() => isMacOS ? '⌥' : 'Alt')
 const shortKeyCtrl = computed(() => isMacOS ? '⌘' : 'Ctrl')
@@ -135,6 +160,13 @@ const showSearchModal = () => {
 
 const showSetting = () => {
   visibleSetting.value = true
+}
+
+const setLanguage = (value) => {
+  app.value.language = value
+  setTimeout(() => {
+    languagePopoverRef?.value.hide()
+  }, 300);
 }
 
 const onRoute = (path) => {
@@ -184,8 +216,7 @@ const toggleTheme = (event) => {
 
 const handleLogout = async () => {
   menuDropdownRef.value?.handleClose()
-  useMessageBox('confirm', '即将登出系统？', {
-    iconType: 'warning',
+  showConfirmWarningBox('即将登出系统？', '', {
     callback: async (value, action) => {
       if (value === 'confirm') {
         await logout()
@@ -197,22 +228,24 @@ const handleLogout = async () => {
   })
 }
 
-const highlight = (str) => {
-  if (!searchValue.value) return str
-  return str.replace(
-    searchValue.value,
-    `<span style="color: var(--el-color-primary);font-weight:bold;">${searchValue.value}</span>`
-  )
-}
+// const highlight = (str) => {
+//   if (!searchValue.value) return str
+//   return str.replace(
+//     searchValue.value,
+//     `<span style="color: var(--el-color-primary);font-weight:bold;">${searchValue.value}</span>`
+//   )
+// }
 
 const registerShortKeys = () => {
   const keys = useMagicKeys()
 
   whenever(keys.Alt_KeyQ, () => {
+    if (!shortcutKeys.value.enable || !shortcutKeys.value.logout) return
     handleLogout()
   })
   const ctrlKey = isMacOS ? 'Cmd' : 'Ctrl'
   whenever(keys[ctrlKey + '_KeyK'], () => {
+    if (!widget.value.search || !shortcutKeys.value.enable || !shortcutKeys.value.search) return
     showSearchModal()
   })
 }
@@ -234,6 +267,7 @@ defineOptions({
   margin-left: 8px;
   border-radius: 100%;
   cursor: pointer;
+  transition: all 0.3s;
 
   &.is-avatar {
     width: 44px;

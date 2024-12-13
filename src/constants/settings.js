@@ -18,3 +18,9 @@ export const THEME_COLORS_PRESET = [
   { label: '棕色', value: 'brown' },
   { label: '自定义', value: 'custom' }
 ]
+
+// 预设语言
+export const LANGUAGE_PRESET = [
+  { label: '简体中文', value: 'zhCn' },
+  { label: 'English', value: 'en-US' }
+]

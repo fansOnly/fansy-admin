@@ -5,8 +5,8 @@
       class="flex-[center,space-between] mb-10px px-8px py-4px rounded-4px hover:background-custom-var(--el-fill-color-light)">
       <div class="">语言</div>
       <el-select v-model="app.language" style="width: 120px">
-        <el-option label="简体中文" value="zh"></el-option>
-        <el-option label="English" value="en"></el-option>
+        <el-option v-for="item in LANGUAGE_PRESET" :key="item.value" :label="item.label"
+          :value="item.value"></el-option>
       </el-select>
     </div>
     <div
@@ -46,10 +46,11 @@
 
 <script setup>
 import { useGlobalStore } from '@/store/app';
+import { LANGUAGE_PRESET } from '@/constants/settings'
 
 const globalStore = useGlobalStore();
-const transition = globalStore.preference.transition
-const app = globalStore.preference.app
+const transition = computed(() => globalStore.preference.transition)
+const app = computed(() => globalStore.preference.app)
 
 const transitionPreset = ['fade', 'fade-slide', 'fade-up', 'fade-down'];
 
