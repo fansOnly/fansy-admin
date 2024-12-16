@@ -71,28 +71,29 @@ service.interceptors.response.use(
 
       if (data.code === 200) {
         return data.data
-      }
-    } else {
-      handleAuthError(data.code, data.message)
-      handleGeneralError(data.code, data.message)
-      if (data.code === 1001) {
-        // 登录过期
-        if (isRefreshTokening) {
-          return new Promise((resolve) => {
-            requestsToReload.push((newToken) => {
-              // update token here
-              resolve(service(config))
+      } else {
+        handleAuthError(data.code, data.message)
+        handleGeneralError(data.code, data.message)
+        if (data.code === 1001) {
+          // 登录过期
+          if (isRefreshTokening) {
+            return new Promise((resolve) => {
+              requestsToReload.push((newToken) => {
+                // update token here
+                resolve(service(config))
+              })
             })
-          })
-        } else {
-          isRefreshTokening = true
-          const newToken = ''
-          requestsToReload.forEach((cb) => cb(newToken))
-          requestsToReload = []
+          } else {
+            isRefreshTokening = true
+            const newToken = ''
+            requestsToReload.forEach((cb) => cb(newToken))
+            requestsToReload = []
+          }
         }
+        return null
       }
-      return null
     }
+    return Promise.reject(data)
   },
   (error) => {
     handleNetworkError(error.response.status)
