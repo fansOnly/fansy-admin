@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import Storage from '../storage'
-import { handleHttpStatus } from './util'
+import { handleNetworkError, handleAuthError, handleGeneralError } from './util'
 
 const isDev = import.meta.env.DEV
 const apiUrl = import.meta.env.VITE_API_URL || ''
@@ -51,47 +51,51 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   async (response) => {
-    const { data, config } = response
-    const params = config.method === 'get' ? config.params : JSON.parse(config.data || {})
+    const { data, config, status } = response
+    if (status === 200) {
+      const params = config.method === 'get' ? config.params : JSON.parse(config.data || {})
 
-    for (const key in params) {
-      const value = params[key]
-      if (value === '' || (Array.isArray(value) && !value.length)) delete params[key]
-    }
+      for (const key in params) {
+        const value = params[key]
+        if (value === '' || (Array.isArray(value) && !value.length)) delete params[key]
+      }
 
-    console.group(new Date())
-    console.log('├─[请求地址]', baseURL + config.url)
-    console.log('├─[请求类型]', config.method)
-    console.log('├─[请求参数]', params)
-    console.log('├─[响应结果]', data)
-    console.timeEnd(`├─[请求耗时@${++j < i ? j : i}]`)
-    console.log('└─')
-    console.groupEnd()
+      console.group(new Date())
+      console.log('├─[请求地址]', baseURL + config.url)
+      console.log('├─[请求类型]', config.method)
+      console.log('├─[请求参数]', params)
+      console.log('├─[响应结果]', data)
+      console.timeEnd(`├─[请求耗时@${++j < i ? j : i}]`)
+      console.log('└─')
+      console.groupEnd()
 
-    if (data.code === 200) {
-      return data.data
-    } else if (data.code === 1001) {
-      // 登录过期
-      if (isRefreshTokening) {
-        return new Promise((resolve) => {
-          requestsToReload.push((newToken) => {
-            // update token here
-            resolve(service(config))
-          })
-        })
-      } else {
-        isRefreshTokening = true
-        const newToken = ''
-        requestsToReload.forEach((cb) => cb(newToken))
-        requestsToReload = []
+      if (data.code === 200) {
+        return data.data
       }
     } else {
-      handleHttpStatus(data.code, data.message)
+      handleAuthError(data.code, data.message)
+      handleGeneralError(data.code, data.message)
+      if (data.code === 1001) {
+        // 登录过期
+        if (isRefreshTokening) {
+          return new Promise((resolve) => {
+            requestsToReload.push((newToken) => {
+              // update token here
+              resolve(service(config))
+            })
+          })
+        } else {
+          isRefreshTokening = true
+          const newToken = ''
+          requestsToReload.forEach((cb) => cb(newToken))
+          requestsToReload = []
+        }
+      }
       return null
     }
   },
   (error) => {
-    // handleHttpStatus(error.response.status, error.message)
+    handleNetworkError(error.response.status)
     return Promise.reject(error)
   }
 )
