@@ -189,6 +189,7 @@ defineOptions({
 }
 
 .fansy-menu-popper {
+  --el-menu-item-bg-color: #333;
 
   .fansy-menu-item,
   .fansy-sub-menu .el-sub-menu__title {

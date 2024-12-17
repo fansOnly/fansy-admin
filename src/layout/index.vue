@@ -14,6 +14,7 @@
 
 <script setup>
 import { watchThrottled, useWindowSize } from '@vueuse/core'
+import { startNprogress, stopNprogress } from '@/utils/nprogress';
 import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 
@@ -29,11 +30,12 @@ watchThrottled(
   { throttle: 300 }
 )
 
-const handleReload = () => {
+const handleReload = async () => {
   loaded.value = false
-  nextTick(() => {
-    loaded.value = true
-  })
+  startNprogress()
+  await new Promise((resolve) => setTimeout(resolve, 200));
+  loaded.value = true
+  stopNprogress()
 }
 
 defineOptions({

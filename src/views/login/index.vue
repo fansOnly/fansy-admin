@@ -10,11 +10,11 @@
       <div class="login-form mt-7px">
         <el-form ref="loginFormRef" :model="loginForm" :rules="rules" label-width="0" size="large">
           <el-form-item label="" prop="username">
-            <el-input v-model="loginForm.username" type="text" prefix-icon="lock" clearable
+            <el-input v-model="loginForm.username" type="text" prefix-icon="lock"
               @keyup.enter="submitForm(loginFormRef)" />
           </el-form-item>
           <el-form-item label="" prop="password">
-            <el-input v-model="loginForm.password" type="password" prefix-icon="key" clearable autocomplete="off"
+            <el-input v-model="loginForm.password" type="password" show-password prefix-icon="key" autocomplete="off"
               @keyup.enter="submitForm(loginFormRef)" />
           </el-form-item>
           <el-form-item>
@@ -48,8 +48,8 @@ const redirectedFrom = route.redirectedFrom
 const loginFormRef = ref(null)
 const loading = ref(false)
 const loginForm = reactive({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '123456'
 })
 
 const rules = reactive({
