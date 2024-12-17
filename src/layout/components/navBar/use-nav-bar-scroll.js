@@ -82,6 +82,7 @@ export const useNavBarScroll = () => {
     onScroll,
     scrollDistance,
     scrollToActive,
-    checkScrollable
+    checkScrollable,
+    getScrollDirection
   }
 }

@@ -50,6 +50,8 @@ export const useNavBar = () => {
       currentNavIndex.value = index - 1
       const prev = navBarData.value[currentNavIndex.value]
       router.push(prev.path)
+    } else if (currentNavIndex.value > index) {
+      currentNavIndex.value -= 1
     }
   }
 
@@ -83,8 +85,9 @@ export const useNavBar = () => {
 
   const closeOther = () => {
     const current = navBarData.value[currentNavIndex.value]
-    if (currentNavIndex.value > affixNavList.value.length) {
+    if (currentNavIndex.value > affixNavList.value.length - 1) {
       navBarData.value = affixNavList.value.concat(current)
+      currentNavIndex.value = affixNavList.value.length
     } else {
       navBarData.value = affixNavList.value
     }
@@ -190,21 +193,14 @@ export const useNavBar = () => {
     }
   }
 
-  const closeable = computed(() => {
-    return (item) => !item.meta?.affix && navBarData.value.length > 1
-  })
+  // const closeable = computed(() => {
+  //   return (item) => !item.meta?.affix && navBarData.value.length > 1
+  // })
 
   const currentNav = computed(() => navBarData.value[currentNavIndex.value])
 
   const affixNavList = computed(
-    () =>
-      routes
-        .filter((v) => v.meta?.affix)
-        .map((v) => ({
-          name: v.name,
-          path: v.path,
-          meta: v.meta
-        }))
+    () => navBarData.value.filter((v) => v.meta?.affix)
     // .sort((a, b) => a.meta.sortnum - b.meta.sortnum)
   )
 
@@ -215,8 +211,28 @@ export const useNavBar = () => {
   )
 
   const isFirstNav = computed(() => currentNavIndex.value === 0)
-
   const isLastNav = computed(() => currentNavIndex.value === navBarData.value.length - 1)
+  const closeable = computed(() => !currentNav.value.meta?.affix)
+  const canCloseLeft = computed(() => currentNavIndex.value > affixNavList.value.length)
+  const canCloseAll = computed(() => navBarData.value.length > affixNavList.value.length)
+  const canCloseOther = computed(() => {
+    if (currentNavIndex.value < affixNavList.value.length) {
+      return navBarData.value.length > affixNavList.value.length
+    } else if (currentNavIndex.value === affixNavList.value.length) {
+      return currentNavIndex.value < navBarData.value.length - 1
+    }
+    return true
+  })
+
+  watch(
+    currentNavBar,
+    (newVal) => {
+      currentNavIndex.value = navBarData.value.findIndex((v) => newVal.name === v.name)
+    },
+    {
+      immediate: true
+    }
+  )
 
   _init()
 
@@ -230,6 +246,9 @@ export const useNavBar = () => {
     closeable,
     isFirstNav,
     isLastNav,
+    canCloseLeft,
+    canCloseAll,
+    canCloseOther,
     clickItem,
     removeItem,
     handleCommand
