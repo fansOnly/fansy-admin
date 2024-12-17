@@ -30,7 +30,7 @@ export const PREFERENCE_PRESET = {
     draggable: true,
     more: true,
     maximize: true,
-    style: 'default' // default google
+    style: 'google' // default google
   },
   widget: {
     search: true,

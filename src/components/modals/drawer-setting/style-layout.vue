@@ -79,14 +79,14 @@
       <div class="">显示最大化</div>
       <el-switch v-model="navbar.maximize" />
     </div>
-    <div
+    <!-- <div
       class="flex-[center,space-between] mb-10px px-8px py-4px rounded-4px hover:background-custom-var(--el-fill-color-light)">
       <div class="">标签栏风格</div>
       <el-radio-group v-model="navbar.style">
         <el-radio-button label="谷歌" value="google" />
         <el-radio-button label="朴素" value="default" />
       </el-radio-group>
-    </div>
+    </div> -->
     <div class="mt-20px">
       <div class="mb-10px font-size-18px font-500">小组件</div>
       <div
