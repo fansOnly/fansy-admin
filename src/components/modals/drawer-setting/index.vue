@@ -5,8 +5,11 @@
       <el-tooltip effect="light" content="恢复默认" popper-class="fansy-tooltip-popper">
         <el-icon size="18px" class="mr-8px cursor-pointer hover:color-custom-var(--el-color-primary)"
           @click="onReset()">
-          <RefreshRight />
-        </el-icon></el-tooltip>
+          <el-badge :is-dot="isChanged">
+            <RefreshRight />
+          </el-badge>
+        </el-icon>
+      </el-tooltip>
     </template>
 
     <fansy-tabbar ref="tabbarRef" :options="menuList" @change="onTabChange" />
@@ -35,6 +38,7 @@ import StyleLayout from './style-layout.vue';
 import ShortcutKeys from './shortcut-keys.vue';
 import CommonAndAnimation from './common-and-animation.vue';
 import { useGlobalStore } from '@/store/app'
+import { PREFERENCE_PRESET } from '@/constants/preset'
 
 const show = defineModel('show')
 const globalStore = useGlobalStore()
@@ -47,12 +51,14 @@ const menuList = [
 ]
 const tabbarRef = ref(null)
 const current = ref(0)
+const isChanged = ref(false)
 
 const onTabChange = (item, index) => {
   current.value = index
 }
 
 const onReset = () => {
+  if (!isChanged.value) return
   globalStore.resetPreference()
 }
 
@@ -62,6 +68,14 @@ watch(show, (val) => {
     tabbarRef.value?.setCurrent(0)
   }
 })
+
+watch(() => globalStore.preference, (newVal) => {
+  isChanged.value = !isSameObject(newVal, PREFERENCE_PRESET)
+}, { deep: true })
+
+function isSameObject(obj1, obj2) {
+  return JSON.stringify(obj1) === JSON.stringify(obj2)
+}
 </script>
 
 <style lang="scss" scoped></style>
