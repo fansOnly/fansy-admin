@@ -92,6 +92,14 @@ defineOptions({
 .el-menu {
   width: 100%;
   border-right: none;
+
+  .el-sub-menu {
+
+    &.is-active .el-sub-menu__title,
+    &:hover .el-sub-menu__title {
+      background-color: var(--el-menu-hover-bg-color);
+    }
+  }
 }
 
 .el-menu--horizontal.el-menu {
@@ -142,6 +150,14 @@ defineOptions({
 
   .el-menu-item {
     border-bottom: none !important;
+
+    &:not(.is-disabled):hover,
+    &:not(.is-disabled):focus,
+    &:not(.is-disabled).is-active {
+      outline: none;
+      color: var(--el-menu-active-color);
+      background-color: var(--el-menu-hover-bg-color);
+    }
   }
 
   .el-sub-menu {
@@ -149,11 +165,6 @@ defineOptions({
 
     .el-sub-menu__title {
       border-bottom: none !important;
-    }
-
-    &.is-active .el-sub-menu__title,
-    &:hover .el-sub-menu__title {
-      background-color: var(--el-menu-hover-bg-color);
     }
 
     &.is-round {
