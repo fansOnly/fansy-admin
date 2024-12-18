@@ -24,6 +24,9 @@ export const useEcharts = (chartRef) => {
 
   function renderCharts(options = {}, clear = false) {
     chartOptions = options
+    if (isDark.value) {
+      chartOptions.backgroundColor = 'transparent'
+    }
     return new Promise((resolve) => {
       nextTick(() => {
         useTimeoutFn(() => {
