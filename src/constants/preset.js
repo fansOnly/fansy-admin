@@ -43,6 +43,7 @@ export const PREFERENCE_PRESET = {
   shortcutKeys: {
     enable: true,
     search: true,
+    lock: true,
     logout: true
   },
   transition: {

@@ -3,19 +3,7 @@
 @use './element-ui.scss';
 @use './theme/dark.scss';
 
-:root {
-  --padding-sm: 12px;
-  --padding-md: 16px;
-  --padding-lg: 20px;
-  --padding-xl: 24px;
-
-  --bg-white: #fff;
-
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
-
+:root:root {
   --fansy-box-shadow-color-lighter: rgba(0, 0, 0, 0.1);
 
   // --el-bg-color-page: #f5f7fa;

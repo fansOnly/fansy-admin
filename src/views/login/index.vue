@@ -98,9 +98,9 @@ const submitForm = (formEle) => {
   top: 50%;
   right: 50%;
   width: 300px;
-  padding: 0 var(--padding-lg);
-  background: var(--bg-white);
-  border-radius: var(--border-radius-md);
+  padding: 0 20px;
+  background: var(--el-bg-color);
+  border-radius: 12px;
   transform: translate3d(50%, -50%, 0);
 
   &::before {

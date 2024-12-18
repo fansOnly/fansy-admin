@@ -68,14 +68,14 @@
           <div class="flex-[center]">
             <el-badge type="success" :offset="[-4, 26]" is-dot style="display: inline-flex;">
               <el-avatar :size="32" :src="userStore.userInfo.avatar">
-                <el-image :src="avatarDefaultImage" fit="contain" alt="user" />
+                <el-image :src="userStore.defaultAvatar" fit="contain" alt="user" />
               </el-avatar>
             </el-badge>
           </div>
           <template #dropdown>
             <div class="flex-[center] py-12px px-16px">
               <el-avatar :size="48" :src="userStore.userInfo.avatar" class="flex-shrink-0">
-                <el-image :src="avatarDefaultImage" fit="contain" alt="user" />
+                <el-image :src="userStore.defaultAvatar" fit="contain" alt="user" />
               </el-avatar>
               <div class="flex-[,center,column]">
                 <div class="pl-2">{{ userStore.userInfo.nickname }}
@@ -117,11 +117,13 @@
   </el-header>
   <dialog-menu-search v-model:show="visibleSearch" />
   <drawer-setting v-model:show="visibleSetting" />
+  <dialog-lock-screen v-model:show="visibleLock" />
 </template>
 
 <script setup>
 import DialogMenuSearch from '@/components/modals/dialog-menu-search/index.vue'
 import DrawerSetting from '@/components/modals/drawer-setting/index.vue'
+import DialogLockScreen from '@/components/modals/dialog-lock-screen/index.vue'
 import { useGlobalStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { logout } from '@/api/core/login'
@@ -132,7 +134,6 @@ import Storage from '@/common/storage'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import { isMacOS } from '@/utils/index'
 import { LANGUAGE_PRESET } from '@/constants/settings'
-import avatarDefaultImage from '@/assets/images/avatar.gif'
 
 const router = useRouter()
 const globalStore = useGlobalStore()
@@ -151,11 +152,16 @@ const languagePopoverRef = ref(null)
 const menuDropdownRef = ref(null)
 const visibleSetting = ref(false)
 const visibleSearch = ref(false)
+const visibleLock = ref(false)
 const shortKeyAlt = computed(() => isMacOS ? '⌥' : 'Alt')
 const shortKeyCtrl = computed(() => isMacOS ? '⌘' : 'Ctrl')
 
 const showSearchModal = () => {
   visibleSearch.value = true
+}
+
+const showLockModal = () => {
+  visibleLock.value = true
 }
 
 const showSetting = () => {
@@ -239,11 +245,18 @@ const handleLogout = async () => {
 const registerShortKeys = () => {
   const keys = useMagicKeys()
 
+  // 退出登录
   whenever(keys.Alt_KeyQ, () => {
     if (!shortcutKeys.value.enable || !shortcutKeys.value.logout) return
     handleLogout()
   })
+  // 锁屏
+  whenever(keys.Alt_KeyL, () => {
+    if (!shortcutKeys.value.enable || !shortcutKeys.value.lock) return
+    showLockModal()
+  })
   const ctrlKey = isMacOS ? 'Cmd' : 'Ctrl'
+  // 全局搜索
   whenever(keys[ctrlKey + '_KeyK'], () => {
     if (!widget.value.search || !shortcutKeys.value.enable || !shortcutKeys.value.search) return
     showSearchModal()

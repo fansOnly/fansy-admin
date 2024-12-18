@@ -10,6 +10,13 @@ const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
 // localStorage.removeItem(storageKey)
 const storage = localStorage.getItem(storageKey) || cloneDeep(PREFERENCE_PRESET)
 
+const lockStorageKey = `${import.meta.env.VITE_NAMESPACE}-lock`
+// localStorage.removeItem(lockStorageKey)
+const lockStorage = localStorage.getItem(lockStorageKey) || {
+  lock: false,
+  password: ''
+}
+
 export const useGlobalStore = defineStore('app', {
   state: () => {
     return {
@@ -28,6 +35,9 @@ export const useGlobalStore = defineStore('app', {
         navBarHeight: 40,
         maximize: false
       },
+      lockScreen: useStorage(lockStorageKey, lockStorage, localStorage, {
+        serializer: StorageSerializers.object
+      }),
       preference: useStorage(storageKey, storage, localStorage, {
         serializer: StorageSerializers.object
       })
@@ -61,6 +71,9 @@ export const useGlobalStore = defineStore('app', {
       this.layout.maximize = value
       this.layout.headerHeight = value ? 0 : 60
     },
+    // setLockScreen(value) {
+    //   this.lockScreen = value
+    // },
     resetPreference() {
       this.preference = cloneDeep(PREFERENCE_PRESET)
 

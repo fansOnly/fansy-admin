@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import Storage from '@/common/storage'
+import avatarDefaultImage from '@/assets/images/avatar.gif'
 
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
+      defaultAvatar: avatarDefaultImage,
       userInfo: {
         nickname: '',
         id: '',

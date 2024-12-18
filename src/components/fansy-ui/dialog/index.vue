@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="show" class="fansy-dialog">
+  <el-dialog v-model="show" class="fansy-dialog" style="--el-dialog-border-radius: 8px;">
     <template v-if="slots.header" #header>
       <slot name="header"></slot>
     </template>

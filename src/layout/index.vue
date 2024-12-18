@@ -1,5 +1,6 @@
 <template>
-  <el-container class="w-100vw">
+  <lock-screen v-if="globalStore.lockScreen.lock" />
+  <el-container v-else class="w-100vw">
     <el-aside v-if="globalStore.preference.menu.mode === 'vertical'" :width="globalStore.sideWidth"
       class="transition-width">
       <base-sidebar />
@@ -13,6 +14,7 @@
 </template>
 
 <script setup>
+import LockScreen from '@/components/lock-screen/index.vue'
 import { watchThrottled, useWindowSize } from '@vueuse/core'
 import { startNprogress, stopNprogress } from '@/utils/nprogress';
 import { useGlobalStore } from '@/store/app'

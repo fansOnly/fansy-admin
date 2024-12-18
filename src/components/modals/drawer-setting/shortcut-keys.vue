@@ -16,6 +16,14 @@
     </div>
     <div
       class="flex-[center,space-between] mb-10px px-8px py-4px rounded-4px hover:background-custom-var(--el-fill-color-light)">
+      <div class="">锁定屏幕</div>
+      <div class="flex-[center]">
+        <span class="mr-6px color-custom-var(--el-text-color-secondary) font-size-12px">{{ shortKeyCtrl }} L</span>
+        <el-switch v-model="shortcutKeys.lock" />
+      </div>
+    </div>
+    <div
+      class="flex-[center,space-between] mb-10px px-8px py-4px rounded-4px hover:background-custom-var(--el-fill-color-light)">
       <div class="">退出登录</div>
       <div class="flex-[center]">
         <span class="mr-6px color-custom-var(--el-text-color-secondary) font-size-12px">{{ shortKeyAlt }} Q</span>
