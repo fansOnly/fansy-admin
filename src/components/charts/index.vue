@@ -3,43 +3,8 @@
 </template>
 
 <script setup>
-// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
-import * as echarts from 'echarts/core';
-// 引入柱状图图表，图表后缀都为 Chart
-import { BarChart, PieChart, LineChart } from 'echarts/charts';
-// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
-import {
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  GridComponent,
-  DatasetComponent,
-  TransformComponent,
-  LegendComponent
-} from 'echarts/components';
-// 标签自动布局、全局过渡动画等特性
-import { LabelLayout, UniversalTransition } from 'echarts/features';
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import { CanvasRenderer } from 'echarts/renderers';
 import { formatUnit } from '@/utils/index'
-
-// 注册必须的组件
-echarts.use([
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  GridComponent,
-  DatasetComponent,
-  TransformComponent,
-  LegendComponent,
-  BarChart,
-  PieChart,
-  LineChart,
-  LabelLayout,
-  UniversalTransition,
-  CanvasRenderer
-]);
-
+import { useEcharts } from '@/hooks/use-echarts'
 
 const props = defineProps({
   width: {
@@ -53,23 +18,35 @@ const props = defineProps({
   option: Object,
 })
 
-let chart = null
+// let chart = null
 const chartRef = ref(null)
 
-watchEffect(() => {
-  if (chartRef.value) {
-    chart = echarts.init(chartRef.value)
-    chart.setOption(props.option)
-  }
+// watchEffect(() => {
+//   renderCharts()
+// })
+
+
+onMounted(() => {
+  const { renderCharts } = useEcharts(chartRef)
+  renderCharts(props.option)
 })
 
-const reloadChart = () => {
-  chart.setOption(props.option)
-}
+// function initChart(isDark) {
+//   console.log('isDark: ', isDark);
+//   if (chartRef.value) {
+//     console.log('chartRef.value: ', chartRef.value);
+//     chart = echarts.init(chartRef.value, isDark ? 'dark' : null)
+//     chart.setOption(props.option)
+//   }
+// }
 
-defineExpose({
-  reloadChart
-})
+// const reloadChart = () => {
+//   chart.setOption(props.option)
+// }
+
+// defineExpose({
+//   reloadChart
+// })
 </script>
 
 <style lang="scss" scoped></style>
