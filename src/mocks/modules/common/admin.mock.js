@@ -47,7 +47,7 @@ export default [
         CURREN_LIST = CURREN_LIST.filter((v) => v.status === Number(status))
       }
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           list: CURREN_LIST,
@@ -80,7 +80,7 @@ export default [
           status: '@pick([-1, 0, 1])'
         })
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: item
       }
@@ -93,7 +93,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -106,7 +106,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -119,7 +119,7 @@ export default [
     timeout: 500,
     response: () => {
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           affected: 1

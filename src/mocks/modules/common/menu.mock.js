@@ -247,7 +247,7 @@ export default [
     response: (config) => {
       const { roleId } = config.query
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: TABLE_LIST
       }
@@ -260,7 +260,7 @@ export default [
     response: (config) => {
       const { id } = config.query
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: TABLE_LIST.find((v) => v.id === id)
       }
@@ -273,7 +273,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -286,7 +286,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -298,7 +298,7 @@ export default [
     timeout: 500,
     response: () => {
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           affected: 1

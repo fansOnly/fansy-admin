@@ -30,7 +30,7 @@ export default [
         CURREN_LIST = CURREN_LIST.filter((v) => v.title.includes(title))
       }
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           list: CURREN_LIST,

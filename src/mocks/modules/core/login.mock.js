@@ -12,7 +12,7 @@ export default [
         const token =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJuZmdvIiwic3ViIjoiYTg0OWRlZmQtY2JiOC00NWIzLTkxNjAtMmE2MWQxOTVjY2I5IiwiaWF0IjoxNzI4MzUwNjg4LCJleHAiOjE3Mjg0MzcwODh9.NBN8mLrLsBw3WcQf3RuxYEaay0z4MkfbrrhuRTecJRM'
         return {
-          code: 200,
+          code: 10000,
           message: 'success',
           data: {
             accessToken: token,
@@ -35,7 +35,7 @@ export default [
       const { token } = config.query
       if (token) {
         return {
-          code: 200,
+          code: 10000,
           message: 'success',
           data: {
             accessToken:
@@ -56,7 +56,7 @@ export default [
     timeout: 500,
     response: () => {
       return {
-        code: 200,
+        code: 10000,
         message: 'success'
       }
     }

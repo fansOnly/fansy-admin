@@ -31,7 +31,7 @@ export default [
       const { page = 1, pageSize = 10 } = config.query
       CURREN_LIST = TABLE_LIST.slice((page - 1) * pageSize, page * pageSize)
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           list: CURREN_LIST,
@@ -48,7 +48,7 @@ export default [
       const { id } = config.query
       const item = CURREN_LIST.find((v) => v.id === id)
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: item
       }
@@ -62,7 +62,7 @@ export default [
       const params = config.body
       TABLE_LIST.unshift(params)
       return {
-        code: 200,
+        code: 10000,
         message: 'success'
       }
     }
@@ -75,7 +75,7 @@ export default [
       const { id, ...rest } = config.body
       const item = CURREN_LIST.find((v) => v.id === id)
       return {
-        code: 200,
+        code: 10000,
         message: 'success'
       }
     }
@@ -93,7 +93,7 @@ export default [
         TABLE_LIST.filter((v) => !id.includes(v.id))
       }
       return {
-        code: 200,
+        code: 10000,
         message: 'success'
       }
     }

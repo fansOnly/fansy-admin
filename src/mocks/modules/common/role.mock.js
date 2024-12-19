@@ -39,7 +39,7 @@ export default [
         CURREN_LIST = CURREN_LIST.filter((v) => v.status === Number(status))
       }
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           list: CURREN_LIST,
@@ -56,7 +56,7 @@ export default [
       const { id } = config.query
       const item = CURREN_LIST.find((v) => v.id === id)
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: item
       }
@@ -69,7 +69,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -82,7 +82,7 @@ export default [
     response: (config) => {
       const data = config.body
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data
       }
@@ -95,7 +95,7 @@ export default [
     timeout: 500,
     response: () => {
       return {
-        code: 200,
+        code: 10000,
         message: 'success',
         data: {
           affected: 1
