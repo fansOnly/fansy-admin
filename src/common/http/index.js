@@ -70,7 +70,7 @@ service.interceptors.response.use(
       console.log('└─')
       console.groupEnd()
 
-      if (data.code === 200) {
+      if (data.code === 10000) {
         return data.data
       } else {
         handleAuthError(data.code, data.message)
