@@ -7,18 +7,8 @@ import { getAdminDetail } from '@/api/common/admin'
 import { addRoutes } from './util'
 import { useLoading } from '@/hooks/use-loading'
 import { checkNprogress, startNprogress, stopNprogress } from '@/utils/nprogress'
-// import NProgress from 'nprogress'
-// import 'nprogress/nprogress.css'
 
 const { showLoading, hideLoading } = useLoading()
-
-// NProgress.configure({
-//   speed: 200,
-//   minimum: 0.02,
-//   trickleSpeed: 200,
-//   showSpinner: false
-// })
-
 const WHITE_LIST = ['/login', '/test']
 const REDIRECT_PATH = ['/redirect']
 
@@ -33,7 +23,6 @@ export const createRouterGuards = (router) => {
     }
 
     if (!from.path.includes(REDIRECT_PATH) && globalStore.preference.transition.progress) {
-      // NProgress.start()
       startNprogress()
     }
 
@@ -72,7 +61,7 @@ export const createRouterGuards = (router) => {
         }
       }
     } else if (!whiteRoutes.includes(enterPath)) {
-      NProgress.done()
+      stopNprogress()
       return to.fullPath === '/' ? '/login' : { path: '/login', query: { redirect: to.fullPath } }
     }
   })
@@ -80,7 +69,6 @@ export const createRouterGuards = (router) => {
   router.afterEach((to, from) => {
     hideLoading()
     if (!to.path.includes(REDIRECT_PATH) && checkNprogress()) {
-      // NProgress.done(true)
       stopNprogress()
     }
   })

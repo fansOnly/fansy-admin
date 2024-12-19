@@ -53,7 +53,7 @@ export const handleNetworkError = (errStatus) => {
 
 export const handleAuthError = (errno, msg) => {
   const authErrMap = {
-    10031: '登录失效，需要重新登录', // token 失效
+    // 10031: '登录失效，需要重新登录', // token 失效
     10032: '您太久没登录，请重新登录~', // token 过期
     10033: '账户未绑定角色，请联系管理员绑定角色',
     10034: '该用户未注册，请联系管理员注册用户',
@@ -71,7 +71,7 @@ export const handleAuthError = (errno, msg) => {
 }
 
 export const handleGeneralError = (errno, msg) => {
-  if (errno !== 10000) {
+  if (errno !== 10000 && errno !== 10031) {
     showErrorMessage(msg)
     return false
   }

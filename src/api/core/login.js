@@ -1,4 +1,4 @@
-import { httpPost } from '@/common/http'
+import { httpPost, httpGet } from '@/common/http'
 
 /**
  * 用户登陆
@@ -7,6 +7,12 @@ import { httpPost } from '@/common/http'
  * @param {string} password
  */
 export const login = (params = {}) => httpPost('/core/login', params)
+
+/**
+ * 刷新 accessToken
+ */
+export const refreshToken = (refreshToken = '') =>
+  httpGet('/core/refresh-token', { token: refreshToken })
 
 /**
  * 用户登出

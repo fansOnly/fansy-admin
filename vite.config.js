@@ -30,6 +30,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: createVitePlugins(viteEnv, isBuild),
     server: {
       // open: true,
+      port: 5172,
       proxy: createProxy([
         {
           '/api-mock': VITE_API_URL + VITE_API_CONTEXT

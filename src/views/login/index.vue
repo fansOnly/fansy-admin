@@ -68,7 +68,8 @@ const submitForm = (formEle) => {
           password: md5Encrypt(loginForm.password)
         })
         if (data) {
-          Storage.setItem('token', data.token)
+          Storage.setItem('token', data.accessToken)
+          Storage.setItem('refresh-token', data.refreshToken)
           showMessage('success', '登录成功')
           router.push(redirectedFrom || '/')
         }

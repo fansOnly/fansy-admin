@@ -15,13 +15,37 @@ export default [
           code: 200,
           message: 'success',
           data: {
-            token
+            accessToken: token,
+            refreshToken: 'refreshToken'
           }
         }
       } else {
         return {
           code: 1003,
           message: '用户名或密码错误'
+        }
+      }
+    }
+  },
+  {
+    url: '/api-mock/core/refresh-token',
+    method: 'get',
+    timeout: 500,
+    response: (config) => {
+      const { token } = config.query
+      if (token) {
+        return {
+          code: 200,
+          message: 'success',
+          data: {
+            accessToken:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJuZmdvIiwic3ViIjoiYTg0OWRlZmQtY2JiOC00NWIzLTkxNjAtMmE2MWQxOTVjY2I5IiwiaWF0IjoxNzI4MzUwNjg4LCJleHAiOjE3Mjg0MzcwODh9.NBN8mLrLsBw3WcQf3RuxYEaay0z4MkfbrrhuRTecJRM',
+            refreshToken: 'refreshToken'
+          }
+        }
+      } else {
+        return {
+          code: 10032
         }
       }
     }

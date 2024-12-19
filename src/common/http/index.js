@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import Storage from '../storage'
 import { handleNetworkError, handleAuthError, handleGeneralError } from './util'
+const router = useRouter()
 
 const isDev = import.meta.env.DEV
 const apiUrl = import.meta.env.VITE_API_URL || ''
@@ -28,9 +29,9 @@ const service = Axios.create({
 })
 
 // 刷新 token 标识
-let isRefreshTokening = false
+let refresh = false
 // 登录过期待重新请求接口列表
-let requestsToReload = []
+let requestReloadList = []
 // 接口耗时统计指针
 let i = 0
 let j = 0
@@ -74,20 +75,26 @@ service.interceptors.response.use(
       } else {
         handleAuthError(data.code, data.message)
         handleGeneralError(data.code, data.message)
-        if (data.code === 1001) {
+        if (data.code === 10031) {
           // 登录过期
-          if (isRefreshTokening) {
+          if (refresh) {
             return new Promise((resolve) => {
-              requestsToReload.push((newToken) => {
-                // update token here
+              requestReloadList.push(() => {
                 resolve(service(config))
               })
             })
-          } else {
-            isRefreshTokening = true
-            const newToken = ''
-            requestsToReload.forEach((cb) => cb(newToken))
-            requestsToReload = []
+          } else if (!config.url.includes('/refresh-token')) {
+            try {
+              refresh = true
+              // update token here
+              await refreshToken()
+              refresh = false
+              requestReloadList.forEach((cb) => cb())
+              requestReloadList = []
+              return service(config)
+            } catch (error) {
+              router.push('/login')
+            }
           }
         }
         return null
@@ -100,6 +107,15 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+async function refreshToken() {
+  const res = await httpGet('/core/refresh-token', {
+    token: Storage.getItem('token')
+  })
+  Storage.setItem('token', res.accessToken)
+  Storage.setItem('refresh-token', res.refreshToken)
+  return res
+}
 
 export const httpPost = (url = '', data = {}, customHeaders = {}) => {
   return service.request({
