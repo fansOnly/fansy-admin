@@ -80,7 +80,7 @@ service.interceptors.response.use(
                 resolve(service(config))
               })
             })
-          } else if (!config.url.includes('/refresh-token')) {
+          } else if (!config.url.includes('/refresh_token')) {
             try {
               refresh = true
               // update token here
@@ -106,7 +106,7 @@ service.interceptors.response.use(
 )
 
 async function refreshToken() {
-  const res = await httpPost('/core/refresh-token', {
+  const res = await httpPost('/core/refresh_token', {
     token: Storage.getItem('refresh-token')
   })
   Storage.setItem('token', res.accessToken)

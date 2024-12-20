@@ -12,7 +12,7 @@ export const login = (params = {}) => httpPost('/core/login', params)
  * 刷新 accessToken
  */
 export const refreshToken = (refreshToken = '') =>
-  httpGet('/core/refresh-token', { token: refreshToken })
+  httpGet('/core/refresh_token', { token: refreshToken })
 
 /**
  * 用户登出
