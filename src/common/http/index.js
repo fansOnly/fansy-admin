@@ -9,11 +9,8 @@ const context = import.meta.env.VITE_API_CONTEXT || ''
 const useMock = import.meta.env.VITE_USE_MOCK || false
 
 const contentTypes = {
-  // json
   JSON: 'application/json;charset=UTF-8',
-  // form-data qs
   FORM_URLENCODED: 'application/x-www-form-urlencoded;charset=UTF-8',
-  // form-data  upload
   FORM_DATA: 'multipart/form-data;charset=UTF-8'
 }
 
@@ -88,8 +85,8 @@ service.interceptors.response.use(
               refresh = true
               // update token here
               await refreshToken()
-              refresh = false
               requestReloadList.forEach((cb) => cb())
+              refresh = false
               requestReloadList = []
               return service(config)
             } catch (error) {
@@ -109,8 +106,8 @@ service.interceptors.response.use(
 )
 
 async function refreshToken() {
-  const res = await httpGet('/core/refresh-token', {
-    token: Storage.getItem('token')
+  const res = await httpPost('/core/refresh-token', {
+    token: Storage.getItem('refresh-token')
   })
   Storage.setItem('token', res.accessToken)
   Storage.setItem('refresh-token', res.refreshToken)

@@ -29,10 +29,10 @@ export default [
   },
   {
     url: '/api-mock/core/refresh-token',
-    method: 'get',
+    method: 'post',
     timeout: 500,
     response: (config) => {
-      const { token } = config.query
+      const { token } = config.body
       if (token) {
         return {
           code: 10000,

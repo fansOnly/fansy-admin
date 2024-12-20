@@ -8,9 +8,9 @@
 <script setup>
 import { testApi } from "@/api/index";
 
-async function test(a) {
+async function test(x) {
   try {
-    const data = await testApi({ a: 1, b: 2 });
+    const data = await testApi({ x: x, a: 1, b: 2 });
   } catch (error) {
 
   }
@@ -24,7 +24,7 @@ async function testList() {
   }
 }
 
-
+// test()
 testList()
 </script>
 
