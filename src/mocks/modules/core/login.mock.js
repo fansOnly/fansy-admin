@@ -28,7 +28,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/core/refresh-token',
+    url: '/api-mock/core/refresh_token',
     method: 'post',
     timeout: 500,
     response: (config) => {
