@@ -483,7 +483,7 @@ export const demoMenus = [
   {
     path: '/demo/image-recognition-text',
     name: 'ImageRecognitionText',
-    component: 'demo/recognition/image-recognition-text',
+    component: 'demo/recognition/image-to-text',
     sortnum: 800,
     parentId: 'M2021092317331604641000000018',
     id: 'M20210923143534540180040214545432323',
