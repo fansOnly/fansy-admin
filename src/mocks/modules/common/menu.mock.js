@@ -479,5 +479,21 @@ export const demoMenus = [
     affix: 0,
     visible: 1,
     cache: 1
+  },
+  {
+    path: '/demo/image-recognition-text',
+    name: 'ImageRecognitionText',
+    component: 'demo/recognition/image-recognition-text',
+    sortnum: 800,
+    parentId: 'M2021092317331604641000000018',
+    id: 'M20210923143534540180040214545432323',
+    auth: 1,
+    type: 'default',
+    link: '',
+    icon: 'Camera',
+    title: '图片识别文字',
+    affix: 0,
+    visible: 1,
+    cache: 1
   }
 ]
