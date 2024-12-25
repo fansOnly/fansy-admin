@@ -19,7 +19,7 @@ const font = reactive({
   color: 'rgba(0, 0, 0, .15)',
 })
 
-const setPreference = () => {
+function setPreference() {
   if (!theme.value) return
   if (theme.value.builtin === 'default') {
     theme.value.primary = globalStore.getPrimaryColor()
@@ -29,6 +29,10 @@ const setPreference = () => {
     globalStore.setPrimaryColor(theme.value.builtin)
   }
 }
+function setTheme() {
+  globalStore.setThemeMode(globalStore.preference.theme.mode)
+}
+setTheme()
 setPreference()
 useTitle()
 

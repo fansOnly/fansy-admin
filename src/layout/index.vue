@@ -34,10 +34,10 @@ watchThrottled(
 
 const handleReload = async () => {
   loaded.value = false
-  startNprogress()
+  globalStore.preference.transition.progress && startNprogress()
   await new Promise((resolve) => setTimeout(resolve, 200));
   loaded.value = true
-  stopNprogress()
+  globalStore.preference.transition.progress && stopNprogress()
 }
 
 defineOptions({
