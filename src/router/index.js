@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: '/test',
-    name: 'Test',
+    name: '实验室',
     component: () => import('@/views/index/test.vue'),
     meta: {
       title: 'test'

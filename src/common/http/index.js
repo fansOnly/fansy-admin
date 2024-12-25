@@ -1,7 +1,6 @@
 import Axios from 'axios'
 import Storage from '../storage'
 import { handleNetworkError, handleAuthError, handleGeneralError } from './util'
-const router = useRouter()
 
 const isDev = import.meta.env.DEV
 const apiUrl = import.meta.env.VITE_API_URL || ''
@@ -90,6 +89,7 @@ service.interceptors.response.use(
               requestReloadList = []
               return service(config)
             } catch (error) {
+              const router = useRouter()
               router.push('/login')
             }
           }
