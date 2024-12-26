@@ -57,7 +57,7 @@ function initLogicFlow() {
     grid: true,
     adjustNodePosition: true,
     allowResize: true, // 允许节点缩放
-    allowRotate: true, // 允许节点旋转
+    // allowRotate: true, // 允许节点旋转
     // stopMoveGraph: false, // 允许拖动画布
     // isSilentMode: false, // 静默模式
     // animation: true, // 动画效果
