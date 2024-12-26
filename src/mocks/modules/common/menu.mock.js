@@ -495,5 +495,21 @@ export const demoMenus = [
     affix: 0,
     visible: 1,
     cache: 1
+  },
+  {
+    path: '/demo/flow',
+    name: 'LogicFlow',
+    component: 'demo/flow',
+    sortnum: 900,
+    parentId: 'M2021092317331604641000000018',
+    id: 'M20210923143534540180121040214545432323',
+    auth: 1,
+    type: 'default',
+    link: '',
+    icon: 'CoffeeCup',
+    title: '流程图',
+    affix: 0,
+    visible: 1,
+    cache: 1
   }
 ]
