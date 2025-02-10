@@ -114,7 +114,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div v-if="pagination.show" class="flex-[center,flex-end] pt-4px">
+    <div v-if="pagination.show" class="flex-[center,flex-end] pt-20px">
       <el-pagination v-model:current-page="initData.pagination.currentPage"
         v-model:page-size="initData.pagination.pageSize" :page-sizes="pageSizes" :background="pagination.background"
         :layout="tableConfig.pagination.layout" :total="initData.pagination.total" @change="onPageChange" />

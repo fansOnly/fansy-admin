@@ -1,6 +1,6 @@
 <template>
   <el-header :height="globalStore.layout.headerHeight + 'px'"
-    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter) transition"
+    class="flex-[center,space-between] background-custom-var(--el-fill-color-blank) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter) transition-height"
     :class="{ 'overflow-hidden': globalStore.layout.maximize }">
     <div class="flex-1 flex-[center]">
       <template v-if="menu.mode === 'vertical'">

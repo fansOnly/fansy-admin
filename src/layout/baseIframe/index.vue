@@ -5,45 +5,47 @@
 </template>
 
 <script setup>
-  import { useWindowSize } from '@vueuse/core'
-  import { useGlobalStore } from '@/store/app'
+import { useWindowSize } from '@vueuse/core'
+import { useGlobalStore } from '@/store/app'
 
-  const props = defineProps({
-    src: String
-  })
+const props = defineProps({
+  src: String
+})
 
-  const globalStore = useGlobalStore()
-  const { height } = useWindowSize()
-  const frameRef = ref(null)
+const globalStore = useGlobalStore()
+const { height } = useWindowSize()
+const frameRef = ref(null)
 
-  const { headerHeight, footerHeight, navBarHeight } = globalStore.layout
-  const extraHeight =
-    headerHeight +
-    footerHeight +
-    navBarHeight +
-    40 /** paddingTop&paddingBottom */ +
-    20 /** marginTop */
-  const iframeHeight = computed(() => height.value - extraHeight)
+// 动态 iframe 高度
+const iframeHeight = computed(() => height.value - (globalStore.layout.headerHeight +
+  globalStore.layout.footerHeight +
+  globalStore.layout.navBarHeight +
+  40 /** paddingTop&paddingBottom */ +
+  20 /** marginTop */))
 
-  const loading = ref(true)
-  const hideLoading = () => {
-    loading.value = false
-  }
+const loading = ref(true)
+const hideLoading = () => {
+  loading.value = false
+}
 
-  onDeactivated(() => {
-    loading.value = true
-  })
+onDeactivated(() => {
+  loading.value = true
+})
 
-  defineOptions({
-    name: 'IframePage'
-  })
+defineOptions({
+  name: 'IframePage'
+})
 </script>
 
 <style lang="scss" scoped>
-  .fs-iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
+.fs-iframe__wrapper {
+  // transition: height 0.3s linear;
+}
+
+.fs-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
 </style>

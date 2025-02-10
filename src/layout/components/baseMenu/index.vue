@@ -28,8 +28,9 @@
                 </template>
                 <template v-for="third in second.children" :key="third.id">
                   <!-- 仅限3级菜单 -->
-                  <el-menu-item v-if="third.visible === 1" :index="third.id" class="fansy-menu-item"
-                    :class="[`is-${menuSetting.style}`]" @click="onClickMenu(third)">
+                  <el-menu-item v-if="third.visible === 1" :index="third.id"
+                    class="fansy-menu-item fansy-menu-item-third" :class="[`is-${menuSetting.style}`]"
+                    @click="onClickMenu(third)">
                     <el-icon v-if="third.icon">
                       <component :is="third.icon" />
                     </el-icon>
@@ -37,8 +38,8 @@
                   </el-menu-item>
                 </template>
               </el-sub-menu>
-              <el-menu-item v-else :index="second.id" class="fansy-menu-item" :class="[`is-${menuSetting.style}`]"
-                @click="onClickMenu(second)">
+              <el-menu-item v-else :index="second.id" class="fansy-menu-item fansy-menu-item-second"
+                :class="[`is-${menuSetting.style}`]" @click="onClickMenu(second)">
                 <el-icon v-if="second.icon">
                   <component :is="second.icon" />
                 </el-icon>
@@ -47,8 +48,8 @@
             </template>
           </template>
         </el-sub-menu>
-        <el-menu-item v-else :index="first.id" class="fansy-menu-item" :class="[`is-${menuSetting.style}`]"
-          @click="onClickMenu(first)">
+        <el-menu-item v-else :index="first.id" class="fansy-menu-item fansy-menu-item-first"
+          :class="[`is-${menuSetting.style}`]" @click="onClickMenu(first)">
           <el-icon v-if="first.icon">
             <component :is="first.icon" />
           </el-icon>
@@ -95,8 +96,8 @@ defineOptions({
 
   .el-sub-menu {
 
-    &.is-active .el-sub-menu__title,
-    &:hover .el-sub-menu__title {
+    &.is-active>.el-sub-menu__title,
+    &:hover>.el-sub-menu__title {
       background-color: var(--el-menu-hover-bg-color);
     }
   }

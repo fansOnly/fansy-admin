@@ -11,6 +11,7 @@ export default defineConfig(({ command, mode }) => {
   const isBuild = command === 'build'
 
   return {
+    base: './',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
