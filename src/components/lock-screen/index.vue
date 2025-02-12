@@ -46,6 +46,7 @@
 </template>
 
 <script setup>
+import { logout } from '@/api/core/login'
 import { useDateFormat, useNow, useTimeout } from '@vueuse/core'
 import { useUserStore } from '@/store/user';
 import { useGlobalStore } from '@/store/app';
@@ -93,7 +94,8 @@ const submitForm = (formEle) => {
   })
 }
 
-function onBackLogin() {
+async function onBackLogin() {
+  await logout()
   userStore.logout()
   router.push('/login')
   useTimeout(() => {

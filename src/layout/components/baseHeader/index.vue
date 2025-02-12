@@ -226,8 +226,7 @@ const handleLogout = async () => {
     callback: async (value, action) => {
       if (value === 'confirm') {
         await logout()
-        Storage.removeItem('token')
-        userStore.setUserInfo({})
+        userStore.logout()
         router.push('/login')
       }
     }
