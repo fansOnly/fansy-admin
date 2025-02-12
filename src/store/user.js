@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
-    isLogin: () => !!Storage.getItem('token')
+    isLogin: () => !!Storage.getLocalItem('token')
   },
   actions: {
     setUserInfo(payload) {
@@ -32,7 +32,8 @@ export const useUserStore = defineStore('user', {
         email: '',
         avatar: ''
       }
-      Storage.removeItem('token')
+      Storage.removeLocalItem('token')
+      Storage.removeLocalItem('refresh-token')
     }
   }
 })

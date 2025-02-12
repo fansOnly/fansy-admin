@@ -3,7 +3,7 @@ import { useGlobalStore } from '@/store/app'
 const globalStore = useGlobalStore()
 
 export const useNavBar = () => {
-  const storageKey = `${import.meta.env.VITE_NAMESPACE}-nav-bar-data`
+  const storageKey = `${import.meta.env.VITE_NAMESPACE}-nav-bar`
   // sessionStorage.removeItem(storageKey)
   const storage = sessionStorage.getItem(storageKey) || []
   const navBarData = useStorage(storageKey, storage, sessionStorage, {

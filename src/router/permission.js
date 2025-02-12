@@ -31,7 +31,7 @@ export const createRouterGuards = (router) => {
     const whiteRoutes = menuStore.whiteRoutes.map((v) => v.path).concat(WHITE_LIST)
 
     const enterPath = to.path
-    const token = Storage.getItem('token')
+    const token = Storage.getLocalItem('token')
     if (token) {
       if (enterPath === '/login') {
         return '/'

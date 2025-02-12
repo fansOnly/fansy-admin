@@ -35,7 +35,7 @@ let j = 0
 service.interceptors.request.use(
   (config) => {
     console.time(`├─[请求耗时@${++i}]`)
-    const token = Storage.getItem('token')
+    const token = Storage.getLocalItem('token')
     if (token) {
       config.headers.Authorization = `Bear ${token}`
     }
@@ -107,10 +107,10 @@ service.interceptors.response.use(
 
 async function refreshToken() {
   const res = await httpPost('/core/refresh_token', {
-    token: Storage.getItem('refresh-token')
+    token: Storage.getLocalItem('refresh-token')
   })
-  Storage.setItem('token', res.accessToken)
-  Storage.setItem('refresh-token', res.refreshToken)
+  Storage.setLocalItem('token', res.accessToken)
+  Storage.setLocalItem('refresh-token', res.refreshToken)
   return res
 }
 

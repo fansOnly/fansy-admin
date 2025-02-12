@@ -68,8 +68,14 @@ const submitForm = (formEle) => {
           password: md5Encrypt(loginForm.password)
         })
         if (data) {
-          Storage.setItem('token', data.accessToken)
-          Storage.setItem('refresh-token', data.refreshToken)
+          Storage.setLocalItem('token', data.accessToken)
+          Storage.setLocalItem('refresh-token', data.refreshToken)
+          // 判断是否是上一个用户，不是则清除 session 数据
+          const lastUsername = Storage.getSessionItem('login-username')
+          if (lastUsername !== loginForm.username) {
+            Storage.clearSession('nav-bar')
+            Storage.setSessionItem('login-username', loginForm.username)
+          }
           showMessage('success', '登录成功')
           router.push(redirectedFrom || '/')
         }
