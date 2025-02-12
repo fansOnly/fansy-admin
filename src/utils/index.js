@@ -39,3 +39,17 @@ export function isMacOS() {
   const platform = navigator.platform.toLowerCase()
   return platform.includes('mac')
 }
+
+export function deepMerge(target, source) {
+  for (const key of Object.keys(source)) {
+    if (source[key] && typeof source[key] === 'object') {
+      if (!target[key]) {
+        Object.assign(target, { [key]: {} })
+      }
+      deepMerge(target[key], source[key])
+    } else {
+      Object.assign(target, { [key]: source[key] })
+    }
+  }
+  return target
+}

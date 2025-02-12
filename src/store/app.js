@@ -8,7 +8,11 @@ const { isDark, toggleDark } = useTheme()
 
 const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
 // localStorage.removeItem(storageKey)
-const storage = localStorage.getItem(storageKey) || cloneDeep(PREFERENCE_PRESET)
+const preferenceStorageJson = localStorage.getItem(storageKey) || ''
+const preferenceStorage = {
+  ...(preferenceStorageJson ? JSON.parse(preferenceStorageJson) : {}),
+  ...cloneDeep(PREFERENCE_PRESET)
+}
 
 const lockStorageKey = `${import.meta.env.VITE_NAMESPACE}-lock`
 // localStorage.removeItem(lockStorageKey)
@@ -38,8 +42,11 @@ export const useGlobalStore = defineStore('app', {
       lockScreen: useStorage(lockStorageKey, lockStorage, localStorage, {
         serializer: StorageSerializers.object
       }),
-      preference: useStorage(storageKey, storage, localStorage, {
-        serializer: StorageSerializers.object
+      preference: useStorage(storageKey, preferenceStorage, localStorage, {
+        serializer: StorageSerializers.object,
+        mergeDefaults: (storageValue, defaults) => {
+          return deepMerge(storageValue, defaults)
+        }
       })
     }
   },
