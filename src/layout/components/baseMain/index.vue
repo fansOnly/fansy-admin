@@ -1,6 +1,6 @@
 <template>
   <div class="px-20px pt-20px overflow-x-hidden" :style="{ height: `calc(100vh - ${globalStore.topHeight}px)` }">
-    <el-main v-loading="!loaded" class="background-custom-var(--el-fill-color-extra-light) rounded-8px"
+    <el-main v-loading="!loaded" class="background-custom-var(--fansy-main-bg-color) rounded-8px"
       :style="{ 'overflow': 'hidden', 'min-height': `calc(100% - ${globalStore.layout.footerHeight + 20}px)` }">
       <router-view v-slot="{ Component, route }">
         <transition :name="globalStore.preference.transition.name" mode="out-in" appear>

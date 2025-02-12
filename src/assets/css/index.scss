@@ -3,8 +3,9 @@
 @use './element-ui.scss';
 @use './theme/dark.scss';
 
-:root:root {
+:root {
   --fansy-box-shadow-color-lighter: rgba(0, 0, 0, 0.1);
+  --fansy-main-bg-color: var(--el-fill-color-blank);
 
   // --el-bg-color-page: #f5f7fa;
   --el-color-primary: #d84e3e;

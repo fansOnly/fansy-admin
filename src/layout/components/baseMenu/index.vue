@@ -7,7 +7,8 @@
     <template v-for="first in menuStore.userRoutes" :key="first.id">
       <template v-if="first.visible === 1">
         <el-sub-menu v-if="first.children?.filter(v => v.visible === 1)?.length" :index="first.id"
-          class="fansy-sub-menu" :class="[`is-${menuSetting.style}`]">
+          class="fansy-sub-menu first-level"
+          :class="[`is-${menuSetting.style}`, first.id === firstMenuId && secondMenuId && menuMode === 'horizontal' ? 'follow-active' : null]">
           <template #title>
             <el-icon v-if="first.icon">
               <component :is="first.icon" />
@@ -19,7 +20,8 @@
           <template v-for="second in first.children" :key="second.id">
             <template v-if="second.visible === 1">
               <el-sub-menu v-if="second.children?.filter(v => v.visible === 1)?.length" :index="second.id"
-                class="fansy-sub-menu" :class="[`is-${menuSetting.style}`]">
+                class="fansy-sub-menu second-level"
+                :class="[`is-${menuSetting.style}`, second.id === secondMenuId && (sidebarSetting.collapse || menuMode === 'horizontal') ? 'follow-active' : null]">
                 <template #title>
                   <el-icon v-if="second.icon">
                     <component :is="second.icon" />
@@ -28,9 +30,8 @@
                 </template>
                 <template v-for="third in second.children" :key="third.id">
                   <!-- 仅限3级菜单 -->
-                  <el-menu-item v-if="third.visible === 1" :index="third.id"
-                    class="fansy-menu-item fansy-menu-item-third" :class="[`is-${menuSetting.style}`]"
-                    @click="onClickMenu(third)">
+                  <el-menu-item v-if="third.visible === 1" :index="third.id" class="fansy-menu-item third-level"
+                    :class="[`is-${menuSetting.style}`]" @click="onClickMenu(third)">
                     <el-icon v-if="third.icon">
                       <component :is="third.icon" />
                     </el-icon>
@@ -38,7 +39,7 @@
                   </el-menu-item>
                 </template>
               </el-sub-menu>
-              <el-menu-item v-else :index="second.id" class="fansy-menu-item fansy-menu-item-second"
+              <el-menu-item v-else :index="second.id" class="fansy-menu-item second-level"
                 :class="[`is-${menuSetting.style}`]" @click="onClickMenu(second)">
                 <el-icon v-if="second.icon">
                   <component :is="second.icon" />
@@ -48,8 +49,8 @@
             </template>
           </template>
         </el-sub-menu>
-        <el-menu-item v-else :index="first.id" class="fansy-menu-item fansy-menu-item-first"
-          :class="[`is-${menuSetting.style}`]" @click="onClickMenu(first)">
+        <el-menu-item v-else :index="first.id" class="fansy-menu-item first-level" :class="[`is-${menuSetting.style}`]"
+          @click="onClickMenu(first)">
           <el-icon v-if="first.icon">
             <component :is="first.icon" />
           </el-icon>
@@ -75,6 +76,18 @@ const sidebarSetting = computed(() => globalStore.preference.sidebar)
 const menuSetting = computed(() => globalStore.preference.menu)
 const menuMode = globalStore.preference.menu.mode === 'horizontal' ? 'horizontal' : 'vertical'
 
+const firstMenuId = ref('')
+const secondMenuId = ref('')
+const thirdMenuId = ref('')
+
+watch(() => route.fullPath, () => {
+  firstMenuId.value = route.matched[1]?.meta?.id
+  secondMenuId.value = route.matched[2]?.meta?.id
+  thirdMenuId.value = route.matched[3]?.meta?.id
+}, {
+  immediate: true
+})
+
 const onClickMenu = (current) => {
   const { type, link, path } = current
   if (type === 'external-link') {
@@ -94,11 +107,11 @@ defineOptions({
   width: 100%;
   border-right: none;
 
-  .el-sub-menu {
+  .el-sub-menu.follow-active {
 
-    &.is-active>.el-sub-menu__title,
-    &:hover>.el-sub-menu__title {
+    .el-sub-menu__title {
       background-color: var(--el-menu-hover-bg-color);
+      color: var(--el-menu-active-color);
     }
   }
 }
@@ -166,6 +179,10 @@ defineOptions({
 
     .el-sub-menu__title {
       border-bottom: none !important;
+
+      &:hover {
+        background-color: var(--el-menu-hover-bg-color);
+      }
     }
 
     &.is-round {

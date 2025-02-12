@@ -34,6 +34,7 @@ const componentMap = {
 
 const onClickItem = (item) => {
   globalStore.preference.menu.mode = item.value
+  globalStore.setMenuCollapse(false)
 }
 </script>
 
