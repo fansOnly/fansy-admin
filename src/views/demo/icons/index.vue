@@ -17,7 +17,7 @@ import { useClipboard } from '@vueuse/core'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { useMessage } from '@/hooks/use-message'
 
-const { showMessage } = useMessage()
+const { showSuccessMessage } = useMessage()
 
 const iconList = reactive(Object.keys(ElementPlusIconsVue))
 
@@ -26,7 +26,7 @@ const { copy, isSupported } = useClipboard()
 const handleCopy = (value) => {
   if (isSupported) {
     copy(value)
-    showMessage('success', 'Copied!', { grouping: true })
+    showSuccessMessage('Copied!', { grouping: true })
   }
 }
 </script>

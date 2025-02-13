@@ -1,5 +1,5 @@
 import { useMessage } from '@/hooks/use-message'
-const { showMessage } = useMessage()
+const { showErrorMessage } = useMessage()
 
 /**
  * script error
@@ -41,7 +41,7 @@ const vueErrorHandler = (err, instance, info) => {
   // 处理错误，例如：报告给一个服务
   console.log(':: vue error :: ', err, instance, info)
   if (err instanceof ReferenceError) {
-    showMessage('error', err.message)
+    showErrorMessage(err.message)
   }
 }
 

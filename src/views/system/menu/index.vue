@@ -43,7 +43,7 @@ import { BADGE_STATUS_LIST, ACCOUNT_STATUS_LIST, MENU_TYPE_LIST } from '@/consta
 import { generateRouteTree } from '@/router/util'
 
 const router = useRouter()
-const { showMessage } = useMessage()
+const { showErrorMessage } = useMessage()
 
 const loading = ref(false)
 const menuList = ref([])
@@ -72,7 +72,7 @@ const loadList = async () => {
     const data = await getMenuList()
     menuList.value = generateRouteTree(data)
   } catch (error) {
-    showMessage('error', error.message)
+    showErrorMessage(error.message)
   } finally {
     loading.value = false
   }

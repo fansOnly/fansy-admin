@@ -1,5 +1,5 @@
 import { useMessage } from '../use-message'
-const { showMessage } = useMessage()
+const { showErrorMessage } = useMessage()
 
 export const useTable = (api, params = {}) => {
   const { currentPage = 1, pageSize = 10, ...rest } = params
@@ -32,7 +32,7 @@ export const useTable = (api, params = {}) => {
       total.value = data.total
       loading.value = false
     } catch (error) {
-      showMessage('error', error.message)
+      showErrorMessage(error.message)
     } finally {
       loading.value = false
     }

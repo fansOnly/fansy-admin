@@ -38,7 +38,7 @@
 import { login } from '@/api/core/login'
 import { md5Encrypt } from '@/common/security/md5'
 import { useMessage } from '@/hooks/use-message'
-const { showMessage } = useMessage()
+const { showSuccessMessage } = useMessage()
 import Storage from '@/common/storage'
 
 const router = useRouter()
@@ -76,7 +76,7 @@ const submitForm = (formEle) => {
             Storage.clearSession('nav-bar')
             Storage.setSessionItem('login-username', loginForm.username)
           }
-          showMessage('success', '登录成功')
+          showSuccessMessage('登录成功')
           router.push(redirectedFrom || '/')
         }
       } catch (error) {
