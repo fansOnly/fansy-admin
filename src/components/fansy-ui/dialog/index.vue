@@ -9,8 +9,8 @@
     <template v-if="slots.footer" #footer>
       <slot name="footer">
         <div style="flex: auto">
-          <el-button @click="emit('cancel')">{{ cancelText }}</el-button>
-          <el-button type="primary" @click="emit('confirm')">{{ confirmText }}</el-button>
+          <el-button :disabled="disabled" @click="emit('cancel')">{{ cancelText }}</el-button>
+          <el-button :disabled="disabled" type="primary" @click="emit('confirm')">{{ confirmText }}</el-button>
         </div>
       </slot>
     </template>
@@ -27,10 +27,12 @@ const props = defineProps({
   confirmText: {
     type: String,
     default: '确定'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 const emit = defineEmits(['confirm', 'cancel'])
 const slots = useSlots()
 </script>
-
-<style lang="scss" scoped></style>

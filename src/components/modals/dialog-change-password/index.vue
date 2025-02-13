@@ -1,7 +1,7 @@
 <template>
-  <el-dialog v-model="show" title="修改密码" width="600">
+  <fansy-dialog v-model="show" title="修改密码" width="600">
     <change-password class="mt-16px" @loading="onLoading" @success="onSuccess" />
-  </el-dialog>
+  </fansy-dialog>
 </template>
 
 <script setup>
