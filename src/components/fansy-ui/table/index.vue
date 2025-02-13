@@ -6,7 +6,7 @@
           toolsConfig.addButtonText }}</el-button>
         <el-button v-if="toolsConfig.showSelect" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-          }}</el-button>
+        }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="emit('batch-delete', selections)">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-            }}</el-button>
+          }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -75,13 +75,15 @@
       :border="tableConfig.border" :stripe="tableConfig.stripe" style="width: 100%" @row-click="onRowClick"
       @selection-change="onSelectionChange">
       <!-- 选择栏 -->
-      <el-table-column v-if="tableConfig.selection === 'single'" min-width="47"
-        :fixed="shouldSingleSelectionColumnFixed">
-        <template #default="scope">
-          <el-radio :model-value="selection" :value="scope.row[rowKey]" />
-        </template>
-      </el-table-column>
-      <el-table-column v-else-if="tableConfig.selection === 'multiple'" type="selection" width="42" />
+      <template v-if="toolsConfig.showSelect">
+        <el-table-column v-if="tableConfig.selection === 'single'" min-width="47"
+          :fixed="shouldSingleSelectionColumnFixed">
+          <template #default="scope">
+            <el-radio :model-value="selection" :value="scope.row[rowKey]" />
+          </template>
+        </el-table-column>
+        <el-table-column v-else-if="tableConfig.selection === 'multiple'" type="selection" width="42" />
+      </template>
       <!-- 自定义栏 -->
       <el-table-column v-for="column in activeTableColumns" :key="column.prop" :property="column.prop"
         :label="column.label" :width="column.width || ''" :fixed="column.fixed" :resizable="column.resizable || true"
@@ -92,7 +94,7 @@
         </template>
         <template v-else-if="column.prop === 'status'" #default="scope">
           <div class="flex-[center] whitespace-nowrap">
-            <div class="relative w-16 mr-1">
+            <div class="relative w-16px mr-4px">
               <el-badge is-dot :type="getBadgeType(scope.row.status)" :offset="[-17, 8]">
                 <div :class="['badge-status', `is-${getBadgeType(scope.row.status)}`]"></div>
               </el-badge>
@@ -200,6 +202,8 @@ const toolsConfig = Object.assign(
     showExport: false,
     showImport: false,
     showDelete: true,
+    showEdit: true,
+    showPublish: true,
     addButtonText: '新增',
     addButtonIcon: 'Plus',
     deleteButtonText: '删除',
@@ -219,7 +223,7 @@ const actions = [
     label: '编辑',
     value: COMMON_ACTIONS.EDIT,
     icon: 'Edit',
-    isShow: () => true
+    isShow: () => toolsConfig.showEdit
   },
   {
     sortnum: 20,
@@ -227,7 +231,7 @@ const actions = [
     value: COMMON_ACTIONS.PUBLISH,
     icon: 'Promotion',
     type: 'success',
-    isShow: (status) => status === 0,
+    isShow: (status) => toolsConfig.showPublish && status === 0,
     data: 1
   },
   {
@@ -236,7 +240,7 @@ const actions = [
     value: COMMON_ACTIONS.UN_PUBLISH,
     type: 'warning',
     icon: 'Hide',
-    isShow: (status) => status !== 0,
+    isShow: (status) => toolsConfig.showPublish && status !== 0,
     data: 0
   },
   {
@@ -245,7 +249,7 @@ const actions = [
     value: COMMON_ACTIONS.DELETE,
     type: 'danger',
     icon: 'Delete',
-    isShow: () => true
+    isShow: () => toolsConfig.showDelete,
   }
 ].concat(props.actions)
 
