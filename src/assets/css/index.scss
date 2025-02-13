@@ -102,6 +102,12 @@ svg {
 }
 
 .fansy-detail-container {
-  margin: -var(--el-main-padding);
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   padding: var(--el-main-padding);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
