@@ -10,7 +10,7 @@
           style="width: 100%" />
       </template>
       <template #icon="{ prop }">
-        <el-icon v-if="formData[prop]" :size="40" class="mr-2">
+        <el-icon v-if="formData[prop]" :size="30" class="mr-8px">
           <component :is="formData[prop]" />
         </el-icon>
         <el-button type="default" @click="openIconDialog(prop)">选择图标</el-button>

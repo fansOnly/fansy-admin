@@ -1,13 +1,14 @@
 <template>
-  <el-dialog v-model="show" title="选择图标" width="800">
+  <el-dialog v-model="show" title="选择图标" width="810">
     <div class="grid icon-list">
-      <div v-for="item in iconList" :key="item" class="flex-[center,,column] p-8 rounded-4px cursor-pointer icon-item"
+      <div v-for="item in iconList" :key="item"
+        class="flex-[center,,column] px-4px py-8px rounded-4px cursor-pointer icon-item"
         :class="{ 'is-active': icon === item }" @click="onSelect(item)">
-        <el-icon :size="24">
+        <el-icon :size="20">
           <IconMenu v-if="item === 'Menu'" />
           <component v-else :is="item" />
         </el-icon>
-        <div class="mt-2 font-size-12px whitespace-nowrap">{{ item }}</div>
+        <div class="mt-2px font-size-12px whitespace-nowrap">{{ item }}</div>
       </div>
     </div>
     <template #footer>
@@ -45,7 +46,7 @@ const onConfirm = () => {
 
 <style lang="scss" scoped>
 .icon-list {
-  grid-template-columns: repeat(5, 20%);
+  grid-template-columns: repeat(7, 1fr);
   height: 300px;
   overflow-y: auto;
 }
