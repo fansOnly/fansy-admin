@@ -92,7 +92,7 @@
                 <span class="ml-4px font-size-14px">个人信息</span>
               </div>
             </div>
-            <div class="header-menu-item" @click="onRoute('/user/info')">
+            <div class="header-menu-item" @click="showChangePassword()">
               <div class="header-menu-item-content">
                 <el-icon size="16px">
                   <Key />
@@ -120,12 +120,14 @@
   <dialog-menu-search v-model:show="visibleSearch" />
   <drawer-setting v-model:show="visibleSetting" />
   <dialog-lock-screen v-model:show="visibleLock" />
+  <dialog-change-password v-model:show="visibleChangePassword" />
 </template>
 
 <script setup>
 import DialogMenuSearch from '@/components/modals/dialog-menu-search/index.vue'
 import DrawerSetting from '@/components/modals/drawer-setting/index.vue'
 import DialogLockScreen from '@/components/modals/dialog-lock-screen/index.vue'
+import DialogChangePassword from '@/components/modals/dialog-change-password/index.vue'
 import { useGlobalStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
 import { logout } from '@/api/core/login'
@@ -154,6 +156,7 @@ const languagePopoverRef = ref(null)
 const menuDropdownRef = ref(null)
 const visibleSetting = ref(false)
 const visibleSearch = ref(false)
+const visibleChangePassword = ref(false)
 const visibleLock = ref(false)
 const shortKeyAlt = computed(() => isMacOS ? '⌥' : 'Alt')
 const shortKeyCtrl = computed(() => isMacOS ? '⌘' : 'Ctrl')
@@ -175,6 +178,11 @@ const setLanguage = (value) => {
   setTimeout(() => {
     languagePopoverRef?.value.hide()
   }, 300);
+}
+
+function showChangePassword() {
+  menuDropdownRef?.value.handleClose()
+  visibleChangePassword.value = true
 }
 
 const onRoute = (path) => {

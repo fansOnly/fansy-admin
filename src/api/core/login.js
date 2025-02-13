@@ -18,3 +18,12 @@ export const refreshToken = (refreshToken = '') =>
  * 用户登出
  */
 export const logout = () => httpPost('/core/logout')
+
+/**
+ * 修改密码
+ * @param {Object} params
+ * @param {string} params.id
+ * @param {string} params.oldPass
+ * @param {string} params.password
+ */
+export const changePassword = (params = {}) => httpPost('/core/change_password', params)

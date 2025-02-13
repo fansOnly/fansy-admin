@@ -47,7 +47,7 @@ const onConfirm = () => {
 <style lang="scss" scoped>
 .icon-list {
   grid-template-columns: repeat(7, 1fr);
-  height: 300px;
+  height: 410px;
   overflow-y: auto;
 }
 

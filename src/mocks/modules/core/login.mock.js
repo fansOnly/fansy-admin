@@ -71,5 +71,24 @@ export default [
         message: 'success'
       }
     }
+  },
+  {
+    url: '/api-mock/core/change_password',
+    method: 'post',
+    timeout: 500,
+    response: (config) => {
+      const { oldPass } = config.body
+      if (oldPass !== md5Encrypt('123456')) {
+        return {
+          code: 1003,
+          message: '旧密码错误'
+        }
+      }
+      return {
+        code: 10000,
+        message: 'success',
+        data: true
+      }
+    }
   }
 ]

@@ -13,15 +13,6 @@ const extraRoutes = [
       title: '用户中心',
       requireAuth: true
     }
-  },
-  {
-    path: '/user/changePassword',
-    name: 'UserChangePassword',
-    component: () => import('@/views/user/changePassword.vue'),
-    meta: {
-      title: '修改密码',
-      requireAuth: true
-    }
   }
 ]
 
