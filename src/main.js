@@ -12,6 +12,7 @@ import 'element-plus/theme-chalk/src/message-box.scss'
 import 'element-plus/theme-chalk/src/message.scss'
 import 'element-plus/theme-chalk/src/notification.scss'
 import 'element-plus/theme-chalk/src/overlay.scss'
+import 'element-plus/theme-chalk/src/loading.scss'
 
 import App from './App.vue'
 import './assets/css/index.scss'

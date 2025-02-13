@@ -1,16 +1,16 @@
 <template>
   <div class="px-20px pt-20px overflow-x-hidden" :style="{ height: `calc(100vh - ${globalStore.topHeight}px)` }">
-    <el-main v-loading="!loaded" class="background-custom-var(--fansy-main-bg-color) rounded-8px"
+    <el-main class="background-custom-var(--fansy-main-bg-color) rounded-8px"
       :style="{ 'overflow': 'hidden', 'min-height': `calc(100% - ${globalStore.layout.footerHeight + 20}px)` }">
-      <router-view v-slot="{ Component, route }">
+      <router-view v-if="loaded" v-slot="{ Component, route }">
         <transition :name="globalStore.preference.transition.name" mode="out-in" appear>
-          <keep-alive v-if="route.meta.cache && loaded">
+          <keep-alive v-if="route.meta.cache">
             <base-iframe v-if="route.meta.type === 'iframe'" :src="route.meta.src" />
-            <component :is="Component" :key="route.meta.id" v-else />
+            <component :is="Component" v-else />
           </keep-alive>
-          <template v-else-if="loaded">
+          <template v-else>
             <base-iframe v-if="route.meta.type === 'iframe'" :src="route.meta.src" />
-            <component :is="Component" :key="route.meta.id" v-else />
+            <component :is="Component" v-else />
           </template>
         </transition>
       </router-view>
