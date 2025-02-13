@@ -38,8 +38,8 @@ export const DATA_STATUS_LIST = [
 // 账号数据状态
 export const ACCOUNT_STATUS_LIST = [
   { label: '启用', value: 1 },
-  { label: '禁用', value: 0 }
-  // { label: '异常', value: -1 }
+  { label: '禁用', value: 0 },
+  { label: '异常', value: -1 }
 ]
 // 徽章数据状态
 export const BADGE_STATUS_LIST = [
