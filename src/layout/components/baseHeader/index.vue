@@ -85,7 +85,7 @@
             </div>
             <div class="w-full h-1px background-custom-var(--el-border-color-lighter)"></div>
             <div class="header-menu-item" @click="onRoute('/user/info')">
-              <div class="flex-1">
+              <div class="header-menu-item-content">
                 <el-icon size="16px">
                   <User />
                 </el-icon>
@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="header-menu-item" @click="onRoute('/user/info')">
-              <div class="flex-1">
+              <div class="header-menu-item-content">
                 <el-icon size="16px">
                   <Key />
                 </el-icon>
@@ -102,13 +102,15 @@
             </div>
             <div class="w-full h-1px background-custom-var(--el-border-color-lighter)"></div>
             <div class="header-menu-item" @click="handleLogout()">
-              <div class="flex-1 flex-[center]">
-                <el-icon size="16px">
-                  <SwitchButton />
-                </el-icon>
-                <span class="ml-4px font-size-14px">退出登录</span>
+              <div class="header-menu-item-content">
+                <div class="flex-1 flex-[center] ">
+                  <el-icon size="16px">
+                    <SwitchButton />
+                  </el-icon>
+                  <span class="ml-4px font-size-14px">退出登录</span>
+                </div>
+                <span>{{ shortKeyAlt }} Q</span>
               </div>
-              <span>{{ shortKeyAlt }} Q</span>
             </div>
           </template>
         </el-dropdown>
@@ -309,13 +311,19 @@ defineOptions({
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 4px;
+}
+
+.header-menu-item-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
   padding: 12px 16px;
-  color: #606266;
+  border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background: var(--el-color-primary-light-9);
-    color: var(--el-color-primary);
+    background: var(--el-menu-hover-bg-color);
   }
 }
 
