@@ -100,3 +100,8 @@ svg {
     display: none;
   }
 }
+
+.fansy-detail-container {
+  margin: -var(--el-main-padding);
+  padding: var(--el-main-padding);
+}

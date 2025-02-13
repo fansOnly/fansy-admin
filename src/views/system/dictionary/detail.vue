@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div class="fansy-detail-container" v-loading="loading">
     <fansy-form :form-data="formData" :form-items="formItems" :form-config="{ showBack: true }" @submit="handleSubmit">
       <template #options="{ prop }">
         <el-row :gutter="12" v-for="(item, index) in formData[prop]" :key="index" class="mb-5 w-full">

@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div class="fansy-detail-container" v-loading="loading">
     <fansy-form :form-data="formData" :form-items="formItems" :form-config="{ showBack: true }" @submit="handleSubmit">
       <template #parentId="{ prop }">
         <el-tree-select v-model="formData[prop]" :data="menuTree" render-after-expand check-on-click-node show-checkbox
