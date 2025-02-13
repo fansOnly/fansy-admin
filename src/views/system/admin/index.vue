@@ -58,12 +58,12 @@ const columns = [
   {
     label: '登录账号',
     prop: 'username',
-    width: 120
+    minWidth: 120
   },
   {
     label: '用户名',
     prop: 'nickname',
-    width: 80
+    minWidth: 80
   },
   {
     label: '头像',
@@ -74,17 +74,17 @@ const columns = [
   {
     label: '手机',
     prop: 'phone',
-    width: 130
+    minWidth: 130
   },
   {
     label: '邮箱',
     prop: 'email',
-    width: 180
+    minWidth: 180
   },
   {
     label: '角色',
     prop: 'roleId',
-    width: 180
+    minWidth: 180
   },
   {
     label: '创建时间',

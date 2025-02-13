@@ -5,11 +5,11 @@
       style="width: 100%">
       <el-table-column type="selection" width="55" />
       <el-table-column prop="sortnum" label="序号" width="120" />
-      <el-table-column prop="title" label="菜单名称" width="140" />
-      <el-table-column prop="name" label="路由名称" width="180" />
-      <el-table-column prop="path" label="路由地址" width="200" />
-      <el-table-column prop="type" label="菜单类型" width="90" :formatter="getMenuTypeText" />
-      <!-- <el-table-column prop="createTime" label="创建时间" width="180" /> -->
+      <el-table-column prop="title" label="菜单名称" min-width="120" />
+      <el-table-column prop="name" label="路由名称" min-width="180" />
+      <el-table-column prop="path" label="路由地址" min-width="200" />
+      <el-table-column prop="type" label="菜单类型" width="90" align="center" :formatter="getMenuTypeText" />
+      <el-table-column prop="createTime" label="创建时间" width="180" />
       <el-table-column prop="status" label="状态" width="80">
         <template #default="scope">
           <div class="flex-[center]">
@@ -22,7 +22,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="410" fixed="right">
         <template #default="scope">
           <el-button type="default" size="small" icon="Edit" @click="onEdit(scope.row.id)">编辑</el-button>
           <el-button type="success" size="small" icon="Plus" @click="onAdd(scope.row.id, 'sub')">新增子菜单</el-button>

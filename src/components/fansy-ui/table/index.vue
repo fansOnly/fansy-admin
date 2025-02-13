@@ -86,9 +86,9 @@
       </template>
       <!-- 自定义栏 -->
       <el-table-column v-for="column in activeTableColumns" :key="column.prop" :property="column.prop"
-        :label="column.label" :width="column.width || ''" :fixed="column.fixed" :resizable="column.resizable || true"
-        :show-overflow-tooltip="column.showOverflowTooltip" :align="column.align || 'left'"
-        :formatter="column.formatter">
+        :label="column.label" :width="column.width || ''" :min-width="column.minWidth || ''" :fixed="column.fixed"
+        :resizable="column.resizable || true" :show-overflow-tooltip="column.showOverflowTooltip"
+        :align="column.align || 'left'" :formatter="column.formatter">
         <template v-if="column.custom" #default="scope">
           <slot :name="column.prop" :index="scope.$index" :row="scope.row"></slot>
         </template>
@@ -105,7 +105,7 @@
         </template>
       </el-table-column>
       <!-- 操作栏 -->
-      <el-table-column label="操作" :min-width="tableConfig.actionColumnWidth"
+      <el-table-column label="操作" :width="tableConfig.actionColumnWidth" :min-width="tableConfig.actionColumnMinWidth"
         :fixed="tableConfig.isActionColumnFixed ? 'right' : false">
         <template #default="scope">
           <el-button v-for="(action, index) in effectiveActions(scope.row.status)" :key="index" size="small"

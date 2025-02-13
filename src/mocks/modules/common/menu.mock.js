@@ -409,7 +409,7 @@ export const demoMenus = [
     id: 'M202109231733160464100000001800402',
     auth: 1,
     type: 'iframe',
-    link: 'https://www.baidu.com',
+    link: 'https://nodejs.org/zh-cn/',
     icon: '',
     title: 'iframe示例',
     affix: 0,

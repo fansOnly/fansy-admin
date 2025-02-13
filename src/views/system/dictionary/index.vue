@@ -46,7 +46,8 @@ const columns = [
   },
   {
     label: '字典名称',
-    prop: 'title'
+    prop: 'title',
+    minWidth: 120
   },
   {
     label: '创建时间',
@@ -87,7 +88,9 @@ const initData = reactive({
 const tableConfig = {
   actionColumnWidth: 100,
   actionPublishText: '启用',
-  actionUnPublishText: '禁用'
+  actionUnPublishText: '禁用',
+  actionColumnWidth: 250,
+  isActionColumnFixed: true,
 }
 
 const handleSearch = () => {

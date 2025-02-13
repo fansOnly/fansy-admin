@@ -44,12 +44,13 @@ const columns = [
   {
     label: '角色名称',
     prop: 'title',
-    width: 120
+    minWidth: 120
   },
   {
     label: '角色描述',
     prop: 'content',
-    showOverflowTooltip: true
+    showOverflowTooltip: true,
+    minWidth: 120
   },
   {
     label: '创建时间',
@@ -90,7 +91,9 @@ const initData = reactive({
 const tableConfig = {
   actionColumnWidth: 60,
   actionPublishText: '启用',
-  actionUnPublishText: '禁用'
+  actionUnPublishText: '禁用',
+  actionColumnWidth: 250,
+  isActionColumnFixed: true,
 }
 
 const handleSearch = () => {
