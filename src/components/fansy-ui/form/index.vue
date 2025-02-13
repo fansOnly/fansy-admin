@@ -167,6 +167,7 @@ const formConfig = Object.assign(
     size: 'large',
     label: {
       // width: 'auto', // 控制台警告
+      width: '100px',
       position: 'left',
       suffix: ''
     },
