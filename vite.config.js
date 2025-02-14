@@ -32,6 +32,7 @@ export default defineConfig(({ command, mode }) => {
     server: {
       // open: true,
       port: 5172,
+      host: true,
       proxy: createProxy([
         {
           '/api-mock': VITE_API_URL + VITE_API_CONTEXT

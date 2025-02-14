@@ -4,11 +4,15 @@
       <div class="p-16px background-custom-var(--el-fill-color) rounded-6px">
         <div class="flex-[center,center,column] mt-50px">
           <div class="relative">
-            <div
-              class="absolute right-4px bottom-10px flex-[center,center] p-4px rounded-full background-custom-var(--el-color-primary) cursor-pointer">
-              <el-icon size="20px">
-                <UploadFilled />
-              </el-icon>
+            <div class="absolute right-4px bottom--4px">
+              <upload-file :auto-upload="false" @change="handleFileChange">
+                <div
+                  class="flex-[center,center] p-4px rounded-full background-custom-var(--el-color-primary) cursor-pointer">
+                  <el-icon size="20px" color="#fff">
+                    <UploadFilled />
+                  </el-icon>
+                </div>
+              </upload-file>
             </div>
             <el-avatar :size="100" :src="adminInfo.avatar">
               <el-image :src="userStore.defaultAvatar" fit="contain" alt="user" />
@@ -56,11 +60,17 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+
+    <!-- 裁剪头像 -->
+    <dialog-image-cropper v-model:show="visibleAvatarCropper" name="avatar" :src="avatarSrc"
+      @confirm="handleCropperAvatar" />
   </div>
 </template>
 
 <script setup>
 import ChangePassword from '@/components/change-password/index.vue'
+import UploadFile from '@/components/upload-file/index.vue'
+import DialogImageCropper from '@/components/modals/dialog-image-cropper/index.vue'
 import { getAdminDetail, updateAdmin } from '@/api/common/admin'
 import { useUserStore } from '@/store/user';
 import { isPhone, isEmail } from '@/utils/validate'
@@ -71,19 +81,17 @@ const { showSuccessMessage, showErrorMessage } = useMessage()
 
 const formRef = ref(null)
 const loading = ref(false)
+const visibleAvatarCropper = ref(false)
 const adminInfo = ref({});
 const form = ref({})
 const activeName = ref('info')
+const avatarSrc = ref('https://images.pexels.com/photos/226746/pexels-photo-226746.jpeg')
 const rules = {
   nickname: [
     { required: true, message: '请输入昵称', trigger: 'blur' },
   ],
   phone: [
-    {
-      required: true,
-      message: '请输入手机号',
-      trigger: 'blur'
-    },
+    { required: true, message: '请输入手机号', trigger: 'blur' },
     {
       validator: (rule, value, callback) => {
         if (!isPhone(value)) {
@@ -95,11 +103,7 @@ const rules = {
     }
   ],
   email: [
-    {
-      required: true,
-      message: '请输入邮箱',
-      trigger: 'blur'
-    },
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
     {
       validator: (rule, value, callback) => {
         if (!isEmail(value)) {
@@ -128,6 +132,22 @@ function onReset(formEl) {
 
 function onLoading(val) {
   loading.value = val
+}
+
+function handleFileChange(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    avatarSrc.value = e.target.result;
+    visibleAvatarCropper.value = true;
+  };
+  reader.readAsDataURL(file.raw);
+}
+
+// 裁剪头像
+function handleCropperAvatar(file, formData) {
+  console.log('handleAvatarSuccess formData: ', formData);
+  console.log('handleAvatarSuccess file: ', file);
+  // TODO: 上传头像
 }
 
 async function getAdminInfo() {
@@ -173,7 +193,9 @@ async function updateAdminData() {
   }
 }
 
-getAdminInfo()
+onMounted(() => {
+  getAdminInfo()
+})
 </script>
 
 <style lang="scss" scoped></style>
