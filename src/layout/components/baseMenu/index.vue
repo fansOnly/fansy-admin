@@ -120,6 +120,25 @@ defineOptions({
   border-bottom: none;
 }
 
+// 文本超出适配
+.el-menu--vertical {
+  &.el-menu--collapse {
+
+    .el-menu-item.first-level,
+    .el-sub-menu.first-level .el-sub-menu__title {
+      height: auto;
+      min-height: var(--el-menu-item-height);
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  .fansy-menu-title {
+    white-space: normal;
+    line-height: 1.3;
+  }
+}
+
 .fansy-menu-item.is-round,
 .fansy-sub-menu.is-round .el-sub-menu__title {
   margin: 4px;
