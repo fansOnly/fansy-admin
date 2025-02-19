@@ -79,7 +79,7 @@
         </el-form-item>
       </el-col>
       <el-col v-if="showConfirmButton || showResetButton" :span="formConfig.layout.span">
-        <el-form-item>
+        <el-form-item label-width="auto">
           <el-button v-if="showConfirmButton" type="primary" @click="onSubmit(formRef)">{{ confirmButtonText
             }}</el-button>
           <el-button v-if="showResetButton" @click="onReset">{{ resetButtonText }}</el-button>
