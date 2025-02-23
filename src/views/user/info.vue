@@ -116,6 +116,22 @@ const rules = {
   ]
 }
 
+function handleFileChange(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    avatarSrc.value = e.target.result;
+    visibleAvatarCropper.value = true;
+  };
+  reader.readAsDataURL(file.raw);
+}
+
+// 裁剪头像
+function handleCropperAvatar(file, formData) {
+  console.log('handleAvatarSuccess formData: ', formData);
+  console.log('handleAvatarSuccess file: ', file);
+  // TODO: 上传头像
+}
+
 function onSubmit(formEl) {
   if (!formEl) return
   formEl.validate((valid) => {
@@ -132,22 +148,6 @@ function onReset(formEl) {
 
 function onLoading(val) {
   loading.value = val
-}
-
-function handleFileChange(file) {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    avatarSrc.value = e.target.result;
-    visibleAvatarCropper.value = true;
-  };
-  reader.readAsDataURL(file.raw);
-}
-
-// 裁剪头像
-function handleCropperAvatar(file, formData) {
-  console.log('handleAvatarSuccess formData: ', formData);
-  console.log('handleAvatarSuccess file: ', file);
-  // TODO: 上传头像
 }
 
 async function getAdminInfo() {
