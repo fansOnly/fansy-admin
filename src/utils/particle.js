@@ -1,9 +1,9 @@
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, maxSpeed = 1) {
     this.x = x
     this.y = y
-    this.speedX = this._getRandomRange(-1, 1)
-    this.speedY = this._getRandomRange(-1, 1)
+    this.speedX = this._getRandomRange(-maxSpeed, maxSpeed)
+    this.speedY = this._getRandomRange(-maxSpeed, maxSpeed)
   }
 
   draw(ctx, radius) {
@@ -24,43 +24,61 @@ class Particle {
 
 export default class CanvasParticle {
   constructor(canvas, options = {}) {
-    this.canvas = canvas // 画布对象
+    this.options = {
+      color: 'rgba(24, 144, 255, 1)', // 粒子颜色
+      lineColor: '#fff', // 连线颜色
+      radius: 1, // 粒子半径
+      particleCount: 80, // 粒子数量
+      maxSpeed: 0.5, // 粒子最大移动速度
+      minDistance: 100, // 粒子之间连线的最小距离
+      collideDetect: true, // 是否开启边界碰撞检测
+      hasInteractMouse: false, // 是否开启鼠标交互
+      density: 80, // 粒子密度
+      clearOffset: 0.4, // 清除偏移量
+      ...options
+    }
+
+    this.canvas = canvas
     this.width = options.width || document.documentElement.clientWidth || document.body.clientWidth
     this.height =
       options.height || document.documentElement.clientHeight || document.body.clientHeight
-    this.radius = options.radius || 3 // 粒子半径
-    this.particleCount = options.particleCount || 200 // 粒子数量
-    this.minDistance = options.minDistance || 100 // 粒子画线的最小距离
-    this.collideDetect = options.collideDetect || true // 边界碰撞检测
-    this.hasInteractMouse = options.hasInteractMouse || false // 是否有鼠标交互
 
-    this.particles = [] // 粒子集合
-    this.mouseOffset = null // 鼠标位置对象
-    this.ctx = null // 画布上下文
+    this.radius = this.options.radius
+    this.particleCount = this.options.particleCount
+    this.minDistance = this.options.minDistance
+    this.collideDetect = this.options.collideDetect
+    this.hasInteractMouse = this.options.hasInteractMouse
+
+    this.particles = []
+    this.mouseOffset = null
+    this.ctx = null
   }
 
   init() {
-    //设置canvas铺满屏幕
     this.canvas.width = this.width
     this.canvas.height = this.height
     this.ctx = this.canvas.getContext('2d')
 
     this.createParticles()
     this.draw()
-    this.handleCanvasEvent()
+    if (this.options.hasInteractMouse) {
+      this.handleCanvasEvent()
+    }
   }
 
-  // 创建粒子对象
   createParticles() {
     for (let index = 0; index < this.particleCount; index++) {
       this.particles.push(
-        new Particle(this._getRandomRange(0, this.width), this._getRandomRange(0, this.height))
+        new Particle(
+          this._getRandomRange(0, this.width),
+          this._getRandomRange(0, this.height),
+          this.options.maxSpeed
+        )
       )
     }
   }
 
   draw() {
-    // 清空画布
     this.canvas.width = this.width
     this.drawParticles()
     this.ctx.lineWidth = 0.1
@@ -70,14 +88,13 @@ export default class CanvasParticle {
   }
 
   drawParticles() {
-    this.ctx.fillStyle = 'lightyellow'
+    this.ctx.fillStyle = this.options.color
     this.ctx.beginPath()
     for (let index = 0; index < this.particles.length; index++) {
       const particle = this.particles[index]
 
-      particle.draw(this.ctx)
+      particle.draw(this.ctx, this.radius)
 
-      // 没有开启边界碰撞检测，越界的粒子,更新位置并保证其新位置不越界
       if (!this.collideDetect) {
         if (
           particle.x > this.width ||
@@ -85,11 +102,10 @@ export default class CanvasParticle {
           particle.y > this.height ||
           particle.y < 0
         ) {
-          // 粒子直径
           const diameter = this.radius * 2
           particle.updateCoordinate(
-            getRandomRange(diameter, this.width - diameter),
-            getRandomRange(diameter, this.height - diameter)
+            this._getRandomRange(diameter, this.width - diameter),
+            this._getRandomRange(diameter, this.height - diameter)
           )
         }
       } else {
@@ -103,7 +119,7 @@ export default class CanvasParticle {
   }
 
   drawLines() {
-    this.ctx.strokeStyle = 'blue'
+    this.ctx.strokeStyle = this.options.lineColor
     this.ctx.beginPath()
     let arr = [...this.particles]
     this.mouseOffset && (arr = [this.mouseOffset].concat(arr))
@@ -117,12 +133,9 @@ export default class CanvasParticle {
         }
         const distance = this._calDistance(particle.x, particle2.x, particle.y, particle2.y)
         if (distance < this.minDistance) {
-          // 如果是鼠标，则让粒子向鼠标的位置移动,距离-10 保证粒子与鼠标之间的最小间距
           if (particle2 === this.mouseOffset && distance > this.minDistance - 10) {
             const xc = particle.x - particle2.x
             const yc = particle.y - particle2.y
-
-            // 0.03 向鼠标坐标移动的速率
             particle.x -= xc * 0.03
             particle.y -= yc * 0.03
           }
@@ -131,11 +144,23 @@ export default class CanvasParticle {
         }
       }
 
-      // 去掉重复比较
       arr.splice(arr.indexOf(particle), 1)
     }
 
     this.ctx.stroke()
+  }
+
+  handleCanvasEvent() {
+    this.canvas.addEventListener('mousemove', (e) => {
+      this.mouseOffset = {
+        x: e.offsetX,
+        y: e.offsetY
+      }
+    })
+
+    this.canvas.addEventListener('mouseout', () => {
+      this.mouseOffset = null
+    })
   }
 
   _handleCollide(particle) {
