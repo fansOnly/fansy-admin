@@ -106,6 +106,7 @@ defineOptions({
 .el-menu {
   width: 100%;
   border-right: none;
+  user-select: none;
 
   .el-sub-menu.follow-active {
 

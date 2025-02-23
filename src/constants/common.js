@@ -1,8 +1,11 @@
 export const COMMON_ACTIONS = {
+  SEARCH: 'search',
+  REFRESH: 'refresh',
   EDIT: 'edit',
   DELETE: 'delete',
   ADD: 'add',
   DETAIL: 'detail',
+  VIEW: 'view',
   PUBLISH: 'publish',
   UN_PUBLISH: 'unPublish',
   TOP: 'top',
