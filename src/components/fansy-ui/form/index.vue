@@ -94,7 +94,7 @@
         </el-form-item>
       </el-col>
       <el-col v-if="showConfirmButton || showResetButton || formConfig.showBack" :span="formConfig.layout.span">
-        <el-form-item :label-width="0">
+        <el-form-item label-width="0">
           <el-button v-if="showConfirmButton && !disabled" type="primary" @click="onSubmit(formRef)">{{
             confirmButtonText
           }}</el-button>
@@ -187,7 +187,7 @@ const formConfig = Object.assign(
     size: 'large',
     label: {
       // width: 'auto', // 控制台警告
-      width: '100px',
+      width: '80px',
       position: 'left',
       suffix: ''
     },
