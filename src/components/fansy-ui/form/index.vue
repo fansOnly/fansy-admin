@@ -8,29 +8,29 @@
           v-if="item.showOnlyValued ? formData[item.prop] : true">
           <template v-if="item.type === 'date'">
             <el-date-picker v-model="formData[item.prop]" type="date" :placeholder="item.placeholder"
-              v-bind="item.attrs" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'daterange'">
             <el-date-picker v-model="formData[item.prop]" type="daterange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始日期'"
               :end-placeholder="item.config?.endPlaceholder || '结束日期'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetime'">
             <el-date-picker v-model="formData[item.prop]" type="datetime" :placeholder="item.placeholder"
-              v-bind="item.attrs" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetimerange'">
             <el-date-picker v-model="formData[item.prop]" type="datetimerange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始时间'"
               :end-placeholder="item.config?.endPlaceholder || '结束时间'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'select'">
             <el-select v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }">
+              :readonly="disabled" :style="{ width: '100%', ...item.style }">
               <el-option v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled" />
             </el-select>
@@ -38,51 +38,67 @@
           <template v-else-if="item.type === 'multiple-select'">
             <el-select v-model="formData[item.prop]" :placeholder="item.placeholder" multiple collapse-tags
               collapse-tags-tooltip :max-collapse-tags="item.config?.maxCollapseTags || 2" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }">
+              :readonly="disabled" :style="{ width: '100%', ...item.style }">
               <el-option v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled" />
             </el-select>
           </template>
           <template v-else-if="item.type === 'number'">
             <el-input-number v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'textarea'">
             <el-input v-model="formData[item.prop]" type="textarea" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'radio'">
             <el-radio-group v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }">
+              :readonly="disabled" :style="{ width: '100%', ...item.style }">
               <el-radio v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled"></el-radio>
             </el-radio-group>
           </template>
           <template v-else-if="item.type === 'checkbox'">
             <el-checkbox-group v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }">
+              :readonly="disabled" :style="{ width: '100%', ...item.style }">
               <el-checkbox v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled"></el-checkbox>
             </el-checkbox-group>
+          </template>
+          <template v-else-if="item.type === 'file'">
+            <el-upload :show-file-list="false" drag
+              action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" v-bind="item.attrs"
+              :disabled="disabled" :style="{ width: '100%', ...item.style }"
+              :on-success="(res, file, FileList) => handleSuccess(res, file, FileList, item)"
+              :before-upload="file => beforeUpload(file, item)">
+              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+              <div class="el-upload__text">
+                拖拽文件到这里或者<em>点击上传</em>
+              </div>
+              <template v-if="item.slots?.tip" #tip>
+                <div class="el-upload__tip">{{ item.slots.tip }}</div>
+              </template>
+            </el-upload>
           </template>
           <template v-else-if="item.type === 'custom'">
             <slot :name="item.prop" :prop="item.prop"></slot>
           </template>
           <template v-else-if="item.modify">
             <el-input v-model.[item.modify]="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else>
             <el-input v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
           </template>
         </el-form-item>
       </el-col>
-      <el-col v-if="showConfirmButton || showResetButton" :span="formConfig.layout.span">
-        <el-form-item label-width="auto">
-          <el-button v-if="showConfirmButton" type="primary" @click="onSubmit(formRef)">{{ confirmButtonText
-            }}</el-button>
-          <el-button v-if="showResetButton" @click="onReset">{{ resetButtonText }}</el-button>
+      <el-col v-if="showConfirmButton || showResetButton || formConfig.showBack" :span="formConfig.layout.span">
+        <el-form-item :label-width="0">
+          <el-button v-if="showConfirmButton && !disabled" type="primary" @click="onSubmit(formRef)">{{
+            confirmButtonText
+          }}</el-button>
+          <el-button v-if="showResetButton && !disabled" @click="onReset">{{ resetButtonText }}</el-button>
           <template v-if="formConfig.showBack">
             <el-button @click="onBack">返回</el-button>
           </template>
@@ -129,6 +145,10 @@ const props = defineProps({
    * @param {Function} validator 自定义校验函数
    */
   formItems: Array,
+  disabled: {
+    type: Boolean,
+    default: false
+  },
   showResetButton: {
     type: Boolean,
     default: true
@@ -185,6 +205,34 @@ const formItemsSorted = computed(() => {
     .map((v, i) => ({ sortnum: (i + 1) * 10, ...v }))
     .sort((a, b) => a.sortnum - b.sortnum)
 })
+
+const handleSuccess = (
+  response,
+  uploadFile,
+  fileList,
+  item
+) => {
+  // TODO: 处理上传成功后的逻辑
+  const url = URL.createObjectURL(uploadFile.raw)
+  props.formData[item.prop] = url
+  emit('upload-success', response, uploadFile, fileList, item)
+}
+
+const beforeUpload = (rawFile, item) => {
+  emit('before-upload', rawFile, item)
+  // const types = item.attrs?.accept.split(',')
+  // console.log('types: ', types);
+  const maxSize = item.attrs?.maxSize || 10
+  // if (rawFile.type !== 'image/jpeg') {
+  //   ElMessage.error('Avatar picture must be JPG format!')
+  //   return false
+  // } else 
+  if (rawFile.size / 1024 / 1024 > maxSize) {
+    ElMessage.error(`上传的文件大小不能超过 ${maxSize}M!`)
+    return false
+  }
+  return true
+}
 
 const onSubmit = async (formEl) => {
   if (!formEl) return

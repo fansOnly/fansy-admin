@@ -9,7 +9,7 @@
         }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
-            @click="emit('batch-delete', selections)">{{ toolsConfig.deleteButtonText }}</el-button>
+            @click="onBatchDelete()">{{ toolsConfig.deleteButtonText }}</el-button>
         </template>
         <template v-if="toolsConfig.showExport">
           <el-button v-show="selections.length" :icon="toolsConfig.exportButtonIcon" @click="onExport()">{{
@@ -340,12 +340,25 @@ const onPageChange = (currentPage, pageSize) => {
   emit('page-change', { pageSize, currentPage })
 }
 
+function onBatchDelete() {
+  useMessageBox('confirm', `即将删除${selections.value.length}条数据，是否继续？`, '', {
+    iconType: 'warning',
+    callback: (value, action) => {
+      if (value === 'confirm') {
+        emit('batch-delete', selections.value)
+      }
+    }
+  })
+}
+
 const onAction = (item, index, data) => {
   if (tableConfig.useDialogDelete && item.value === COMMON_ACTIONS.DELETE) {
-    useMessageBox('confirm', '即将删除当前数据，是否继续？', {
+    useMessageBox('confirm', '即将删除当前数据，是否继续？', '', {
       iconType: 'warning',
-      callback: () => {
-        emit('action', item, index, data)
+      callback: (value, action) => {
+        if (value === 'confirm') {
+          emit('action', item, index, data)
+        }
       }
     })
   } else {
