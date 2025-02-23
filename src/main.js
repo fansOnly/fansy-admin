@@ -15,7 +15,7 @@ import 'element-plus/theme-chalk/src/overlay.scss'
 import 'element-plus/theme-chalk/src/loading.scss'
 
 import App from './App.vue'
-import './assets/css/index.scss'
+import './assets/styles/index.scss'
 
 const app = createApp(App)
 app.use(router)
