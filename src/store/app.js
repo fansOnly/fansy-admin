@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import { PREFERENCE_PRESET } from '@/constants/preset'
 import { useTheme } from '@/hooks/use-theme'
 import { useToggle } from '@vueuse/core'
+import { setGlobalColor } from '@/utils/color'
 const { isDark, toggleDark } = useTheme()
 
 const storageKey = `${import.meta.env.VITE_NAMESPACE}-preferences`
@@ -89,8 +90,7 @@ export const useGlobalStore = defineStore('app', {
       this.setThemeMode(this.preference.theme.mode)
     },
     setPrimaryColor(color) {
-      const dom = document.documentElement
-      dom.style.setProperty('--el-color-primary', color)
+      setGlobalColor(color)
     },
     getPrimaryColor() {
       const dom = document.documentElement

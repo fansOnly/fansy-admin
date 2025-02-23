@@ -8,14 +8,14 @@ export const THEME_PRESET = [
 // 预设主题色
 export const THEME_COLORS_PRESET = [
   { label: '默认', value: 'default' },
-  { label: '紫色', value: 'purple' },
-  { label: '红色', value: 'red' },
-  { label: '黄色', value: 'yellow' },
-  { label: '蓝色', value: 'blue' },
-  { label: '绿色', value: 'green' },
-  { label: '青色', value: 'cyan' },
-  { label: '粉色', value: 'pink' },
-  { label: '棕色', value: 'brown' },
+  { label: '紫色', value: '#7166f0' },
+  { label: '红色', value: '#bb1b1b' },
+  { label: '黄色', value: '#efbd48' },
+  { label: '蓝色', value: '#0960be' },
+  { label: '绿色', value: '#0bd092' },
+  { label: '青色', value: '#0d9496' },
+  { label: '粉色', value: '#e84a6c' },
+  { label: '棕色', value: '#e6a23c' },
   { label: '自定义', value: 'custom' }
 ]
 

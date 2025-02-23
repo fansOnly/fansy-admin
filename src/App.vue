@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { setGlobalColor } from '@/utils/color'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { useGlobalStore } from './store/app'
 import { useTitle } from '@/hooks/use-title'
@@ -47,4 +48,6 @@ watch(
     immediate: true,
   }
 )
+
+setGlobalColor('#2ad5c3')
 </script>

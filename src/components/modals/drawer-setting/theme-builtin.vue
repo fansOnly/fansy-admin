@@ -10,7 +10,8 @@
               <MagicStick />
             </el-icon>
             <div class="w-0 h-0 overflow-hidden">
-              <el-color-picker ref="colorPickerRef" v-model="color" show-alpha @change="onColorChange" />
+              <el-color-picker ref="colorPickerRef" v-model="color" color-format="hex" :show-alpha="false"
+                @change="onColorChange" />
             </div>
           </template>
           <div v-else class="w-20px h-20px rounded-4px"

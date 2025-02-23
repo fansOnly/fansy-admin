@@ -17,13 +17,14 @@ export default defineConfig(({ command, mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@/assets/css/theme/index.scss" as *;`
-        }
-      }
-    },
+    // css: {
+    //   preprocessorOptions: {
+    //     scss: {
+    //       additionalData: `@use "@/assets/styles/element/index.scss" as *;`,
+    //       api: 'modern-compiler'
+    //     }
+    //   }
+    // },
     define: {
       __APP_VERSION__: JSON.stringify('v1.0.0'),
       'process.env': {}
