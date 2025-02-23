@@ -310,10 +310,10 @@ const onSetRowClass = ({ row, rowIndex }) => {
 const onDragEnd = ({ newIndex, oldIndex }) => {
   // console.log('newIndex, oldIndex: ', newIndex, oldIndex);
   if (newIndex === oldIndex) return
-  const oldTarget = tableColumns.value.find((v) => v.sort === oldIndex)
-  const newTarget = tableColumns.value.find((v) => v.sort === newIndex)
-  oldTarget.sort = newIndex
-  newTarget.sort = oldIndex
+  const oldTarget = tableColumns.value.find((v) => v.sortnum === oldIndex)
+  const newTarget = tableColumns.value.find((v) => v.sortnum === newIndex)
+  oldTarget.sortnum = newIndex
+  newTarget.sortnum = oldIndex
   showTable.value = false
   nextTick(() => {
     showTable.value = true
