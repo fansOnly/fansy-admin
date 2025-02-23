@@ -47,7 +47,7 @@ export const useNavBar = () => {
     const index = navBarData.value.findIndex((v) => v.name === name)
     navBarData.value.splice(index, 1)
     if (currentNavIndex.value === index) {
-      currentNavIndex.value = index - 1
+      currentNavIndex.value = Math.max(0, currentNavIndex.value - 1)
       const prev = navBarData.value[currentNavIndex.value]
       router.push(prev.path)
     } else if (currentNavIndex.value > index) {
@@ -77,8 +77,13 @@ export const useNavBar = () => {
   }
 
   const closeAll = () => {
-    navBarData.value = affixNavList.value.slice()
-    currentNavIndex.value = affixNavList.value.length - 1
+    if (affixNavList.value.length) {
+      navBarData.value = affixNavList.value.slice()
+    } else {
+      const item = navBarData.value[currentNavIndex.value]
+      navBarData.value = [item]
+    }
+    currentNavIndex.value = navBarData.value.length - 1
     const last = navBarData.value[currentNavIndex.value]
     router.push(last?.path || '/')
   }
@@ -212,9 +217,13 @@ export const useNavBar = () => {
 
   const isFirstNav = computed(() => currentNavIndex.value === 0)
   const isLastNav = computed(() => currentNavIndex.value === navBarData.value.length - 1)
-  const closeable = computed(() => !currentNav.value.meta?.affix)
+  const closeable = computed(() => {
+    return !currentNav.meta?.affix && navBarData.value.length > 1
+  })
   const canCloseLeft = computed(() => currentNavIndex.value > affixNavList.value.length)
-  const canCloseAll = computed(() => navBarData.value.length > affixNavList.value.length)
+  const canCloseAll = computed(
+    () => navBarData.value.length > Math.max(1, affixNavList.value.length)
+  )
   const canCloseOther = computed(() => {
     if (currentNavIndex.value < affixNavList.value.length) {
       return navBarData.value.length > affixNavList.value.length
