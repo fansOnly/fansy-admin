@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import router from '@/router'
 import Storage from '../storage'
 import { handleNetworkError, handleAuthError, handleGeneralError } from './util'
 
@@ -89,7 +90,6 @@ service.interceptors.response.use(
               requestReloadList = []
               return service(config)
             } catch (error) {
-              const router = useRouter()
               router.push('/login')
             }
           }
