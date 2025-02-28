@@ -124,3 +124,44 @@ svg {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.route-loading .el-loading-spinner .circular {
+  animation: none;
+  color: var(--el-color-primary);
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* 为每个小方块设置动画 */
+.route-loading-path,
+.route-loading-path2,
+.route-loading-path3,
+.route-loading-path4 {
+  animation: blink 1.6s infinite;
+  /* 动画总时长1.6秒，无限循环 */
+}
+
+/* 设置不同的动画延迟 */
+.route-loading-path1 {
+  animation-delay: 0s;
+}
+
+.route-loading-path2 {
+  animation-delay: 0.4s;
+}
+
+.route-loading-path3 {
+  animation-delay: 0.8s;
+}
+
+.route-loading-path4 {
+  animation-delay: 1.2s;
+}
