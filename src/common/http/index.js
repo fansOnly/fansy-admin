@@ -6,7 +6,7 @@ import { handleNetworkError, handleAuthError, handleGeneralError } from './util'
 const isDev = import.meta.env.DEV
 const apiUrl = import.meta.env.VITE_API_URL || ''
 const context = import.meta.env.VITE_API_CONTEXT || ''
-const useMock = import.meta.env.VITE_USE_MOCK || false
+const useMock = import.meta.env.VITE_USE_MOCK || 'false'
 
 const contentTypes = {
   JSON: 'application/json;charset=UTF-8',
@@ -14,7 +14,7 @@ const contentTypes = {
   FORM_DATA: 'multipart/form-data;charset=UTF-8'
 }
 
-const baseURL = isDev && useMock ? '/api-mock' : apiUrl + context
+const baseURL = useMock === 'false' ? '/api-mock' : isDev ? '/api-proxy' : apiUrl + context
 console.log('[debug] 远程请求地址 >>>', apiUrl + context)
 
 const service = Axios.create({

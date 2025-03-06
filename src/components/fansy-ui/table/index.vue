@@ -4,9 +4,9 @@
       <div class="flex flex-1">
         <el-button v-if="toolsConfig.showAdd" :icon="toolsConfig.addButtonIcon" @click="emit('add')">{{
           toolsConfig.addButtonText }}</el-button>
-        <el-button v-if="toolsConfig.showSelect" type="primary" @click="toggleSelect()">{{
+        <el-button v-if="toolsConfig.showSelect && tableData.length" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-        }}</el-button>
+          }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="onBatchDelete()">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-          }}</el-button>
+            }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -105,8 +105,8 @@
         </template>
       </el-table-column>
       <!-- 操作栏 -->
-      <el-table-column label="操作" :width="tableConfig.actionColumnWidth" :min-width="tableConfig.actionColumnMinWidth"
-        :fixed="tableConfig.isActionColumnFixed ? 'right' : false">
+      <el-table-column v-if="tableConfig.showActionColumn" label="操作" :width="tableConfig.actionColumnWidth"
+        :min-width="tableConfig.actionColumnMinWidth" :fixed="tableConfig.isActionColumnFixed ? 'right' : false">
         <template #default="scope">
           <el-button v-for="(action, index) in effectiveActions(scope.row.status)" :key="index" size="small"
             :type="action.type" :icon="action.icon" :text="tableConfig.isActionButtonText"
@@ -176,6 +176,7 @@ const tableConfig = Object.assign(
       background: true
     },
     isActionButtonText: false, // 操作按钮文字
+    showActionColumn: true,
     isActionColumnFixed: false, // 固定操作栏
     actionColumnWidth: 250,
     useDialogDelete: true, // 使用弹窗删除

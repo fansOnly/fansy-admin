@@ -97,7 +97,7 @@
         <el-form-item label-width="0">
           <el-button v-if="showConfirmButton && !disabled" type="primary" @click="onSubmit(formRef)">{{
             confirmButtonText
-          }}</el-button>
+            }}</el-button>
           <el-button v-if="showResetButton && !disabled" @click="onReset">{{ resetButtonText }}</el-button>
           <template v-if="formConfig.showBack">
             <el-button @click="onBack">返回</el-button>
@@ -178,10 +178,21 @@ const dataFormLayoutPreset = {
   gutter: 12,
   span: 16
 }
-const searchFormLayoutPreset = {
-  gutter: 12,
-  span: 6
+const searchFormLayoutPresets = {
+  '2': {
+    gutter: 12,
+    span: 12
+  },
+  '3': {
+    gutter: 12,
+    span: 8
+  },
+  '4': {
+    gutter: 12,
+    span: 6
+  }
 }
+const columns = props.formConfig.columns || 4
 const formConfig = Object.assign(
   {
     size: 'large',
@@ -191,7 +202,7 @@ const formConfig = Object.assign(
       position: 'left',
       suffix: ''
     },
-    layout: props.formConfig.useSearchForm ? searchFormLayoutPreset : dataFormLayoutPreset,
+    layout: props.formConfig.useSearchForm ? searchFormLayoutPresets[columns] : dataFormLayoutPreset,
     submitOnReset: false,
     showBack: false
   },

@@ -36,7 +36,8 @@ export default defineConfig(({ command, mode }) => {
       host: true,
       proxy: createProxy([
         {
-          '/api-mock': VITE_API_URL + VITE_API_CONTEXT
+          '/api-mock': 'http://localhost:3011',
+          '/api-proxy': VITE_API_URL + VITE_API_CONTEXT
         }
       ])
     },
