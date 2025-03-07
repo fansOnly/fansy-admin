@@ -8,29 +8,29 @@
           v-if="item.showOnlyValued ? formData[item.prop] : true">
           <template v-if="item.type === 'date'">
             <el-date-picker v-model="formData[item.prop]" type="date" :placeholder="item.placeholder"
-              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'daterange'">
             <el-date-picker v-model="formData[item.prop]" type="daterange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始日期'"
               :end-placeholder="item.config?.endPlaceholder || '结束日期'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetime'">
             <el-date-picker v-model="formData[item.prop]" type="datetime" :placeholder="item.placeholder"
-              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetimerange'">
             <el-date-picker v-model="formData[item.prop]" type="datetimerange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始时间'"
               :end-placeholder="item.config?.endPlaceholder || '结束时间'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'select'">
             <el-select v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }">
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }">
               <el-option v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled" />
             </el-select>
@@ -38,29 +38,29 @@
           <template v-else-if="item.type === 'multiple-select'">
             <el-select v-model="formData[item.prop]" :placeholder="item.placeholder" multiple collapse-tags
               collapse-tags-tooltip :max-collapse-tags="item.config?.maxCollapseTags || 2" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }">
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }">
               <el-option v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled" />
             </el-select>
           </template>
           <template v-else-if="item.type === 'number'">
             <el-input-number v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'textarea'">
             <el-input v-model="formData[item.prop]" type="textarea" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'radio'">
             <el-radio-group v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }">
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }">
               <el-radio v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled"></el-radio>
             </el-radio-group>
           </template>
           <template v-else-if="item.type === 'checkbox'">
             <el-checkbox-group v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }">
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }">
               <el-checkbox v-for="opt in item.options" :key="opt.value" :label="opt.label" :value="opt.value"
                 :disabled="opt.disabled"></el-checkbox>
             </el-checkbox-group>
@@ -85,11 +85,11 @@
           </template>
           <template v-else-if="item.modify">
             <el-input v-model.[item.modify]="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else>
             <el-input v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
-              :readonly="disabled" :style="{ width: '100%', ...item.style }" />
+              :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
           </template>
         </el-form-item>
       </el-col>
