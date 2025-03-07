@@ -36,7 +36,7 @@ export const createRouterGuards = (router) => {
         svg: `
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="route-loading-svg">
           <g clipPath="url(#clip0_324_2488)">
-            <path class="route-loading-path1"
+            <path class="route-loading-path1" opacity="0.8"
               d="M15 0H10C9.44772 0 9 0.447715 9 1V6C9 6.55228 9.44772 7 10 7H15C15.5523 7 16 6.55228 16 6V1C16 0.447715 15.5523 0 15 0Z"
               fill="currentColor" />
             <path class="route-loading-path2" opacity="0.5"

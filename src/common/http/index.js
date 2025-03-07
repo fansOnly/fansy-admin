@@ -14,7 +14,7 @@ const contentTypes = {
   FORM_DATA: 'multipart/form-data;charset=UTF-8'
 }
 
-const baseURL = useMock === 'false' ? '/api-mock' : isDev ? '/api-proxy' : apiUrl + context
+const baseURL = useMock === 'true' ? '/api-mock' : isDev ? '/api-proxy' : apiUrl + context
 console.log('[debug] 远程请求地址 >>>', apiUrl + context)
 
 const service = Axios.create({
