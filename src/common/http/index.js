@@ -67,6 +67,22 @@ service.interceptors.response.use(
       console.log('└─')
       console.groupEnd()
 
+      // mock 模拟未登录状态
+      // if (isDev && useMock === 'true') {
+      //   if (config.url === coreApiPath.login) {
+      //     const token = data.data.cookie
+      //     document.cookie = token
+      //   } else {
+      //     const cookies = document.cookie.split(';')
+      //     const token = cookies.some(
+      //       (v) => v.split('=')[0] == ` ${import.meta.env.VITE_NAMESPACE}MockToken`
+      //     )
+      //     if (!token) {
+      //       data.code = 10031
+      //     }
+      //   }
+      // }
+
       if (data.code === 10000) {
         return data.data
       } else {
