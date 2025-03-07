@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { dictionaryApiPath } from '../../../api/api-path'
 
 const initList = () => {
   const res = Mock.mock({
@@ -29,7 +30,7 @@ let CURREN_LIST = []
 
 export default [
   {
-    url: '/api-mock/common/dictionary/list',
+    url: `/api-mock${dictionaryApiPath.list}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -52,7 +53,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/dictionary/detail',
+    url: `/api-mock${dictionaryApiPath.detail}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -66,7 +67,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/dictionary/update',
+    url: `/api-mock${dictionaryApiPath.update}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -79,7 +80,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/dictionary/add',
+    url: `/api-mock${dictionaryApiPath.add}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -91,9 +92,8 @@ export default [
       }
     }
   },
-  ,
   {
-    url: '/api-mock/common/dictionary/remove',
+    url: `/api-mock${dictionaryApiPath.remove}`,
     method: 'post',
     timeout: 500,
     response: () => {

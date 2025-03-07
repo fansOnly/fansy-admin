@@ -1,4 +1,5 @@
 import { httpPost, httpGet } from '@/common/http'
+import { dictionaryApiPath } from '@/api/api-path'
 
 /**
  * 获取参数列表
@@ -8,13 +9,13 @@ import { httpPost, httpGet } from '@/common/http'
  * @param {string} params.title
  * @param {number} params.status
  */
-export const getDictionaryList = (params = {}) => httpGet('/common/dictionary/list', params)
+export const getDictionaryList = (params = {}) => httpGet(dictionaryApiPath.list, params)
 
 /**
  * 获取参数详情
  * @param {string} id
  */
-export const getDictionaryDetail = (id = '') => httpGet('/common/dictionary/detail', { id })
+export const getDictionaryDetail = (id = '') => httpGet(dictionaryApiPath.detail, { id })
 
 /**
  * 更新参数
@@ -31,16 +32,16 @@ export const getDictionaryDetail = (id = '') => httpGet('/common/dictionary/deta
  * @param {date} params.updateTime
  * @param {number} params.status
  */
-export const updateDictionary = (params = {}) => httpPost('/common/dictionary/update', params)
+export const updateDictionary = (params = {}) => httpPost(dictionaryApiPath.update, params)
 
 /**
  * 新增参数
  * @param {DictionaryDto} params
  */
-export const addDictionary = (params = {}) => httpPost('/common/dictionary/add', params)
+export const addDictionary = (params = {}) => httpPost(dictionaryApiPath.add, params)
 
 /**
  * 删除参数
  * @param {string | Array<string>} id
  */
-export const removeDictionary = (id = '') => httpPost('/common/dictionary/remove', { id })
+export const removeDictionary = (id = '') => httpPost(dictionaryApiPath.remove, { id })

@@ -1,10 +1,11 @@
 import Mock from 'mockjs'
+import { adminApiPath } from '../../../api/api-path'
 
 const initList = () => {
   const res = Mock.mock({
     ['LIST|14-106']: [
       {
-        id: '@id',
+        id: '@increment',
         'sortnum|+10': 10,
         username: '@word(5,10)',
         nickname: '@cname',
@@ -28,7 +29,7 @@ let CURREN_LIST = []
 
 export default [
   {
-    url: '/api-mock/common/admin/list',
+    url: `/api-mock${adminApiPath.list}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -57,7 +58,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/admin/detail',
+    url: `/api-mock${adminApiPath.detail}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -87,7 +88,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/admin/update',
+    url: `/api-mock${adminApiPath.update}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -100,7 +101,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/admin/add',
+    url: `/api-mock${adminApiPath.add}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -114,7 +115,7 @@ export default [
   },
   ,
   {
-    url: '/api-mock/common/admin/remove',
+    url: `/api-mock${adminApiPath.remove}`,
     method: 'post',
     timeout: 500,
     response: () => {

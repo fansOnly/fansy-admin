@@ -1,14 +1,17 @@
 import { md5Encrypt } from '../../../common/security/md5'
+import Mock from 'mockjs'
+import { coreApiPath } from '../../../api/api-path'
 
 export default [
   {
-    url: '/api-mock/core/login',
+    url: `/api-mock${coreApiPath.login}`,
     method: 'post',
     timeout: 500,
     // statusCode: 403,
     response: (config) => {
       const { username, password } = config.body
       if (username == 'admin' && password === md5Encrypt('123456')) {
+        const cookie = `${process.env.VITE_NAMESPACE}MockToken=${Mock.mock('@guid')};Path=/;`
         const token =
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJuZmdvIiwic3ViIjoiYTg0OWRlZmQtY2JiOC00NWIzLTkxNjAtMmE2MWQxOTVjY2I5IiwiaWF0IjoxNzI4MzUwNjg4LCJleHAiOjE3Mjg0MzcwODh9.NBN8mLrLsBw3WcQf3RuxYEaay0z4MkfbrrhuRTecJRM'
         return {
@@ -16,7 +19,8 @@ export default [
           message: 'success',
           data: {
             accessToken: token,
-            refreshToken: 'admin-refresh-token'
+            refreshToken: 'admin-refresh-token',
+            cookie
           }
         }
       } else if (username == 'guest' && password === md5Encrypt('123456')) {
@@ -27,7 +31,8 @@ export default [
           message: 'success',
           data: {
             accessToken: token,
-            refreshToken: 'guest-refresh-token'
+            refreshToken: 'guest-refresh-token',
+            cookie
           }
         }
       } else {
@@ -39,7 +44,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/core/refresh_token',
+    url: `/api-mock${coreApiPath.refreshToken}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -62,7 +67,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/core/logout',
+    url: `/api-mock${coreApiPath.logout}`,
     method: 'post',
     timeout: 500,
     response: () => {
@@ -73,7 +78,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/core/change_password',
+    url: `/api-mock${coreApiPath.changePassword}`,
     method: 'post',
     timeout: 500,
     response: (config) => {

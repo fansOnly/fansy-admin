@@ -1,4 +1,5 @@
 import { httpPost, httpGet } from '@/common/http'
+import { adminApiPath } from '@/api/api-path'
 
 /**
  * 获取管理员列表
@@ -10,28 +11,28 @@ import { httpPost, httpGet } from '@/common/http'
  * @param {string} params.phone
  * @param {number} params.status
  */
-export const getAdminList = (params = {}) => httpGet('/common/admin/list', params)
+export const getAdminList = (params = {}) => httpGet(adminApiPath.list, params)
 
 /**
  * 获取管理员详情
  * @param {string} id
  */
-export const getAdminDetail = (id = '') => httpGet('/common/admin/detail', { id })
+export const getAdminDetail = (id = '') => httpGet(adminApiPath.detail, { id })
 
 /**
  * 更新管理员
  * @param {AdminDto} params
  */
-export const updateAdmin = (params = {}) => httpPost('/common/admin/update', params)
+export const updateAdmin = (params = {}) => httpPost(adminApiPath.update, params)
 
 /**
  * 新增管理员
  * @param {AdminDto} params
  */
-export const addAdmin = (params = {}) => httpPost('/common/admin/add', params)
+export const addAdmin = (params = {}) => httpPost(adminApiPath.add, params)
 
 /**
  * 删除管理员
  * @param {string | Array<string>} id
  */
-export const removeAdmin = (id = '') => httpPost('/common/admin/remove', { id })
+export const removeAdmin = (id = '') => httpPost(adminApiPath.remove, { id })

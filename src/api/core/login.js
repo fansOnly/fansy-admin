@@ -1,4 +1,5 @@
 import { httpPost, httpGet } from '@/common/http'
+import { coreApiPath } from '@/api/api-path'
 
 /**
  * 用户登陆
@@ -6,18 +7,17 @@ import { httpPost, httpGet } from '@/common/http'
  * @param {string} username
  * @param {string} password
  */
-export const login = (params = {}) => httpPost('/core/login', params)
+export const login = (params = {}) => httpPost(coreApiPath.login, params)
 
 /**
  * 刷新 accessToken
  */
-export const refreshToken = (refreshToken = '') =>
-  httpGet('/core/refresh_token', { token: refreshToken })
+export const refreshToken = (token = '') => httpGet(coreApiPath.refreshToken, { token })
 
 /**
  * 用户登出
  */
-export const logout = () => httpPost('/core/logout')
+export const logout = () => httpPost(coreApiPath.logout)
 
 /**
  * 修改密码
@@ -26,4 +26,4 @@ export const logout = () => httpPost('/core/logout')
  * @param {string} params.oldPass
  * @param {string} params.password
  */
-export const changePassword = (params = {}) => httpPost('/core/change_password', params)
+export const changePassword = (params = {}) => httpPost(coreApiPath.changePassword, params)

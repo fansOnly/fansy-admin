@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { menuApiPath } from '../../../api/api-path'
 
 const menus = [
   {
@@ -241,7 +242,7 @@ const TABLE_LIST = initList()
 
 export default [
   {
-    url: '/api-mock/common/menu/list',
+    url: `/api-mock${menuApiPath.list}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -254,7 +255,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/menu/detail',
+    url: `/api-mock${menuApiPath.detail}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -267,7 +268,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/menu/update',
+    url: `/api-mock${menuApiPath.update}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -280,7 +281,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/menu/add',
+    url: `/api-mock${menuApiPath.add}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -293,7 +294,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/menu/remove',
+    url: `/api-mock${menuApiPath.remove}`,
     method: 'post',
     timeout: 500,
     response: () => {

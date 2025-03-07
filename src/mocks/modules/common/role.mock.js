@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { roleApiPath } from '../../../api/api-path'
 
 const initList = () => {
   const arr = ['访客', '普通管理员', '系统管理员', '审核管理员', '超级管理员', '管理员']
@@ -6,7 +7,7 @@ const initList = () => {
   for (let i = 0; i < arr.length; i++) {
     res.push(
       Mock.mock({
-        id: '@id',
+        id: '@increment',
         sortnum: (i + 1) * 10,
         title: arr[i],
         content: '@csentence',
@@ -26,7 +27,7 @@ let CURREN_LIST = []
 
 export default [
   {
-    url: '/api-mock/common/role/list',
+    url: `/api-mock${roleApiPath.list}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -49,7 +50,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/role/detail',
+    url: `/api-mock${roleApiPath.detail}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -63,7 +64,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/role/update',
+    url: `/api-mock${roleApiPath.update}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -76,7 +77,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/common/role/add',
+    url: `/api-mock${roleApiPath.add}`,
     method: 'post',
     timeout: 500,
     response: (config) => {
@@ -90,7 +91,7 @@ export default [
   },
   ,
   {
-    url: '/api-mock/common/role/remove',
+    url: `/api-mock${roleApiPath.remove}`,
     method: 'post',
     timeout: 500,
     response: () => {

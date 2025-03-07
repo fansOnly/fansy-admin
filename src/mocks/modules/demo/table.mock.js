@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { tableApiPath } from '../../../api/api-path'
 
 const initTableList = () => {
   const res = Mock.mock({
@@ -24,7 +25,7 @@ let CURREN_LIST = []
 
 export default [
   {
-    url: '/api-mock/demo/table/list',
+    url: `/api-mock${tableApiPath.list}`,
     method: 'get',
     timeout: 500,
     response: (config) => {
@@ -41,7 +42,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/demo/table/detail',
+    url: `/api-mock${tableApiPath.detail}`,
     method: 'get',
     timeout: 300,
     response: (config) => {
@@ -55,7 +56,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/demo/table/add',
+    url: `/api-mock${tableApiPath.add}`,
     method: 'post',
     timeout: 300,
     response: (config) => {
@@ -68,7 +69,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/demo/table/update',
+    url: `/api-mock${tableApiPath.update}`,
     method: 'post',
     timeout: 300,
     response: (config) => {
@@ -81,7 +82,7 @@ export default [
     }
   },
   {
-    url: '/api-mock/demo/table/delete',
+    url: `/api-mock${tableApiPath.delete}`,
     method: 'post',
     timeout: 300,
     response: (config) => {
