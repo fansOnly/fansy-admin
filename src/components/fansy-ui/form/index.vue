@@ -65,7 +65,10 @@
                 :disabled="opt.disabled"></el-checkbox>
             </el-checkbox-group>
           </template>
-          <template v-else-if="item.type === 'file'">
+          <template v-else-if="item.type === 'image'">
+            <el-image :src="formData[item.prop]" :style="item.style"></el-image>
+          </template>
+          <template v-else-if="item.type === 'upload'">
             <el-upload :show-file-list="false" drag
               action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" v-bind="item.attrs"
               :disabled="disabled" :style="{ width: '100%', ...item.style }"
