@@ -79,7 +79,7 @@ const emit = defineEmits(['cancel', 'confirm'])
 const searchInputRef = ref(null)
 const searchItemRef = ref(null)
 const search = ref('')
-const searchIndex = ref(0)
+const searchIndex = ref(-1)
 const storageKey = `${import.meta.env.VITE_NAMESPACE}-search-history`
 // localStorage.removeItem(storageKey)
 const storage = localStorage.getItem(storageKey) || []
@@ -129,7 +129,7 @@ function onKeydownClose() {
 function resetSearch() {
   show.value = false
   search.value = ''
-  searchIndex.value = 0
+  searchIndex.value = -1
 }
 
 
@@ -138,6 +138,9 @@ watchEffect(() => {
     setTimeout(() => {
       searchInputRef.value?.focus()
     }, 300);
+  } else {
+    searchIndex.value = -1
+    searchInputRef.value?.blur()
   }
 })
 
