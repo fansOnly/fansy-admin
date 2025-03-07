@@ -2,7 +2,7 @@
   <div v-if="sidebarSetting.show"
     class="h-full background-custom-var(--el-fill-color-blank) b-r-1px b-r-solid borderColor-custom-var(--el-border-color-lighter) overflow-hidden">
     <base-logo :height="topHeight" :title="globalStore.name" :collapse="sidebarSetting.collapse" />
-    <el-scrollbar noresize class="fansy-menu" :style="{ height: `calc(100% - ${topHeight}px)` }">
+    <el-scrollbar noresize class="fansy-menu" :style="{ height: `calc(100vh - ${topHeight}px)` }">
       <base-menu />
     </el-scrollbar>
   </div>
