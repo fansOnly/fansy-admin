@@ -8,25 +8,29 @@
           v-if="item.showOnlyValued ? formData[item.prop] : true">
           <template v-if="item.type === 'date'">
             <el-date-picker v-model="formData[item.prop]" type="date" :placeholder="item.placeholder"
-              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly"
+              :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'daterange'">
             <el-date-picker v-model="formData[item.prop]" type="daterange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始日期'"
               :end-placeholder="item.config?.endPlaceholder || '结束日期'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly"
+              :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetime'">
             <el-date-picker v-model="formData[item.prop]" type="datetime" :placeholder="item.placeholder"
-              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly"
+              :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'datetimerange'">
             <el-date-picker v-model="formData[item.prop]" type="datetimerange"
               :range-separator="item.config?.separator || '-'"
               :start-placeholder="item.config?.startPlaceholder || '开始时间'"
               :end-placeholder="item.config?.endPlaceholder || '结束时间'" :shortcuts="item.config?.shortcuts"
-              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly" :style="{ width: '100%', ...item.style }" />
+              v-bind="item.attrs" :readonly="disabled || item.attrs?.readonly"
+              :style="{ width: '100%', ...item.style }" />
           </template>
           <template v-else-if="item.type === 'select'">
             <el-select v-model="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
@@ -84,7 +88,7 @@
             </el-upload>
           </template>
           <template v-else-if="item.type === 'custom'">
-            <slot :name="item.prop" :prop="item.prop"></slot>
+            <slot :name="item.prop" :prop="item.prop" :data="item"></slot>
           </template>
           <template v-else-if="item.modify">
             <el-input v-model.[item.modify]="formData[item.prop]" :placeholder="item.placeholder" v-bind="item.attrs"
@@ -100,7 +104,7 @@
         <el-form-item label-width="0">
           <el-button v-if="showConfirmButton && !disabled" type="primary" @click="onSubmit(formRef)">{{
             confirmButtonText
-            }}</el-button>
+          }}</el-button>
           <el-button v-if="showResetButton && !disabled" @click="onReset">{{ resetButtonText }}</el-button>
           <template v-if="formConfig.showBack">
             <el-button @click="onBack">返回</el-button>
@@ -154,7 +158,7 @@ const props = defineProps({
   },
   showResetButton: {
     type: Boolean,
-    default: true
+    default: false
   },
   resetButtonText: {
     type: String,

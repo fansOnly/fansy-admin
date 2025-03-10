@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fansy-form :form-data="formData" :form-items="formItems"
+    <fansy-form :form-data="formData" :form-items="formItems" show-reset-button
       :form-config="{ submitOnReset: true, useSearchForm: true, size: 'default' }" confirmButtonText="搜索"
       @submit="handleSearch">
     </fansy-form>
