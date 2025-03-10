@@ -1,54 +1,64 @@
 <template>
-  <el-upload ref="uploadRef" v-bind="attrs" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    :show-file-list="false" :on-success="onUploadSuccess" :before-upload="onBeforeUpload" :on-change="onFileChange">
-    <slot></slot>
+  <el-upload ref="uploadRef" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+    :show-file-list="false" drag with-credentials v-bind="attrs" :on-success="emit('on-success')"
+    :before-upload="onBeforeUpload" :on-change="emit('on-change')" :on-remove="emit('on-remove')"
+    class="fansy-upload-file">
+    <slot>
+      <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+      <div class="el-upload__text">
+        拖拽文件到这里或者 <em>点击上传</em>
+      </div>
+    </slot>
     <template #tip>
-      <slot name="tip"></slot>
+      <slot name="tip">
+        <div class="el-upload__tip">{{ tip }}</div>
+      </slot>
     </template>
   </el-upload>
 </template>
 
 <script setup>
-
 const props = defineProps({
-  name: String,
   accept: {
     type: String,
-    default: 'image/jpeg,image/png,image/gif'
+    default: '.txt,.doc,.docx'
   },
-  maxSize: {
-    type: Number,
-    default: 5
+  tip: {
+    type: String,
+    default: '支持格式：.txt,.doc,.docx，大小不超过50MB'
   }
 })
-const emit = defineEmits(['success', 'change'])
+const emit = defineEmits(['on-success', 'on-change', 'before-upload'])
 const attrs = useAttrs();
 
 const uploadRef = ref(null)
 
-const onUploadSuccess = (
-  response,
-  uploadFile
-) => {
-  emit('success', response, uploadFile)
-}
-
-function onFileChange(file) {
-  emit('change', file)
-}
-
 const onBeforeUpload = (rawFile) => {
+  const maxSize = attrs?.maxSize || 50
   if (!props.accept.includes(rawFile.type)) {
-    // ElMessage.error('File must be JPG, PNG or GIF format!')
-    ElMessage.error('文件必须是 JPG, PNG or GIF 格式！')
+    ElMessage.error('文件必须是 TXT, DOC, DOCX 格式！')
+    emit('before-upload', rawFile, false)
     return false
-  } else if (rawFile.size / 1024 / 1024 > props.maxSize) {
-    // ElMessage.error(`File size can not exceed ${props.maxSize}MB!`)
-    ElMessage.error(`文件大小不能超过 ${props.maxSize}MB！`)
+  } else if (rawFile.size / 1024 / 1024 > maxSize) {
+    ElMessage.error(`文件大小不能超过 ${maxSize}MB！`)
+    emit('before-upload', rawFile, false)
     return false
   }
+  emit('before-upload', rawFile, true)
   return true
 }
+
+function submit() {
+  uploadRef.value?.submit()
+}
+
+defineExpose({
+  submit
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fansy-upload-file {
+  width: 100%;
+}
+</style>
