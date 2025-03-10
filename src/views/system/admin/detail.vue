@@ -20,7 +20,7 @@ const id = route.query.id
 const loading = ref(false)
 const roleOptions = ref([])
 
-const formItems = [
+const formItems = ref([
   {
     label: '序号',
     prop: 'sortnum',
@@ -159,7 +159,7 @@ const formItems = [
       readonly: true
     }
   }
-]
+])
 const formData = ref({
   sortnum: 10,
   username: '',
@@ -192,7 +192,7 @@ const handleSubmit = () => {
 }
 
 const renderRoleList = () => {
-  formItems.forEach((v) => {
+  formItems.value.forEach((v) => {
     if (v.prop === 'roleId') {
       v.options = roleOptions.value
     }
