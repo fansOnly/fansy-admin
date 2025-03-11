@@ -76,7 +76,7 @@ export const createRouterGuards = (router) => {
       }
 
       const userStore = useUserStore()
-      if (!userStore.userInfo.id) {
+      if (!userStore.userInfo.id && to.name !== 'NotFound') {
         // get id from token
         const payload = jwtDecode(token)
         const userData = await getAdminDetail(payload.sub)
