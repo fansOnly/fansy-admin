@@ -10,12 +10,28 @@ export default defineConfig(({ command, mode }) => {
   const { VITE_DROP_CONSOLE, VITE_API_CONTEXT, VITE_API_URL } = viteEnv
   const isBuild = command === 'build'
 
+  const manualChunks = (id) => {
+    if (id.includes('node_modules')) {
+      if (id.includes('lodash-es')) {
+        return 'lodash-vendor'
+      }
+      if (id.includes('element-plus')) {
+        return 'el-vendor'
+      }
+      if (id.includes('@vue') || id.includes('vue')) {
+        return 'vue-vendor'
+      }
+      return 'vendor'
+    }
+  }
+
   return {
     base: './',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
-      }
+      },
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
     },
     // css: {
     //   preprocessorOptions: {
@@ -44,20 +60,37 @@ export default defineConfig(({ command, mode }) => {
     esbuild: {
       pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
     },
-    // build: {
-    //   outDir: 'dist',
-    //   rollupOptions: {
-    //     // 路由分块
-    //     // https://rollupjs.org/guide/en/#outputmanualchunks
-    //     output: {
-    //       manualChunks: {
-    //         // 'group-user': ['./src/pages/user/index']
-    //       }
-    //     }
-    //   }
-    // },
+    build: {
+      outDir: 'dist',
+      rollupOptions: {
+        // 路由分块
+        // https://rollupjs.org/guide/en/#outputmanualchunks
+        output: {
+          manualChunks: {
+            // 'group-user': ['./src/pages/user/index']
+          }
+        }
+      }
+      // chunkSizeWarningLimit: 1500, //超出 chunk 大小警告阈值，默认500kb
+      // //Rollup 打包配置
+      // rollupOptions: {
+      //   output: {
+      //     entryFileNames: 'assets/js/[name]-[hash:8].js', //入口文件名称
+      //     chunkFileNames: 'assets/js/[name]-[hash:8].js', //引入文件名名称
+      //     assetFileNames: 'assets/[ext]/[name]-[hash:8][extname]', //静态资源名称
+      //     manualChunks
+      //   }
+      // }
+    },
     optimizeDeps: {
-      include: ['element-plus/dist/locale/zh-cn.mjs']
+      include: [
+        'element-plus/dist/locale/zh-cn.mjs',
+        '@vueuse/core',
+        'lodash-es',
+        'nprogress',
+        'dayjs',
+        'echarts'
+      ]
     }
   }
 })
