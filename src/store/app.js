@@ -27,6 +27,7 @@ export const useGlobalStore = defineStore('app', {
   state: () => {
     return {
       name: 'Github',
+      copyright: '@copyright 2025 All rights reserved.',
       config: {
         size: 'default',
         zIndex: 2000

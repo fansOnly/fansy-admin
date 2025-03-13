@@ -6,7 +6,7 @@
           toolsConfig.addButtonText }}</el-button>
         <el-button v-if="toolsConfig.showSelect && tableData.length" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-          }}</el-button>
+        }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="onBatchDelete()">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-            }}</el-button>
+          }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -204,6 +204,7 @@ const toolsConfig = Object.assign(
     showImport: false,
     showDelete: true,
     showEdit: true,
+    showView: false,
     showPublish: true,
     addButtonText: '新增',
     addButtonIcon: 'Plus',
@@ -219,6 +220,13 @@ const toolsConfig = Object.assign(
   props.toolsConfig
 )
 const actions = [
+  {
+    sortnum: 1,
+    label: '查看',
+    value: COMMON_ACTIONS.VIEW,
+    icon: 'View',
+    isShow: () => toolsConfig.showView
+  },
   {
     sortnum: 10,
     label: '编辑',

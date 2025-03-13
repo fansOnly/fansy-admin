@@ -1,6 +1,6 @@
 <template>
-  <el-footer :height="globalStore.layout.footerHeight + 'px'" class="flex-[center,center]">
-    @copyright 2024 All rights reserved.
+  <el-footer :height="globalStore.layout.footerHeight + 'px'" class="flex-[center,center] overflow-hidden">
+    <div v-html="globalStore.copyright"></div>
   </el-footer>
 </template>
 

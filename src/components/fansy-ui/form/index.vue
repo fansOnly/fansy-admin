@@ -101,7 +101,7 @@
         </el-form-item>
       </el-col>
       <el-col v-if="showConfirmButton || showResetButton || formConfig.showBack" :span="formConfig.layout.span">
-        <el-form-item label-width="0">
+        <el-form-item :label-width="formConfig.useSearchForm ? '0px' : formConfig.label.width || '0px'">
           <el-button v-if="showConfirmButton && !disabled" type="primary" @click="onSubmit(formRef)">{{
             confirmButtonText
           }}</el-button>

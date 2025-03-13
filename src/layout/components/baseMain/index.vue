@@ -1,5 +1,6 @@
 <template>
-  <div class="px-20px pt-20px overflow-x-hidden" :style="{ height: `calc(100vh - ${globalStore.topHeight}px)` }">
+  <div class="px-20px pt-20px overflow-x-hidden"
+    :style="{ height: `calc(100vh - ${globalStore.topHeight}px)`, paddingBottom: `${globalStore.layout.footerHeight ? 0 : 20}px` }">
     <el-main class="relative background-custom-var(--fansy-main-bg-color) rounded-8px"
       :style="{ 'overflow': 'hidden', 'min-height': `calc(100% - ${globalStore.layout.footerHeight}px)` }">
       <router-view v-if="loaded" v-slot="{ Component, route }">
