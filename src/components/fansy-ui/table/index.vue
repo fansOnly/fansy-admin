@@ -6,7 +6,7 @@
           toolsConfig.addButtonText }}</el-button>
         <el-button v-if="toolsConfig.showSelect && tableData.length" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-        }}</el-button>
+          }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="onBatchDelete()">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-          }}</el-button>
+            }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -108,7 +108,7 @@
       <el-table-column v-if="tableConfig.showActionColumn" label="操作" :width="tableConfig.actionColumnWidth"
         :min-width="tableConfig.actionColumnMinWidth" :fixed="tableConfig.isActionColumnFixed ? 'right' : false">
         <template #default="scope">
-          <el-button v-for="(action, index) in effectiveActions(scope.row.status)" :key="index" size="small"
+          <el-button v-for="(action, index) in effectiveActions(scope.row)" :key="index" size="small"
             :type="action.type" :icon="action.icon" :text="tableConfig.isActionButtonText"
             @click="onAction(action, scope.$index, scope.row)">
             {{ action.label }}
@@ -221,39 +221,39 @@ const toolsConfig = Object.assign(
 )
 const actions = [
   {
-    sortnum: 1,
+    sortnum: 50,
     label: '查看',
     value: COMMON_ACTIONS.VIEW,
     icon: 'View',
     isShow: () => toolsConfig.showView
   },
   {
-    sortnum: 10,
+    sortnum: 60,
     label: '编辑',
     value: COMMON_ACTIONS.EDIT,
     icon: 'Edit',
     isShow: () => toolsConfig.showEdit
   },
   {
-    sortnum: 20,
+    sortnum: 70,
     label: '发布',
     value: COMMON_ACTIONS.PUBLISH,
     icon: 'Promotion',
     type: 'success',
-    isShow: (status) => toolsConfig.showPublish && status === 0,
+    isShow: ({ status }) => toolsConfig.showPublish && status === 0,
     data: 1
   },
   {
-    sortnum: 30,
+    sortnum: 80,
     label: '下架',
     value: COMMON_ACTIONS.UN_PUBLISH,
     type: 'warning',
     icon: 'Hide',
-    isShow: (status) => toolsConfig.showPublish && status !== 0,
+    isShow: ({ status }) => toolsConfig.showPublish && status !== 0,
     data: 0
   },
   {
-    sortnum: 40,
+    sortnum: 90,
     label: '删除',
     value: COMMON_ACTIONS.DELETE,
     type: 'danger',
@@ -288,7 +288,7 @@ const activeTableColumns = computed(() =>
 )
 
 const getBadgeType = (status) => getConstantLabel(BADGE_STATUS_LIST, status, 'info')
-const effectiveActions = (status) => {
+const effectiveActions = (data) => {
   return actions
     .slice()
     .map((v) => {
@@ -299,7 +299,7 @@ const effectiveActions = (status) => {
       }
       return v
     })
-    .filter((v) => v.isShow(status))
+    .filter((v) => v.isShow(data))
     .sort((a, b) => a.sortnum - b.sortnum)
 }
 

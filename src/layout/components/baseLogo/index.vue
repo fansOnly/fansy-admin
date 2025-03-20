@@ -1,6 +1,6 @@
 <template>
   <div
-    class="box-border flex-[center,center] color-custom-var(--el-text-color-primary) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter)"
+    class="box-border flex-[center,center] px-12px color-custom-var(--el-text-color-primary) b-b-1px b-b-solid borderColor-custom-var(--el-border-color-lighter)"
     :style="{ height: height + 'px' }">
     <el-icon>
       <Sunrise />
