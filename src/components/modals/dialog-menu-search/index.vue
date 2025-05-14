@@ -87,6 +87,7 @@ const history = useStorage(storageKey, storage, localStorage, { serializer: Stor
 const searchList = computed(() => search.value ? routes.filter(route => route.meta.title.includes(search.value) || route.name.includes(search.value)) : (history.value || []))
 
 const onConfirm = async (item, index) => {
+  if (!show.value) return
   searchIndex.value = index
   const data = useArrayUnique(history.value.concat(item), (a, b) => a.meta.id === b.meta.id)
   history.value = data.value
