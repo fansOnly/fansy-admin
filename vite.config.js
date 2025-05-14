@@ -84,6 +84,7 @@ export default defineConfig(({ command, mode }) => {
     },
     optimizeDeps: {
       include: [
+        'element-plus',
         'element-plus/dist/locale/zh-cn.mjs',
         '@vueuse/core',
         'lodash-es',
