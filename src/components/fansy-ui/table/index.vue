@@ -6,7 +6,7 @@
           toolsConfig.addButtonText }}</el-button>
         <el-button v-if="toolsConfig.showSelect && tableData.length" type="primary" @click="toggleSelect()">{{
           selections.length ? toolsConfig.unSelectButtonText : toolsConfig.selectButtonText
-          }}</el-button>
+        }}</el-button>
         <template v-if="toolsConfig.showDelete">
           <el-button v-show="selections.length" type="danger" :icon="toolsConfig.deleteButtonIcon"
             @click="onBatchDelete()">{{ toolsConfig.deleteButtonText }}</el-button>
@@ -18,7 +18,7 @@
         <template v-if="toolsConfig.showImport">
           <el-button :icon="toolsConfig.importButtonIcon" @click="onImport()">{{
             toolsConfig.importButtonText
-            }}</el-button>
+          }}</el-button>
         </template>
         <slot name="tools"></slot>
       </div>
@@ -181,7 +181,11 @@ const tableConfig = Object.assign(
     actionColumnWidth: 250,
     useDialogDelete: true, // 使用弹窗删除
     actionPublishText: '发布',
-    actionUnPublishText: '下架'
+    actionUnPublishText: '下架',
+    actionPublishIcon: 'Promotion',
+    actionUnPublishIcon: 'Hide',
+    actionPublishType: 'success',
+    actionUnPublishType: 'warning'
   },
   props.tableConfig
 )
@@ -294,8 +298,12 @@ const effectiveActions = (data) => {
     .map((v) => {
       if (v.value === COMMON_ACTIONS.PUBLISH) {
         v.label = tableConfig.actionPublishText
+        v.icon = tableConfig.actionPublishIcon
+        v.type = tableConfig.actionPublishType
       } else if (v.value === COMMON_ACTIONS.UN_PUBLISH) {
         v.label = tableConfig.actionUnPublishText
+        v.icon = tableConfig.actionUnPublishIcon
+        v.type = tableConfig.actionUnPublishType
       }
       return v
     })
