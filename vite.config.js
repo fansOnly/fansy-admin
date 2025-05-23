@@ -52,6 +52,7 @@ export default defineConfig(({ command, mode }) => {
       host: true,
       proxy: createProxy([
         {
+          '/api-artalk': 'http://localhost:8080',
           '/api-mock': 'http://localhost:3011',
           '/api-proxy': VITE_API_URL + VITE_API_CONTEXT
         }
